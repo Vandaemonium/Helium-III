@@ -54,6 +54,10 @@ function isSystemOrModuleCodeNote(note, config) {
     if (note.noteId === "root" || note.noteId.startsWith("_")) {
         return true;
     }
+    // Excluded even when unlocked, like Quick Notes: keeps titles and timestamps out of module state.
+    if (note.isProtected) {
+        return true;
+    }
     if (config.excludeHidden && typeof note.isInHiddenSubtree === "function" && note.isInHiddenSubtree()) {
         return true;
     }

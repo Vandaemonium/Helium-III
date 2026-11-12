@@ -4,7 +4,7 @@
 VC's primary modularity goal for **Helium-III** is independently installable and removable feature modules (where removing a module removes its code/registrations without deleting user notes or configuration). VC selected Option A for the first module: a versioned note-subtree package delivering a personal Home panel (Recent Notes, Pinned Links, and Inbox preview) that proves the full module lifecycle without rewriting Trilium core.
 
 ## What Changes
-- Define the v1 note-subtree module package contract (`manifest.json` + code bundle subtree imported under `_hidden` or a designated modules parent, strictly separated from user configuration/data notes).
+- Define the v1 note-subtree module package contract (`manifest.json` + code bundle subtree imported under `root` or a designated ordinary modules parent (the server refuses new children of `_hidden`), strictly separated from user configuration/data notes).
 - Build the `empyrean.home-panel` v0.1.0 module for **Helium-III** using Render Note (`~renderNote`, Preact/JSX) and script bundle (`module.exports`) mechanisms to display Recent Notes, Pinned Notes (`#pinned`), and Inbox preview (`#inbox`), compatible with placement inside a native Dashboard collection or standalone Home note.
 - Implement and verify the five-stage lifecycle: inert import/install -> reviewed activation -> disable -> code-only uninstall (retaining user data/config) -> clean upgrade/reinstall.
 
