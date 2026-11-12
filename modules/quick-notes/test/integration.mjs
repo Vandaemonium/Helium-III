@@ -9,12 +9,13 @@ import { chromium, devices } from '../test-tools/node_modules/playwright/index.m
 import { EtapiClient, QuickNotesLifecycle } from '../scripts/lifecycle.mjs';
 const runtime = process.env.HELIUM_TEST_RUNTIME;
 assert.ok(runtime && fs.existsSync(path.join(runtime, 'main.mjs')), 'Set HELIUM_TEST_RUNTIME to the extracted upstream server distribution');
-const dataDir = `/home/vc/plans/notes-app/quick-notes-fixture-${Date.now()}`;
+const dataDir = process.env.HELIUM_TEST_DATA_DIR ?? `/home/vc/plans/notes-app/quick-notes-fixture-${Date.now()}`;
 fs.mkdirSync(dataDir, { recursive: false });
-const base = 'http://127.0.0.1:18174';
+const port = process.env.HELIUM_TEST_PORT ?? '18174';
+const base = `http://127.0.0.1:${port}`;
 let ephemeral = randomBytes(24).toString('hex');
 const server = spawn(path.join(runtime, 'node/bin/node'), ['main.mjs'], { cwd: runtime,
-    env: { ...process.env, TRILIUM_DATA_DIR: dataDir, TRILIUM_NETWORK_HOST:'127.0.0.1', TRILIUM_NETWORK_PORT:'18174' }, stdio: 'ignore' });
+    env: { ...process.env, TRILIUM_DATA_DIR: dataDir, TRILIUM_NETWORK_HOST:'127.0.0.1', TRILIUM_NETWORK_PORT: port }, stdio: 'ignore' });
 let browser, page;
 const errors = [];
 try {
