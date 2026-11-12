@@ -47,8 +47,8 @@ Cards SHALL represent only eligible direct native text-note children of the conf
 ### Requirement: Retained Scoped Pin Archive and Search
 Pin/unpin and archive/restore SHALL retain the non-inherited `heliumQuickPinned` and `heliumQuickArchived` true/false metadata. Active and Archived SHALL be separate views, with pinned-first then modified-descending ordering and deterministic ties. Case-insensitive search SHALL match title and body text only within the selected view. These actions SHALL NOT delete notes or change global pin, Inbox or publishing conventions.
 
-#### Scenario: Pin archive restore and search after migration
-- **WHEN** the user reloads migrated notes, pins an Active card, archives it, searches for body text in Archived and restores it
+#### Scenario: Pin archive restore and search after reload
+- **WHEN** the user reloads the app, pins an Active card, archives it, searches for body text in Archived and restores it
 - **THEN** the same note retains its content and identity, appears only in the appropriate view, sorts correctly and returns to Active without changing global pin or Inbox labels
 
 ### Requirement: Protected Data and Stale Results Never Enter the Panel

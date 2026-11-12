@@ -16,18 +16,18 @@ Helium-III SHALL show built-in Home for the normal view of note `root` on deskto
 - **THEN** root identity, title, stored content, attributes, protection and child branches are unchanged, explicit root source/alternate views remain usable, and ordinary books and Render Notes retain their native views
 
 ### Requirement: Home Preserves Overview Semantics
-Home SHALL provide read-only Recent, Pinned and Inbox sections with the migrated limits and selectors. Recent SHALL use modification order; Pinned SHALL use the configured global pin label; Inbox SHALL include eligible notes bearing the configured Inbox label and eligible direct children of labeled folders, deduplicated by note ID. Quick Notes pin/archive labels SHALL NOT redefine these selectors.
+Home SHALL provide read-only Recent, Pinned and Inbox sections with the configured limits and selectors. Recent SHALL use modification order; Pinned SHALL use the configured global pin label; Inbox SHALL include eligible notes bearing the configured Inbox label and eligible direct children of labeled folders, deduplicated by note ID. Quick Notes pin/archive labels SHALL NOT redefine these selectors.
 
-#### Scenario: Existing configuration is adopted
-- **WHEN** a valid legacy Home configuration specifies section limits and pin/Inbox labels
-- **THEN** Home honors those values rather than overwriting them with defaults
+#### Scenario: Edited configuration is kept
+- **WHEN** the user edits the hidden Home configuration's section limits and pin/Inbox labels
+- **THEN** Home honors those values and restarts do not overwrite them with defaults
 
 #### Scenario: Fresh configuration and no Inbox
-- **WHEN** no legacy Home configuration or Inbox-labeled note exists
+- **WHEN** the Home configuration is fresh and no Inbox-labeled note exists
 - **THEN** defaults are Recent 8, Pinned 12 with `pinned`, and Inbox 10 with `inbox`, with a clear Inbox empty state and no extra visible Inbox or configuration folder created
 
 ### Requirement: Home Excludes Sensitive and Administrative Notes
-Home SHALL exclude all protected notes, including unlocked ones, and all hidden/system and generated module code/config/host notes from every section. It SHALL honor the migrated archive-exclusion setting and exclude archived notes by default. Filtering SHALL precede section limiting so excluded candidates do not crowd out available eligible notes.
+Home SHALL exclude all protected notes, including unlocked ones, and all hidden/system and generated module code/config/host notes from every section. It SHALL honor the configured archive-exclusion setting and exclude archived notes by default. Filtering SHALL precede section limiting so excluded candidates do not crowd out available eligible notes.
 
 #### Scenario: Protected or hidden notes match a selector
 - **WHEN** a protected, hidden or generated administrative note would otherwise qualify for Recent, Pinned or Inbox

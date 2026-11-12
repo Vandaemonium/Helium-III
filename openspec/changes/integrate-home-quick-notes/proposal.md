@@ -10,9 +10,9 @@ The installed Home and Quick Notes modules expose implementation/configuration n
 - Opening `root` in its normal view shows Home: Recent, Pinned and Inbox. Preserve root content, identity, children and explicit alternate views; do not turn root into a generated Render Note.
 - Add Quick Notes to the existing right-sidebar tab registry. On phones use the same feature in `MobileNotePanel`, not a second tree-host note or a permanently squeezed side column.
 - Preserve approved Quick Notes v1: explicit Save, first nonblank line as title, escaped text capture, cards, scoped pin/archive/search, native editing, uncertain-save handling and exclusion of all protected notes, even unlocked ones.
-- Store config and migration state under deterministic `_helium...` notes inside `_hidden`; expose only one feature-owned visible `Quick Notes` capture folder. Hidden is not encrypted.
-- Provide fresh-instance setup and an idempotent, previewed, operator-approved migration from either/both installed modules. Adopt the existing capture folder and retain every captured note ID, body, branch, protection setting and pin/archive label. Copy configuration before retiring exact generated code/config/host assets; never cascade into user notes.
-- Carry existing module behavior/safety tests into native client/core coverage, then require migration, desktop, phone and restore acceptance before release.
+- Store config under deterministic `_helium...` notes inside `_hidden`; expose only one feature-owned visible `Quick Notes` capture folder. Hidden is not encrypted.
+- Provide idempotent fresh-instance setup. There is **no legacy module migration** (VC, 2026-11-12: Sol holds only test data): the built-in features ignore any leftover module notes, never depend on them and never modify or delete them. Removing leftovers is the operator's manual job.
+- Carry existing module behavior/safety tests into native client/core coverage, then require desktop, phone and restore acceptance before release.
 
 ## Capabilities
 
@@ -21,7 +21,8 @@ The installed Home and Quick Notes modules expose implementation/configuration n
 - `home-dashboard`: root-only built-in overview and safe navigation/filtering.
 - `quick-notes-panel`: shared desktop/mobile capture panel and preserved Quick Notes behavior.
 - `helium-feature-storage`: hidden configuration, one visible destination, native data and repeatable initialization.
-- `legacy-module-migration`: verified adoption, exact cleanup, refusal/recovery and operator approval.
+
+The earlier `legacy-module-migration` capability is dropped by VC's decision (see Decision Provenance).
 
 ### Modified Capabilities
 
@@ -32,13 +33,15 @@ None under `openspec/specs/`: `openspec list --specs` currently reports no canon
 - Base: `release/v0.1.0`, inspected commit `afb3358e2520f5dd369824fc4980b9bd1b4ba743` (draft PR #5). Implementation must re-fetch and reconcile later changes.
 - Client: `NoteDetail.tsx`/`note_types.tsx`, native Preact components, `RightPanelContainer.tsx`, `RightPaneTabs.tsx`, `MobileNotePanel.tsx`, shared draft state, English translations and typed options.
 - Core: `hidden_subtree.ts`, authenticated internal routes/services using Becca and sync-aware entities; shared with server, desktop and standalone. Do not bypass the cache, import core into the client, embed ETAPI credentials or enable backend scripting.
-- Legacy sources: `modules/home-panel/` and `modules/quick-notes/`; port behavior/safety assertions and retain only inert test-only migration fixtures as needed, then retire these features' packaging/build/install/activate/uninstall paths from the integrated product. No supported feature installer, runtime note-bundle dependency or legacy activation fallback remains.
-- User Guide, `.changelog`, fork release notes and migration/rollback runbook are implementation deliverables.
+- Legacy sources: `modules/home-panel/` and `modules/quick-notes/`; port behavior/safety assertions, then remove these features' packaging/build/install/activate/uninstall paths from the integrated product. No supported feature installer, runtime note-bundle dependency, legacy activation fallback or migration fixture remains.
+- User Guide, `.changelog` and fork release notes are implementation deliverables.
 - No production access, deletion, deployment, release tag, Nootion migration or stock-Trilium change is performed by this specification. Claude's Opus crew implements; VC reviews a draft implementation PR; Houston handles any separately approved Sol maintenance.
 
 ## Decision Provenance and Approval Boundary
 
-VC's follow-up clarification, relayed by Claude and appended to the brief: "Just to be clear, these features need to be BUILT IN to the UI, not just special notes. And honestly, if that breaks the modular design plan, I'm fine with that." This is a firm implementation constraint, not an open modularity question. Hidden inert config and ordinary captured notes are storage, never feature entry points. A one-time legacy-data migration is not a retained module installation lifecycle.
+VC's follow-up clarification, relayed by Claude and appended to the brief: "Just to be clear, these features need to be BUILT IN to the UI, not just special notes. And honestly, if that breaks the modular design plan, I'm fine with that." This is a firm implementation constraint, not an open modularity question. Hidden inert config and ordinary captured notes are storage, never feature entry points.
+
+**No legacy migration (VC, 2026-11-12, relayed in the integration crew brief):** Sol only has test data, so the `legacy-module-migration` capability, tasks 5.x and the migration parts of 6.2/6.3 are dropped. The built-in features simply ignore leftover module notes: they do not read their configuration, adopt their folder, or touch them. This amendment supersedes the migration text elsewhere in this change.
 
 Source: Claude's brief `~/plans/notes-app/brief-integrate-home-quick-notes.md`, dated 2026-11-12, attributing the integration choices to VC. The requested canonical section `2026-11-12 evening (VC with Claude Code: Helium-III integration)` was not present in the readable local mirror; that mirror subsequently became unavailable during inspection. Reconcile that exact section before implementation sign-off; do not present this mirror gap as a contrary VC decision or invent a production inventory. The brief's installed Sol modules/seven top-level notes are reported context, not independently inspected production evidence.
 
