@@ -1,0 +1,53 @@
+# Tasks: Integrate Home and Quick Notes
+
+Status: specification only. Every checkbox below is implementation/review work, not a claim that it has run. Use `design.md` for the architecture, migration state table and exact legacy-test mapping. Owner: Claude's Opus crew; VC approves the draft implementation PR and any exact production cleanup separately. Houston owns separately approved Sol maintenance.
+
+## 1. Confirm Inputs and Preserve the Baseline
+
+- [ ] 1.1 Reconcile Claude's brief with the exact `2026-11-12 evening` canonical decision section and record its source; verify the named Home/root, sidebar, hidden-config and capture-folder decisions match before implementation sign-off. If sources disagree, stop for VC rather than infer a new decision from a stale/missing mirror.
+- [ ] 1.2 Fetch and compare `release/v0.1.0` against inspected `afb3358e2520f5dd369824fc4980b9bd1b4ba743`; record the selected base/build and review any new module/lifecycle fixes. Verify the implementation branch includes them without rewriting published history.
+- [ ] 1.3 Record VC review of the proposed phone modal, app-lifetime draft state and preview-first cleanup boundary; verify decisions are explicit in the implementation handoff and revise the specs if VC rejects a proposed default.
+- [ ] 1.4 Turn the design's test-carryover table into an implementation coverage ledger and retain supported old module fixtures. Verify every old behavior/safety assertion is mapped to a native test, retained legacy test or clearly obsolete packaging-only assertion; do not drop tests to hide regressions.
+
+## 2. Hidden State and Repeatable Native Setup
+
+- [ ] 2.1 Add versioned hidden `_helium...` configuration/receipt definitions, shared commons types and seed-once setup using native sync-aware entities. Verify fresh/restart/edit-preservation/malformed-config tests in both server and standalone and document the hidden schema/defaults.
+- [ ] 2.2 Implement the single visible native capture destination, deterministic fresh note/branch identities and explicit legacy-detection state. Verify repeated/concurrent initialization, two-peer fresh convergence, reserved-ID/same-name conflicts and partial installs create no duplicate or hijacked folder; document setup/recovery behavior in the User Guide.
+- [ ] 2.3 Add typed presentation options and their initialization/settings integration without duplicating authoritative hidden config or storing drafts. Verify toggling hides presentation only, restores root's native view when disabled, and leaves capture data/config intact; add English strings and help text.
+- [ ] 2.4 Add authenticated native setup/config/capture access as needed, with server-side membership/destination/protection checks and no frontend core import, raw DB bypass, ETAPI secret or Node-only core API. Verify corresponding narrow server/standalone route/service tests and document the actual chosen internal contracts.
+
+## 3. Built-In Root Home
+
+- [ ] 3.1 Add lazy native root Home selection in `NoteDetail.tsx`/`note_types.tsx`, with tests for normal root, existing alternate views, root content/metadata preservation and ordinary book/Render Note behavior. Verify the root's collection/list is not duplicated below Home.
+- [ ] 3.2 Port Recent/Pinned/Inbox selectors and configurable limits into native data access/UI, filtering before limits and deduplicating Inbox candidates. Verify migrated defaults/custom selectors, pinned-vs-Quick-pin separation, absent Inbox, archived policy, and dense excluded Recent candidates in targeted tests.
+- [ ] 3.3 Add entity/protected-session refresh, stale-result invalidation, safe title rendering, native links and loading/error/empty states. Verify protected notes are excluded even unlocked, no protected identifiers/count contributions persist, and keyboard/touch navigation works; add scoped CSS, English strings, root-Home User Guide content and its `.changelog` entry.
+
+## 4. Quick Notes Desktop and Phone UI
+
+- [ ] 4.1 Add a stable localized Quick Notes tab in `RightPaneTabs.tsx` and its lazy registration in `RightPanelContainer.tsx`. Verify native sidebar tests cover root/text/PDF/image/protected current notes, AI disabled and preservation of existing pane tabs/options.
+- [ ] 4.2 Implement the shared app-window-lifetime in-memory composer/controller and explicit-save flow, carrying over capture escaping/title/blank/pending/uncertain/newer-draft assertions. Verify native tests cover tab switch, peek dismissal, hard close/reopen and pending remount without extra creation or draft loss; retain unload warnings and no automatic retry.
+- [ ] 4.3 Port eligible direct-child cards, native current-context editing, scoped pin/archive/restore/search and protected/destination checks. Verify rich-text round trips, pinned/modified/tie ordering, Active/Archived body search, unrelated/nested/other-type preservation and protection/destination change races with the mapped native tests.
+- [ ] 4.4 Reuse `MobileNotePanel` and shared tab state; wire native card navigation to modal dismissal. Verify 375px automated phone-layout cases, modal close/reopen draft/pending state, touch targets, safe areas and no horizontal overflow; add mobile/desktop User Guide steps, English strings, matching component CSS and a `.changelog` entry. Do not claim a physical-phone test from emulation.
+
+## 5. Reviewed Atomic Legacy Migration
+
+- [ ] 5.1 Implement read-only preview for fresh/Home-only/Quick-only/both/valid-retained-only states, supported-version fingerprints and complete affected-graph inventory. Verify tests include labels without ownership, content links/launchers/relations, duplicates, modified host/code, custom folder names, malformed/protected config, missing/protected/hidden destination and unexpected descendants/clones; assert preview makes no changes. Document exact output fields and digest scope.
+- [ ] 5.2 Implement approved-digest apply under the native write/sync exclusion and transaction, with a verified-backup/maintenance prerequisite. Verify stale graph/config/content/branch/ref changes invalidate approval before mutation, active old clients cannot keep writing in maintenance, and unapproved app upgrade remains migration-pending without deletion or competing setup.
+- [ ] 5.3 Implement in-place folder adoption and previewed rename, supported config translation plus lossless hidden original-config recovery state. Verify every capture's ID/body/labels/timestamps/branches/protection is unchanged, user children of any type survive, no second destination appears, and an existing custom name requires explicit resolution.
+- [ ] 5.4 Implement only the approved bounded registration and code/config/host cleanup; retain destination/captures categorically. Verify user descendants, foreign refs, clones/shared assets, edited assets and drift block the operation without changes, while a clean synthetic fixture ends with no active module entry or visible legacy scaffolding. Land migrated-build installation warnings in legacy READMEs.
+- [ ] 5.5 Prove database **and Becca/cache/sync-event** rollback with injected failures after adoption and between cleanup operations; add a completion receipt only with successful commit. Verify restart/rerun is a no-op, failed apply preserves the complete old graph, missing/corrupt completed targets require repair, and no success event is emitted for rollback. Block destructive apply if transaction/cache semantics cannot be proved; no ETAPI-loop fallback.
+- [ ] 5.6 Write the actual operator preview/apply and rollback runbook, including quiescing/reloading peers, approval digest, matching build/database restore and preservation of post-backup edits. Verify the documented commands against isolated fixtures; record actual outputs without tokens or real captured text. This task does not authorize production deletion.
+
+## 6. Cross-Feature Rehearsal and Review
+
+- [ ] 6.1 Run the carried-over legacy pure suites with the documented Node runtime and the narrow native client/server/standalone suites for changed areas; run `pnpm typecheck` once after the implementation is ready. Verify real results are recorded, no guessed counts or missing-runtime substitutes, no ESLint/full development suite, and no stale module test claims treated as native acceptance.
+- [ ] 6.2 Run a fork-build isolated integration matrix for never-installed, Home-only, Quick-only, both, supported retained-only, duplicate/partial/conflicting, protected and shared-descendant states. Verify successful paths preserve captures/config, failure paths preserve the whole graph, and post-migration root/sidebar/phone/native-editor behavior uses no module package or embedded credentials.
+- [ ] 6.3 Rehearse native backup/restore and the documented rollback with synthetic post-backup captures; verify full content/metadata/config integrity and no blind restore over newer edits. Record build IDs and exact evidence, not fixture success as production evidence.
+- [ ] 6.4 Update fork release notes/User Guide/changelog with the new built-in entry points, hidden-not-encrypted semantics, fresh setup, migration-pending conflicts, preserved behavior and compatibility limits. Verify docs agree with the implemented routes/options and describe packaging changes without implying a release/deploy already happened.
+- [ ] 6.5 Obtain independent migration/data-integrity review plus physical-phone and VC acceptance; verify approval of the proposed mobile surface and exact observed behavior is recorded separately from emulator results. Open an Opus draft implementation PR with its evidence and unresolved gates; keep it draft until VC reviews.
+
+## Workflow Follow-up
+
+- After implementation acceptance, reconcile/archive superseded module change packaging requirements without marking unrelated unfinished release/deployment tasks complete. Validate the archived canonical specs before treating them as the active contract.
+- Before any Sol apply, Houston obtains the actual read-only inventory, a verified production backup and an approved maintenance plan. VC approves the exact cleanup digest and any custom-name/reference resolution. A draft PR or this specification is not that approval.
+- Production deployment, public endpoint/DNS work, release tagging and unrelated app retirement stay separately approved operational work; nothing here schedules or executes them.
