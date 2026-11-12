@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "moduleId": "empyrean.home-panel",
+  "name": "Helium-III Home Panel",
+  "version": "0.1.0",
+  "project": "Helium-III",
+  "compatibleTriliumRange": ">=0.104.0 <=0.107.x",
+  "description": "Independently installable/removable personal Home panel module (Recent Notes, Pinned Notes, Inbox preview) for Helium-III.",
+  "entryPoints": [
+    {
+      "id": "home-render-note",
+      "kind": "renderNote",
+      "codeNoteKey": "homePanelRoot",
+      "mime": "text/jsx",
+      "relationName": "renderNote",
+      "disabledRelationName": "disabled:renderNote",
+      "supportsStandaloneRenderNote": true,
+      "supportsDashboardWidget": true
+    }
+  ],
+  "ownedCodeNotes": [
+    {
+      "key": "modulePackageRoot",
+      "title": "empyrean.home-panel (v0.1.0)",
+      "type": "book",
+      "mime": "text/html",
+      "sourceFile": "src/package_root.html",
+      "labels": [
+        { "name": "heliumModuleId", "value": "empyrean.home-panel" },
+        { "name": "heliumModuleVersion", "value": "0.1.0" },
+        { "name": "heliumModuleRole", "value": "code-root" },
+        { "name": "excludeFromExport", "value": "" }
+      ]
+    },
+    {
+      "key": "homePanelRoot",
+      "parentKey": "modulePackageRoot",
+      "title": "HomePanelRoot",
+      "type": "code",
+      "mime": "text/jsx",
+      "sourceFile": "src/HomePanelRoot.jsx",
+      "labels": [
+        { "name": "heliumModuleId", "value": "empyrean.home-panel" },
+        { "name": "heliumModuleRole", "value": "entry-jsx" }
+      ]
+    },
+    {
+      "key": "homePanelQueries",
+      "parentKey": "homePanelRoot",
+      "title": "HomePanelQueries",
+      "type": "code",
+      "mime": "application/javascript;env=frontend",
+      "sourceFile": "src/HomePanelQueries.js",
+      "labels": [
+        { "name": "heliumModuleId", "value": "empyrean.home-panel" },
+        { "name": "heliumModuleRole", "value": "submodule-js" }
+      ]
+    }
+  ],
+  "retainedDataNotes": [
+    {
+      "key": "userConfigNote",
+      "title": "Home Panel Config",
+      "type": "code",
+      "mime": "application/json",
+      "lookupLabel": {
+        "name": "heliumModuleConfig",
+        "value": "empyrean.home-panel"
+      },
+      "preserveOnUninstall": true,
+      "defaultConfig": {
+        "schemaVersion": 1,
+        "recentLimit": 8,
+        "pinnedLabel": "pinned",
+        "pinnedLimit": 12,
+        "inboxLabel": "inbox",
+        "inboxLimit": 10,
+        "excludeHidden": true,
+        "excludeArchived": true
+      }
+    },
+    {
+      "key": "userHomeHostNote",
+      "title": "Home",
+      "type": "render",
+      "mime": "application/x-trilium-render",
+      "lookupLabel": {
+        "name": "heliumHomeHost",
+        "value": "empyrean.home-panel"
+      },
+      "preserveOnUninstall": true
+    }
+  ],
+  "userContentSelectors": {
+    "pinned": "#pinned",
+    "inbox": "#inbox",
+    "preserveOnUninstall": true
+  },
+  "permissions": {
+    "frontendApi": ["searchForNotes", "getNote", "activateNote", "openTabWithNote", "openSplitWithNote"],
+    "backendScriptingRequired": false,
+    "externalNetworkRequests": false,
+    "coreSchemaChanges": false
+  }
+}
