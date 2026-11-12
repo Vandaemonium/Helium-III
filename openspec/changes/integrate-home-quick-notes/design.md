@@ -22,6 +22,12 @@ Observed integration points:
 
 ## Decisions
 
+### 0. Compiled app code is mandatory; old packaging is not retained
+
+VC explicitly accepts breaking the earlier modular design. Home and Quick Notes ship as compiled Preact/client code with core services/routes where needed. Neither is implemented or hosted by a note. Do not create feature Render Notes, executable JS/JSX/code notes, host notes, note-bundle builders or install/activate/uninstall commands, even inside `_hidden`. Hidden JSON config and ordinary captures are the only feature note storage; they never contain or execute the feature implementation.
+
+First-run data initialization, UI presentation toggles and a one-time approved conversion of existing legacy data are not module install/activation/uninstall APIs. Remove the two features' old packaging/build/lifecycle paths from the integrated product after porting their behavior/safety coverage. Keep only inert static test-only graph/config/content-fingerprint fixtures required to recognize existing installations; historical implementations remain available in Git history. Do not retain a supported old installer or executable note payload as a runtime or test-fixture dependency. Jev agreed with native assertion ports and inert fixtures for test carryover.
+
 ### 1. Root presentation is a view, not a data conversion
 
 Add a lazy native Home view for `note.noteId === "root"` in normal view, respecting existing explicit source/attachments/map view precedence and protection handling. Test existing `NoteDetail` transitions so root's underlying book/collection view does not render a duplicate dashboard/list below Home. Other notes, including ordinary books and Render Notes, keep their current rendering.
@@ -116,23 +122,23 @@ Before apply, cancellation changes nothing. Failure before commit leaves the ful
 
 ## Test Carryover and Evidence
 
-Keep the existing module sources/tests as supported legacy fixture input until native coverage and migration acceptance are complete. Do not delete tests to turn packaging changes green. On this planning branch no runtime tests have been rerun; Node/pnpm were not on the current shell PATH.
+Port the existing behavior/safety assertions before retiring their old test locations and module packaging. Preserve coverage, not supported module products: use inert static test-only graph/config/fingerprint fixtures for migration inputs, with no executable feature note payload or installer dependency. Packaging-only lifecycle assertions become obsolete when no package is shipped and must be replaced by compiled-UI/no-package checks, not retained as product requirements. On this planning branch no runtime tests have been rerun; Node/pnpm were not on the current shell PATH.
 
 | Existing test source | Native coverage to add / retain |
 |---|---|
 | `modules/quick-notes/test/core.spec.mjs` | Capture normalization/escaping/title, blank input, pending suppression, newer-draft retention, uncertain-save acknowledgement, scoped ordering/search |
 | `modules/quick-notes/test/adapter.spec.mjs` | Authenticated folder-only create, owned pin/archive labels, native current-context opening, unrelated/protected target refusal |
-| `modules/quick-notes/test/lifecycle.spec.mjs` | Migration graph refusal, stale approval, edited assets, clones/references/descendants, retained data and rerun; legacy version guard stays a legacy-installer test, not a new built-in app-version restriction |
-| `modules/quick-notes/test/package.spec.mjs` and `transport.spec.mjs` | Keep inert ZIP/reproducibility and raw-HTML ETAPI behavior for supported old fixtures; add proof new feature does not need a note package or ETAPI credentials |
+| `modules/quick-notes/test/lifecycle.spec.mjs` | Port graph refusal, stale approval, edited assets, clones/references/descendants, retained data and rerun into one-time migration tests using inert fixtures; drop installer version/lifecycle assertions rather than impose them on the built-in features |
+| `modules/quick-notes/test/package.spec.mjs` and `transport.spec.mjs` | Replace package/ETAPI transport assertions with compiled-UI capture serialization and no-feature-package/distribution checks; inert migration fixtures retain only required fingerprints/legacy state, not executable bundles or builders |
 | `modules/quick-notes/test/browser.mjs` | Native desktop/375px capture, cards, native editing and keyboard/touch plus hard-close/reopen, tab switch, peek and modal draft/pending cases |
 | `modules/quick-notes/test/integration.mjs` | New isolated fork-build integration harness for fresh/Home-only/Quick-only/both/retained-only installs and full rollback/backup restore; never point fixture tooling at Sol |
-| `modules/home-panel/test/lifecycle.spec.mjs` | Home selectors/config defaults/protected exclusion and lifecycle graph regressions; new root-view, root-data preservation, filter-before-limit and entity/protected-session refresh assertions |
+| `modules/home-panel/test/lifecycle.spec.mjs` | Port Home selectors/config defaults/protected exclusion and graph-safety regressions into native UI/migration tests; add root-view, root-data preservation, filter-before-limit and entity/protected-session refresh assertions; retire package/install lifecycle checks |
 | Existing `NoteDetail`, `RightPanelContainer`, `RightPaneTabs`, `MobileNotePanel` specs | Root/alternate-view transitions, stable tab selection and AI-independent availability, mobile shared registry/native navigation and draft lifecycle |
 | Core/server/standalone suites | Hidden initialization preserving edits, deterministic peer convergence, cache rollback/sync events, exact migration inventory and transaction/fault injection |
 
-Crew runs the narrowest native suites per changed area; core tests run through **both server and standalone** configurations, then `pnpm typecheck` once when implementation is ready. Follow `CLAUDE.md`: no ESLint, no development-wide `test:all`/whole-package coverage, no guessed raw `tsc` invocation. Existing legacy pure tests can still be run with `node --test modules/quick-notes/test/*.spec.mjs modules/home-panel/test/*.spec.mjs` when the documented Node runtime is available.
+Crew runs the narrowest native suites per changed area; core tests run through **both server and standalone** configurations, then `pnpm typecheck` once when implementation is ready. Follow `CLAUDE.md`: no ESLint, no development-wide `test:all`/whole-package coverage, no guessed raw `tsc` invocation. During test porting, old pure tests can be consulted on the inspected historical base; final acceptance runs the native suites and inert migration-fixture tests, not a retained module installer or note-bundle build.
 
-Implementation must add English catalogue keys, matching component CSS, ordinary User Guide pages and a `.changelog` entry, plus fork release notes describing the packaging break, migration-pending state and rollback. Update legacy README installation guidance to discourage activation on a migrated integrated build. Physical-phone and VC acceptance remain separate from viewport emulation. Opus crew opens a **draft implementation PR** for VC; this planning branch is not a production release.
+Implementation must add English catalogue keys, matching component CSS, ordinary User Guide pages and a `.changelog` entry, plus fork release notes describing the packaging break, migration-pending state and rollback. Replace Home/Quick Notes installation guidance with built-in usage and one-time legacy migration instructions; do not publish a supported install/activate/uninstall path for these two. Physical-phone and VC acceptance remain separate from viewport emulation. Opus crew opens a **draft implementation PR** for VC; this planning branch is not a production release.
 
 ## Risks / Trade-offs
 

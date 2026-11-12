@@ -4,6 +4,17 @@ Keep Home and Quick Notes configuration out of the ordinary note tree while pres
 
 ## ADDED Requirements
 
+### Requirement: Compiled App Features Without a Module Lifecycle
+Home and Quick Notes SHALL be app code compiled into Helium-III, not specialized notes. Neither feature SHALL create or depend on feature-owned Render Notes, executable code notes, host notes or install/activate/uninstall commands. Their module packaging SHALL NOT remain a supported product path. Only ordinary captured content, inert hidden configuration and one-time legacy migration state SHALL use notes.
+
+#### Scenario: Use a build on a database with no modules
+- **WHEN** a user opens root or the Quick Notes panel in the integrated build on a clean supported database
+- **THEN** the compiled UI works without importing or activating a note package, and initialization creates only the ordinary capture folder and inert hidden state, never feature Render/code/host notes
+
+#### Scenario: Check distribution and feature toggles
+- **WHEN** the integrated release is built or either presentation is toggled
+- **THEN** no Home/Quick Notes package installer, bundle builder or activation/uninstall lifecycle is shipped or invoked; toggles affect only presentation, user-owned code/Render Notes are unaffected, and migration fixtures cannot act as feature entry points
+
 ### Requirement: Hidden Feature Configuration
 Home settings, the Quick Notes destination reference and migration receipts SHALL live under deterministic `_helium...` identities inside `_hidden`, without visible config/host/code notes or executable note bundles. Restart, sync and backup/restore SHALL preserve configured values instead of reseeding defaults over them. Hidden placement SHALL NOT be represented as encryption or an authorization boundary.
 
