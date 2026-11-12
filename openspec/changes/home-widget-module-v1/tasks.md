@@ -5,4 +5,4 @@
 
 ## 2. Verification & Review Gates
 - [x] 2.1 Test full lifecycle against synthetic fixtures: install -> activate -> disable -> uninstall code only (verifying retained user config and `#pinned`/`#inbox` notes remain intact) -> reinstall.
-- [ ] 2.2 Complete review on the PR in **Helium-III** (`Vandaemonium/Trilium`) before installing on `notes.empyrean.cc`.
+- [ ] 2.2 Complete review on the PR in **Helium-III** (`Vandaemonium/Helium-III`) before installing on `notes.empyrean.cc`.
