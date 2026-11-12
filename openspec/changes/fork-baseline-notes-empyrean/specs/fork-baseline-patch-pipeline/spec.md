@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Dual-Instance Isolation Between Helium-III Fork and Stock Trilium
-The deployment SHALL run the **Helium-III** fork (`Vandaemonium/Trilium` / `Vandaemonium/Helium-III`) at `https://notes.empyrean.cc` using a dedicated container and a freshly initialized data directory (`~/docker/config/trilium-notes`), while preserving `https://trilium.empyrean.cc` on the stock `TriliumNext/Trilium` image and its existing data directory.
+The deployment SHALL run the **Helium-III** fork (`Vandaemonium/Helium-III`) at `https://notes.empyrean.cc` using a dedicated container and a freshly initialized data directory (`~/docker/config/trilium-notes`), while preserving `https://trilium.empyrean.cc` on the stock `TriliumNext/Trilium` image and its existing data directory.
 
 #### Scenario: Independent operation of Helium-III fork and stock instances
 - **WHEN** `notes.empyrean.cc` is deployed with a fresh SQLite database or restarted with a patch from **Helium-III**

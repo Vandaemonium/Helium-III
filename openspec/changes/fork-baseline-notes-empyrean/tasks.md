@@ -1,5 +1,5 @@
 ## 1. Repository & OpenSpec Setup (Kepler)
-- [x] 1.1 Fork `TriliumNext/Trilium` as **Helium-III** (`Vandaemonium/Trilium`, local clone at `/home/vc/kepler/repos/Helium-III`).
+- [x] 1.1 Fork `TriliumNext/Trilium` as **Helium-III** (`Vandaemonium/Helium-III`, local clone at `/home/vc/kepler/repos/Helium-III`).
 - [x] 1.2 Add `openspec/` structure on a feature branch, open PR #1, and merge to `main` after VC approval.
 
 ## 2. Sol Baseline Inspection & Fork Deployment (Houston)

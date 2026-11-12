@@ -10,4 +10,4 @@ VC's primary modularity goal for **Helium-III** is independently installable and
 
 ## Impact
 - Affected specs: `home-widget-module`
-- Affected code: Packaged under `modules/home-panel/` in **Helium-III** (`Vandaemonium/Trilium` / `Vandaemonium/Helium-III`, exported as an importable note-subtree ZIP package plus lifecycle CLI/tests); no destructive core schema changes.
+- Affected code: Packaged under `modules/home-panel/` in **Helium-III** (`Vandaemonium/Helium-III`, exported as an importable note-subtree ZIP package plus lifecycle CLI/tests); no destructive core schema changes.
