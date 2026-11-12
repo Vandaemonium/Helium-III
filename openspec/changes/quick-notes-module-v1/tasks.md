@@ -1,6 +1,6 @@
 ## 1. Proposal Approval
 - [x] 1.1 Record VC's feature selection and online desktop/phone scope; inspect existing OpenSpec context and consult Jev.
-- [ ] 1.2 Obtain VC approval of this proposal and the proposed defaults before implementation.
+- [x] 1.2 Obtain VC approval of this proposal and the proposed defaults before implementation (VC: “approve”, 2026-11-12).
 
 ## 2. Target and Design Verification
 - [ ] 2.1 Verify the exact fork/runtime build, supported authenticated frontend create/search/metadata APIs, Render Note execution and mobile behavior on an isolated synthetic database; record source/build identifiers and tested compatibility only.

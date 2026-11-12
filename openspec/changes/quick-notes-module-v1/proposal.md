@@ -9,9 +9,9 @@ VC selected Increment 2, option B (Quick Notes), then explicitly chose text capt
 - Keep captured notes as ordinary native text notes, with pin/archive state and configuration outside the owned code subtree. Open cards in the native editor rather than build a competing rich-text editor.
 - Prove inert install, explicit activation, disable/reload, code-only uninstall, and retained-state reinstall using synthetic fixtures and a real isolated target build before personal release.
 
-## Scope and Proposed Defaults
+## Approved Scope and Defaults
 Confirmed scope: text capture, cards, pin/archive and search; online desktop and phone browsers.
-Defaults proposed for VC approval, not previously selected by VC:
+VC approved the following defaults with “approve” on 2026-11-12:
 - A dedicated retained Quick Notes folder, separate from the global Inbox; no existing notes are moved or relabeled automatically.
 - Explicit Save for new captures, with pending/success/failure feedback and preserved draft text after a failed save; no background autosave or offline queue in v1.
 - First nonblank line supplies the title; an empty/whitespace-only draft is rejected; the remaining text is preserved in the body with safe text-to-HTML conversion.
@@ -30,4 +30,4 @@ Checklists, card colors, reminders, offline capture, collaboration, OS/global sh
 - Deployment: baseline `notes.empyrean.cc` rollout remains separate. Houston owns any server/container changes; no module installation, deletion or production note writes occur as part of this proposal.
 
 ## Decision and Approval Status
-VC confirmed feature scope and online desktop/phone support. Jev recommended the independent ordinary-note design; Jev is advisory, not VC approval. This proposal remains pending VC approval, including the proposed defaults. No implementation or release is claimed here.
+VC confirmed feature scope and online desktop/phone support. Jev recommended the independent ordinary-note design; Jev is advisory, not VC approval. VC approved this proposal and its defaults on 2026-11-12, authorizing implementation on a separate branch. Runtime release, installation and any deletion remain separate gates; no release is claimed here.
