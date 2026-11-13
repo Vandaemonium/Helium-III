@@ -5,6 +5,7 @@ The Quick Notes tab captures short text notes beside whatever note is open, and 
 
 *   To capture a note, type into the composer at the top of the tab and press _Save note_. The first line that is not blank becomes the note's title, and the whole text becomes its content. Text that looks like HTML is saved as plain text.
 *   Nothing is saved until _Save note_ is pressed. A blank composer is refused.
+*   The draft is shared with the _Quick Notes_ widget on <a class="reference-link" href="../Home.md">Home</a>, so text typed in one appears in the other.
 *   The draft stays while switching tabs, closing the right sidebar or moving to another note, but only for as long as the window stays open. Closing or reloading the window with an unsaved draft asks for confirmation first.
 *   If saving fails, the draft is kept and can be saved again. If the connection drops before the answer arrives, the note might have been created anyway: the tab says the save is uncertain and only allows saving again after pressing _I checked; allow retry_, so that a note is not created twice.
 

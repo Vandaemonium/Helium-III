@@ -13,7 +13,7 @@ Upstream TriliumNext/Trilium changes prior to the fork baseline are documented i
 - **Sol Deployment Topology:** Specified isolated deployment architecture for `notes.empyrean.cc` using a dedicated container (`trilium-notes`) and fresh database (`~/docker/config/trilium-notes`), fully decoupled from stock Trilium (`trilium.empyrean.cc`).
 
 ### Built-in features
-- **Home:** opening the root note shows Recent, Pinned (`#pinned`) and Inbox (`#inbox`) sections. Protected notes are excluded even while unlocked. Configured in the hidden note `_heliumHomeConfig`; turned off in *Options → Other*.
+- **Home:** opening the root note shows a board of widgets on a 12-column grid: Quick Notes, Calendar (journal day notes), Checklist (ticks a text note's to-do items), Bookmarks, Clock, Recent, Pinned (`#pinned`), Inbox (`#inbox`) and Saved search. *Edit layout* moves, resizes, adds and parks widgets, by mouse or keyboard; phones show one column. Protected notes are excluded even while unlocked. The layout lives in the `board` key of the hidden note `_heliumHomeConfig` (`schemaVersion` 2; version 1 configs get the default board); turned off in *Options → Other*. New widgets are registered in `apps/client/src/widgets/type_widgets/home/registry.ts` (Developer Guide: *Home board widgets*).
 - **Quick Notes:** a right-sidebar tab (and a note-panel tab on phones) with explicit Save, first-line titles, escaped capture, cards, pin/archive/restore and scoped search. Captures are ordinary text notes in the visible `Quick Notes` folder (`heliumQuickNotes`); configuration lives in the hidden note `_heliumQuickConfig`. Protected notes and protected destinations are refused.
 
 ### Removed

@@ -1,5 +1,5 @@
 # Bookmarks
-Frequently used notes can be bookmarked, which will make them appear in the <a class="reference-link" href="../UI%20Elements/Launch%20Bar.md">Launch Bar</a> for easy access.
+Frequently used notes can be bookmarked, which will make them appear in the <a class="reference-link" href="../UI%20Elements/Launch%20Bar.md">Launch Bar</a> for easy access. The _Bookmarks_ widget on <a class="reference-link" href="../UI%20Elements/Home.md">Home</a> lists them too.
 
 ## Configuring the launch bar
 
