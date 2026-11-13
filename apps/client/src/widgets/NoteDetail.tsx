@@ -94,6 +94,11 @@ export default function NoteDetail() {
     useTriliumEvent("entitiesReloaded", async ({ loadResults }) => {
         if (!note) return;
 
+        if (note.noteId === "root" && loadResults.isOptionReloaded("heliumHomeEnabled")) {
+            parentComponent.triggerEvent("noteTypeMimeChanged", { noteId: note.noteId });
+            return;
+        }
+
         // we're detecting note type change on the note_detail level, but triggering the noteTypeMimeChanged
         // globally, so it also reaches widgets outside the note detail. But this means that the event can be generated multiple
         // times if the same note is open in several tabs.
@@ -514,7 +519,9 @@ export async function getExtendedWidgetType(note: FNote | null | undefined, note
     const type = note.type;
     let resultingType: ExtendedNoteType;
 
-    if (noteContext?.viewScope?.viewMode === "source") {
+    if (note.noteId === "root" && noteContext.showsHome()) {
+        resultingType = "heliumHome";
+    } else if (noteContext?.viewScope?.viewMode === "source") {
         resultingType = "readOnlyCode";
     } else if (noteContext.viewScope?.viewMode === "attachments") {
         resultingType = noteContext.viewScope.attachmentId ? "attachmentDetail" : "attachmentList";

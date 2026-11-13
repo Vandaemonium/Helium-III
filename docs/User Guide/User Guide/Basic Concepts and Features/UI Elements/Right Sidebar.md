@@ -7,6 +7,7 @@ The right sidebar displays specific content for the current note. The sidebar is
 *   <a class="reference-link" href="Right%20Sidebar/Attributes%20tab.md">Attributes tab</a>, which provides a visual editor for the current note's <a class="reference-link" href="../../Advanced%20Usage/Attributes.md">Attributes</a>.
 *   <a class="reference-link" href="Right%20Sidebar/AI%20chat%20tab.md">AI chat tab</a>, which uses the <a class="reference-link" href="../../AI.md">AI</a> integration to chat, with optional access to the current note.
 *   <a class="reference-link" href="Right%20Sidebar/Connections%20tab.md">Connections tab</a>, which groups together the note map, note paths, backlinks and similar notes.
+*   <a class="reference-link" href="Right%20Sidebar/Quick%20Notes%20tab.md">Quick Notes tab</a>, which captures short text notes into the _Quick Notes_ folder, beside any note.
 
 Each window keeps its own selected tab, so switching tabs in one window does not affect the others. A newly opened window starts on the tab that was selected last.
 

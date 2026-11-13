@@ -21,6 +21,7 @@ export default function OtherSettings() {
     return (
         <>
             <OptionsPageHeader />
+            <HeliumSettings />
             <CanvasSettings />
             <SearchSettings />
             <SearchEngineSettings />
@@ -31,6 +32,30 @@ export default function OtherSettings() {
             <ShareSettings />
             <NetworkSettings />
         </>
+    );
+}
+
+function HeliumSettings() {
+    const [ homeEnabled, setHomeEnabled ] = useTriliumOptionBool("heliumHomeEnabled");
+    const [ quickNotesEnabled, setQuickNotesEnabled ] = useTriliumOptionBool("heliumQuickNotesEnabled");
+
+    return (
+        <Card heading={t("helium_options.title")}>
+            <OptionCardSection
+                name="helium-home-enabled"
+                label={t("helium_options.home_enabled")}
+                description={t("helium_options.home_enabled_description")}
+            >
+                <FormToggle currentValue={homeEnabled} onChange={setHomeEnabled} />
+            </OptionCardSection>
+            <OptionCardSection
+                name="helium-quick-notes-enabled"
+                label={t("helium_options.quick_notes_enabled")}
+                description={t("helium_options.quick_notes_enabled_description")}
+            >
+                <FormToggle currentValue={quickNotesEnabled} onChange={setQuickNotesEnabled} />
+            </OptionCardSection>
+        </Card>
     );
 }
 

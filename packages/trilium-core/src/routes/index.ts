@@ -41,6 +41,7 @@ import ocrRoute from "./api/ocr";
 import linkEmbedRoute from "./api/link_embed";
 import spreadsheetRoute from "./api/spreadsheet";
 import llmRoute from "./api/llm";
+import heliumRoute from "./api/helium";
 
 export { type CustomRequestResponse, handleCustomRequest } from "./custom";
 
@@ -86,6 +87,12 @@ interface SharedApiRoutesContext {
 }
 
 export function buildSharedApiRoutes({ route, asyncRoute, asyncRouteWithoutTransaction, apiRoute, asyncApiRoute, checkApiAuth, apiResultHandler, checkApiAuthOrElectron, checkAppNotInitialized, checkSetupAuth, checkCredentials, loginRateLimiter, uploadMiddlewareWithErrorHandling, importMiddlewareWithErrorHandling, csrfMiddleware }: SharedApiRoutesContext) {
+    apiRoute(GET, "/api/helium/home", heliumRoute.getHome);
+    apiRoute(GET, "/api/helium/quick-notes", heliumRoute.getQuickNotes);
+    apiRoute(PST, "/api/helium/quick-notes", heliumRoute.createQuickNote);
+    apiRoute(PST, "/api/helium/quick-notes/setup", heliumRoute.retrySetup);
+    apiRoute(PUT, "/api/helium/quick-notes/:noteId/state", heliumRoute.setQuickNoteState);
+
     apiRoute(GET, '/api/tree', treeApiRoute.getTree);
     apiRoute(PST, '/api/tree/load', treeApiRoute.load);
 

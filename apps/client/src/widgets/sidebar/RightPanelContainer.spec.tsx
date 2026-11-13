@@ -24,6 +24,7 @@ vi.mock("./NotePaths", () => stubWidget("note-paths-stub"));
 vi.mock("./Backlinks", () => stubWidget("backlinks-stub"));
 vi.mock("./BoardColumns", () => stubWidget("board-columns-stub"));
 vi.mock("./ChatHighlightsList", () => stubWidget("chat-highlights-stub"));
+vi.mock("./QuickNotes", () => stubWidget("quick-notes-stub"));
 vi.mock("./pdf/PdfPages", () => stubWidget("pdf-pages-stub"));
 vi.mock("./pdf/PdfAttachments", () => stubWidget("pdf-attachments-stub"));
 vi.mock("./pdf/PdfLayers", () => stubWidget("pdf-layers-stub"));
@@ -154,6 +155,20 @@ describe("RightPanelContainer", () => {
 
         // The choice belongs to the window it was made in: this pane stays where it was put.
         expect(activeTabIcon()).toBe(icon("outline"));
+    });
+
+    it("offers Quick Notes beside any note, with AI off, unless the option turns it off", () => {
+        options.set("heliumQuickNotesEnabled", "true");
+        for (const note of [ buildNote({ title: "Text" }), buildNote({ title: "Image", type: "image" }), buildNote({ title: "Root", id: "root" }) ]) {
+            shownNote.current = note;
+            renderContainer();
+            expect(shownTabIcons(), note.title).toContain(icon("quickNotes"));
+            render(null, container);
+        }
+
+        options.set("heliumQuickNotesEnabled", "false");
+        renderContainer();
+        expect(shownTabIcons()).not.toContain(icon("quickNotes"));
     });
 
     function renderContainer() {

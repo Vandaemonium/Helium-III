@@ -78,6 +78,8 @@ const ALLOWED_OPTIONS = new Set<OptionNames>([
     "rightPaneWidth",
     "rightPaneCollapsedItems",
     "rightPaneSelectedTab",
+    "heliumHomeEnabled",
+    "heliumQuickNotesEnabled",
     "rightPaneNoteMapType",
     "rightPaneVisible",
     "presentationSidebarVisible",

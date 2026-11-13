@@ -205,6 +205,8 @@ const defaultOptions: DefaultOption[] = [
     { name: "rightPaneVisible", value: "true", isSynced: false },
     { name: "rightPaneCollapsedItems", value: "[]", isSynced: false },
     { name: "rightPaneSelectedTab", value: "outline", isSynced: false },
+    { name: "heliumHomeEnabled", value: "true", isSynced: true },
+    { name: "heliumQuickNotesEnabled", value: "true", isSynced: true },
     { name: "presentationSidebarVisible", value: "true", isSynced: false },
     // Synced, unlike the rest of the pane's state: which map to read connections as is a preference
     // rather than where a window happens to be left standing.

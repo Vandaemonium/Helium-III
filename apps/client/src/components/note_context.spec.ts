@@ -1,8 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ViewScope } from "../services/link.js";
+import options from "../services/options.js";
 import utils from "../services/utils.js";
 import { buildNote } from "../test/easy-froca.js";
+import { getExtendedWidgetType } from "../widgets/NoteDetail.js";
 import appContext from "./app_context.js";
 import NoteContext from "./note_context.js";
 import type TabManager from "./tab_manager.js";
@@ -22,6 +24,38 @@ describe("NoteContext.isCommandTarget", () => {
         } finally {
             appContext.tabManager = tabManager;
         }
+    });
+});
+
+describe("NoteContext built-in Home", () => {
+    afterEach(() => options.load({}));
+
+    it("shows Home for root's normal view only, and no note list below it", async () => {
+        options.load({ heliumHomeEnabled: "true" });
+        buildNote({ id: "root", title: "root", children: [ { title: "Child" } ] });
+        const book = buildNote({ title: "Book", type: "book", children: [ { title: "Child" } ] });
+        const noteContext = new NoteContext();
+
+        noteContext.noteId = "root";
+        noteContext.viewScope = { viewMode: "default" };
+        expect(noteContext.showsHome()).toBe(true);
+        expect(noteContext.hasNoteList()).toBe(false);
+        expect(await getExtendedWidgetType(noteContext.note, noteContext)).toBe("heliumHome");
+
+        noteContext.viewScope = { viewMode: "source" };
+        expect(await getExtendedWidgetType(noteContext.note, noteContext)).toBe("readOnlyCode");
+        noteContext.viewScope = { viewMode: "attachments" };
+        expect(await getExtendedWidgetType(noteContext.note, noteContext)).toBe("attachmentList");
+
+        noteContext.viewScope = { viewMode: "default" };
+        noteContext.noteId = book.noteId;
+        expect(noteContext.showsHome()).toBe(false);
+        expect(noteContext.hasNoteList()).toBe(true);
+
+        options.load({ heliumHomeEnabled: "false" });
+        noteContext.noteId = "root";
+        expect(noteContext.showsHome()).toBe(false);
+        expect(await getExtendedWidgetType(noteContext.note, noteContext)).not.toBe("heliumHome");
     });
 });
 
