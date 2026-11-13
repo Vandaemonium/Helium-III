@@ -88,6 +88,11 @@ interface SharedApiRoutesContext {
 
 export function buildSharedApiRoutes({ route, asyncRoute, asyncRouteWithoutTransaction, apiRoute, asyncApiRoute, checkApiAuth, apiResultHandler, checkApiAuthOrElectron, checkAppNotInitialized, checkSetupAuth, checkCredentials, loginRateLimiter, uploadMiddlewareWithErrorHandling, importMiddlewareWithErrorHandling, csrfMiddleware }: SharedApiRoutesContext) {
     apiRoute(GET, "/api/helium/home", heliumRoute.getHome);
+    apiRoute(GET, "/api/helium/home/board", heliumRoute.getBoard);
+    apiRoute(PUT, "/api/helium/home/board", heliumRoute.saveBoard);
+    apiRoute(PST, "/api/helium/checklist", heliumRoute.createChecklist);
+    apiRoute(GET, "/api/helium/checklist/:noteId", heliumRoute.getChecklist);
+    apiRoute(PUT, "/api/helium/checklist/:noteId/items/:index", heliumRoute.setChecklistItem);
     apiRoute(GET, "/api/helium/quick-notes", heliumRoute.getQuickNotes);
     apiRoute(PST, "/api/helium/quick-notes", heliumRoute.createQuickNote);
     apiRoute(PST, "/api/helium/quick-notes/setup", heliumRoute.retrySetup);

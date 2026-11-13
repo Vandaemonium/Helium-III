@@ -1,4 +1,7 @@
-import { HELIUM_HOME_CONFIG_NOTE_ID, HELIUM_QUICK_CONFIG_NOTE_ID, HELIUM_QUICK_NOTES_FOLDER_ID, type HomeData, type QuickNotesData } from "@triliumnext/commons";
+import {
+    type ChecklistData, defaultBoard, HELIUM_HOME_CONFIG_NOTE_ID, HELIUM_QUICK_CONFIG_NOTE_ID, HELIUM_QUICK_NOTES_FOLDER_ID,
+    type HomeBoard, type HomeData, type QuickNotesData
+} from "@triliumnext/commons";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import becca from "../../becca/becca";
@@ -158,6 +161,88 @@ describe("Helium Home and Quick Notes API (core)", () => {
         });
     });
 
+    describe("Home board", () => {
+        it("serves the default board for a version 1 config and saves a valid one beside the other settings", async () => {
+            setHomeConfig({ schemaVersion: 1, recentLimit: 3 });
+            try {
+                expect((await api.get<HomeBoard>("/api/helium/home/board")).body).toEqual(defaultBoard());
+
+                const board: HomeBoard = { widgets: [ { id: "c", type: "clock", x: 0, y: 0, w: 2, h: 2, settings: { timeZone: "UTC" } } ], parked: [] };
+                expect((await api.put("/api/helium/home/board", { body: { board } })).status).toBe(200);
+                const stored = JSON.parse(String(becca.getNoteOrThrow(HELIUM_HOME_CONFIG_NOTE_ID).getContent()));
+                expect(stored).toMatchObject({ schemaVersion: 2, recentLimit: 3, board });
+            } finally {
+                setHomeConfig(null);
+            }
+        });
+
+        it("refuses an overlapping layout and keeps a broken stored one readable as the default", async () => {
+            const before = String(becca.getNoteOrThrow(HELIUM_HOME_CONFIG_NOTE_ID).getContent());
+            const overlapping = { widgets: [
+                { id: "a", type: "clock", x: 0, y: 0, w: 4, h: 2, settings: {} },
+                { id: "b", type: "clock", x: 3, y: 1, w: 4, h: 2, settings: {} }
+            ], parked: [] };
+            expect((await api.put("/api/helium/home/board", { body: { board: overlapping } })).status).toBe(400);
+            expect(becca.getNoteOrThrow(HELIUM_HOME_CONFIG_NOTE_ID).getContent()).toBe(before);
+
+            setHomeConfig({ schemaVersion: 2, recentLimit: 5, board: overlapping });
+            try {
+                expect((await api.get<HomeBoard>("/api/helium/home/board")).body).toEqual(defaultBoard());
+                expect((await api.get<HomeData>("/api/helium/home")).status).toBe(200);
+                expect(JSON.parse(String(becca.getNoteOrThrow(HELIUM_HOME_CONFIG_NOTE_ID).getContent())).board).toEqual(overlapping);
+            } finally {
+                setHomeConfig(null);
+            }
+        });
+    });
+
+    describe("Checklist", () => {
+        const todo = (text: string, checked = false) =>
+            `<li><label class="todo-list__label"><input type="checkbox"${checked ? " checked=\"checked\"" : ""} disabled="disabled"><span class="todo-list__label__description">${text}</span></label></li>`;
+
+        it("lists to-do items and ticks one by changing only its checkbox", async () => {
+            const content = `<p>Intro &amp; more</p><ul class="todo-list">${todo("Milk &amp; eggs")}${todo("Bread", true)}</ul>`;
+            const note = await createTextNote(api, { title: "Shopping", content });
+
+            const list = (await api.get<ChecklistData>(`/api/helium/checklist/${note.noteId}`)).body;
+            expect(list).toEqual({ status: "ok", title: "Shopping", items: [
+                { index: 0, text: "Milk & eggs", checked: false },
+                { index: 1, text: "Bread", checked: true }
+            ] });
+
+            expect((await tick(note.noteId, 0, true, "Milk & eggs")).status).toBe(204);
+            expect((await tick(note.noteId, 1, false, "Bread")).status).toBe(204);
+            expect(becca.getNoteOrThrow(note.noteId).getContent())
+                .toBe(`<p>Intro &amp; more</p><ul class="todo-list">${todo("Milk &amp; eggs").replace("<input", "<input checked=\"checked\"")}${todo("Bread")}</ul>`);
+        });
+
+        it("refuses a tick when the item changed since loading, leaving the content as edited", async () => {
+            const note = await createTextNote(api, { content: `<ul class="todo-list">${todo("New first")}${todo("Milk")}</ul>` });
+            const before = String(becca.getNoteOrThrow(note.noteId).getContent());
+            expect((await tick(note.noteId, 0, true, "Milk")).status).toBe(400);
+            expect((await tick(note.noteId, 5, true, "Milk")).status).toBe(400);
+            expect((await tick(note.noteId, 0, "yes" as unknown as boolean, "New first")).status).toBe(400);
+            expect(becca.getNoteOrThrow(note.noteId).getContent()).toBe(before);
+        });
+
+        it("never reads or ticks a protected note, even while unlocked", async () => {
+            const note = await createTextNote(api, { content: `<ul class="todo-list">${todo("Secret")}</ul>` });
+            await withProtected(note.noteId, async () => {
+                expect((await api.get<ChecklistData>(`/api/helium/checklist/${note.noteId}`)).body).toEqual({ status: "protected", title: "", items: [] });
+                expect((await tick(note.noteId, 0, true, "Secret")).status).toBe(400);
+            });
+            expect((await api.get<ChecklistData>("/api/helium/checklist/doesNotExist")).body.status).toBe("missing");
+        });
+
+        it("creates a Checklist note under root only when asked", async () => {
+            const { noteId } = (await api.post<{ noteId: string }>("/api/helium/checklist")).body;
+            const note = becca.getNoteOrThrow(noteId);
+            expect(note.title).toBe("Checklist");
+            expect(note.getParentNotes().map((n) => n.noteId)).toEqual([ "root" ]);
+            expect((await api.get<ChecklistData>(`/api/helium/checklist/${noteId}`)).body.items).toHaveLength(1);
+        });
+    });
+
     describe("Home", () => {
         it("filters excluded notes before applying the Recent limit", async () => {
             setHomeConfig({ recentLimit: 2 });
@@ -204,6 +289,10 @@ describe("Helium Home and Quick Notes API (core)", () => {
 
 function checkHiddenSubtree(force = false) {
     getContext().init(() => hiddenSubtreeService.checkHiddenSubtree(force));
+}
+
+function tick(noteId: string, index: number, checked: boolean, text: string) {
+    return api.put(`/api/helium/checklist/${noteId}/items/${index}`, { body: { checked, text } });
 }
 
 function setState(noteId: string, key: string, value: boolean) {
