@@ -30,9 +30,20 @@ export default function QuickNotes() {
     );
 }
 
-/** The composer and cards, shared by the right pane tab and the Home board's widget through `quickNotesStore`. */
-export function QuickNotesPanel() {
+/** The Home board's widget: the panel with a one-line composer and the search behind a button. */
+export function HomeQuickNotes() {
+    return <QuickNotesPanel compact />;
+}
+
+/**
+ * The composer and cards, shared by the right pane tab and the Home board's widget through `quickNotesStore`.
+ *
+ * @param compact shows the composer as one line until it is focused or holds a draft, and the search
+ *                only once its button is pressed, so the cards get the height.
+ */
+export function QuickNotesPanel({ compact }: { compact?: boolean }) {
     const state = useSyncExternalStore(quickNotesStore.subscribe, quickNotesStore.getState);
+    const [ focused, setFocused ] = useState(false);
     const [ refreshToken, setRefreshToken ] = useState(0);
     const refresh = () => setRefreshToken((token) => token + 1);
     const { data, failed } = useFetch<QuickNotesData>("helium/quick-notes", refreshToken);
@@ -47,33 +58,47 @@ export function QuickNotesPanel() {
     });
 
     const busy = state.status === "pending";
+    const collapsed = !!compact && !focused && !state.draft && !busy && state.status !== "uncertain";
 
     return (
-        <div className="quick-notes">
-            <FormTextArea
-                className="quick-notes-composer"
-                currentValue={state.draft}
-                onChange={quickNotesStore.setDraft}
-                disabled={busy}
-                rows={4}
-                aria-label={t("helium_quick_notes.composer_label")}
-                placeholder={t("helium_quick_notes.composer_placeholder")}
-            />
-            <div className="quick-notes-actions">
-                <Button
-                    text={t("helium_quick_notes.save")}
-                    kind="primary"
-                    disabled={busy || state.status === "uncertain" || data?.status !== "ok"}
-                    onClick={() => void quickNotesStore.save()}
+        <div className={clsx("quick-notes", { compact, collapsed })}>
+            <div
+                className="quick-notes-capture"
+                onFocusIn={() => setFocused(true)}
+                onFocusOut={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
+                }}
+            >
+                <FormTextArea
+                    className="quick-notes-composer"
+                    currentValue={state.draft}
+                    onChange={quickNotesStore.setDraft}
+                    onKeyDown={compact ? (e) => {
+                        if (e.key === "Escape") e.currentTarget.blur();
+                    } : undefined}
+                    disabled={busy}
+                    rows={collapsed ? 1 : 4}
+                    aria-label={t("helium_quick_notes.composer_label")}
+                    placeholder={compact ? t("helium_quick_notes.composer_compact_placeholder") : t("helium_quick_notes.composer_placeholder")}
                 />
-                {state.status === "uncertain" && (
-                    <Button text={t("helium_quick_notes.acknowledge")} onClick={quickNotesStore.acknowledgeUncertain} />
+                {!collapsed && (
+                    <div className="quick-notes-actions">
+                        <Button
+                            text={t("helium_quick_notes.save")}
+                            kind="primary"
+                            disabled={busy || state.status === "uncertain" || data?.status !== "ok"}
+                            onClick={() => void quickNotesStore.save()}
+                        />
+                        {state.status === "uncertain" && (
+                            <Button text={t("helium_quick_notes.acknowledge")} onClick={quickNotesStore.acknowledgeUncertain} />
+                        )}
+                    </div>
                 )}
             </div>
             <p className="quick-notes-status" role="status" aria-live="polite">{statusMessage(state.status)}</p>
 
             {data ? (
-                <QuickNotesCards data={data} query={state.query} archived={state.archived} onRetrySetup={async () => {
+                <QuickNotesCards data={data} query={state.query} archived={state.archived} compact={compact} onRetrySetup={async () => {
                     await server.post("helium/quick-notes/setup");
                     refresh();
                 }} />
@@ -84,12 +109,15 @@ export function QuickNotesPanel() {
     );
 }
 
-function QuickNotesCards({ data, query, archived, onRetrySetup }: {
+function QuickNotesCards({ data, query, archived, compact, onRetrySetup }: {
     data: QuickNotesData;
     query: string;
     archived: boolean;
+    compact?: boolean;
     onRetrySetup: () => void;
 }) {
+    const [ searchOpen, setSearchOpen ] = useState(false);
+
     if (data.status !== "ok") {
         return (
             <NoItems icon="bx bx-error-circle" text={t(`helium_quick_notes.status_${data.status}`)} size="small">
@@ -103,23 +131,50 @@ function QuickNotesCards({ data, query, archived, onRetrySetup }: {
     // A note protected since the last load drops out at once, before the reload confirms it.
     const cards = selectCards(data.cards.filter((card) => !froca.getNoteFromCache(card.noteId)?.isProtected), { query, archived });
 
+    const showSearch = !compact || searchOpen || !!query;
+    const viewChoice = (
+        <SegmentedChoice
+            options={[
+                { value: "active", label: t("helium_quick_notes.active") },
+                { value: "archived", label: t("helium_quick_notes.archived") }
+            ]}
+            currentValue={archived ? "archived" : "active"}
+            onChange={(value) => quickNotesStore.setArchived(value === "archived")}
+        />
+    );
+
     return (
         <>
-            <FormTextBox
-                type="search"
-                currentValue={query}
-                onChange={quickNotesStore.setQuery}
-                aria-label={t("helium_quick_notes.search")}
-                placeholder={t("helium_quick_notes.search")}
-            />
-            <SegmentedChoice
-                options={[
-                    { value: "active", label: t("helium_quick_notes.active") },
-                    { value: "archived", label: t("helium_quick_notes.archived") }
-                ]}
-                currentValue={archived ? "archived" : "active"}
-                onChange={(value) => quickNotesStore.setArchived(value === "archived")}
-            />
+            {showSearch && (
+                <FormTextBox
+                    type="search"
+                    currentValue={query}
+                    onChange={quickNotesStore.setQuery}
+                    autoFocus={compact}
+                    onBlur={compact ? (value) => {
+                        if (!value) setSearchOpen(false);
+                    } : undefined}
+                    onKeyDown={compact ? (e) => {
+                        if (e.key !== "Escape") return;
+                        quickNotesStore.setQuery("");
+                        setSearchOpen(false);
+                    } : undefined}
+                    aria-label={t("helium_quick_notes.search")}
+                    placeholder={t("helium_quick_notes.search")}
+                />
+            )}
+            {compact ? (
+                <div className="quick-notes-filters">
+                    {viewChoice}
+                    {!showSearch && (
+                        <ActionButton
+                            icon="bx bx-search" className="quick-notes-search-toggle"
+                            text={t("helium_quick_notes.search")}
+                            onClick={() => setSearchOpen(true)}
+                        />
+                    )}
+                </div>
+            ) : viewChoice}
             {cards.length ? (
                 <ul className="quick-notes-cards">
                     {cards.map((card) => <QuickNoteCardItem key={card.noteId} card={card} />)}

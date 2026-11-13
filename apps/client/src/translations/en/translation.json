@@ -4247,6 +4247,7 @@
   "helium_quick_notes": {
     "composer_label": "New quick note",
     "composer_placeholder": "The first line is the title. Capture the rest below.",
+    "composer_compact_placeholder": "Quick note…",
     "save": "Save note",
     "saving": "Saving…",
     "saved": "Saved.",

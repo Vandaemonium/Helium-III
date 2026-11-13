@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import options from "../../services/options.js";
 import server from "../../services/server.js";
-import QuickNotes from "./QuickNotes.js";
+import QuickNotes, { HomeQuickNotes } from "./QuickNotes.js";
 import { quickNotesStore } from "./quick_notes_store.js";
 
 let container: HTMLDivElement;
@@ -91,11 +91,11 @@ describe("QuickNotes panel", () => {
         ]
     };
 
-    async function renderPanel(response: QuickNotesData) {
+    async function renderPanel(response: QuickNotesData, panel = <QuickNotes />) {
         vi.spyOn(server, "get").mockResolvedValue(response);
         container ??= document.createElement("div");
         document.body.appendChild(container);
-        act(() => render(<QuickNotes />, container));
+        act(() => render(panel, container));
         for (let round = 0; round < 4; round++) {
             await act(async () => {});
         }
@@ -145,6 +145,43 @@ describe("QuickNotes panel", () => {
         expect(put).toHaveBeenCalledWith("helium/quick-notes/b/state", { key: "pinned", value: false });
         await act(async () => archive?.click());
         expect(put).toHaveBeenCalledWith("helium/quick-notes/b/state", { key: "archived", value: true });
+    });
+
+    it("on Home, keeps the composer one line until focused or drafted, and the search behind a button", async () => {
+        await renderPanel(data, <HomeQuickNotes />);
+        const composer = () => container.querySelector<HTMLTextAreaElement>(".quick-notes-composer");
+        const actions = () => container.querySelector(".quick-notes-actions");
+        const search = () => container.querySelector<HTMLInputElement>("input[type=search]");
+
+        expect(composer()?.getAttribute("rows")).toBe("1");
+        expect(actions()).toBeNull();
+        expect(search()).toBeNull();
+        expect(cardTitles()).toEqual([ "Beta", "Alpha <b>" ]);
+
+        act(() => composer()?.focus());
+        expect(composer()?.getAttribute("rows")).toBe("4");
+        expect(actions()).not.toBeNull();
+        act(() => {
+            composer()?.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+        });
+        expect(document.activeElement).not.toBe(composer());
+        expect(actions()).toBeNull();
+
+        // A draft keeps it open without the focus, and emptying it collapses it again.
+        act(() => quickNotesStore.setDraft("unsaved"));
+        expect(composer()?.getAttribute("rows")).toBe("4");
+        act(() => quickNotesStore.setDraft(""));
+        expect(actions()).toBeNull();
+
+        const toggle = container.querySelector<HTMLButtonElement>(".quick-notes-search-toggle");
+        expect(toggle).not.toBeNull();
+        act(() => toggle?.click());
+        expect(search()).not.toBeNull();
+        expect(container.querySelector(".quick-notes-search-toggle")).toBeNull();
+        act(() => {
+            search()?.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+        });
+        expect(search()).toBeNull();
     });
 
     it("disables saving and lists nothing when the folder is protected", async () => {
