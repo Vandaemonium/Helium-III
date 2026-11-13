@@ -34,6 +34,10 @@ export TRILIUM_DATA_DIR=/home/myuser/data/my-trilium-data
 
 See <a class="reference-link" href="Server%20Installation/Authentication.md">Authentication</a>.
 
+### Mirroring a folder of Markdown files
+
+See <a class="reference-link" href="Server%20Installation/AI-Context%20mirror.md">AI-Context mirror</a>.
+
 ## Reverse Proxy Setup
 
 To configure a reverse proxy for Trilium, you can use either **nginx** or **Apache**. You can also check out the documentation stored in the Reverse proxy folder.
