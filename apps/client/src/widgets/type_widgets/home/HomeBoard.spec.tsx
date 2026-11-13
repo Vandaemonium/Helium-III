@@ -34,9 +34,11 @@ async function mount(vnode: VNode) {
     container = root;
     document.body.appendChild(root);
     act(() => render(vnode, root));
-    for (let round = 0; round < 8; round++) {
+    // The widgets load their modules lazily, and a cold import takes longer than any fixed number of ticks.
+    await vi.waitFor(async () => {
         await act(async () => { await new Promise((resolve) => setTimeout(resolve, 0)); });
-    }
+        expect(root.querySelector(".bx-loader")).toBeNull();
+    }, { timeout: 10_000 });
     return root;
 }
 
