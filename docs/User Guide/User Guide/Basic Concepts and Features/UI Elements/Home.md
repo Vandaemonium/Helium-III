@@ -1,6 +1,8 @@
 # Home
 Home is the board of widgets shown when the root note is opened: quick capture, a calendar of the journal, a checklist, the clock, recent, pinned and inbox notes, bookmarks and saved searches, each in its own panel. It takes the place of the root note's own content and its list of child notes, so the text formatting toolbar is not shown above it; the root note itself is not changed.
 
+If the right sidebar is open on a tab that has nothing to show for Home, such as the outline, it is hidden while Home is shown and comes back on the next note. The sidebar button shows it beside Home.
+
 ## The board
 
 The board is a grid of twelve columns. Each widget fills a rectangle of whole cells, and widgets never overlap. The rows are sized so the default layout fills the pane; a taller layout scrolls.
@@ -33,6 +35,8 @@ With the keyboard, press <kbd>Tab</kbd> to focus a widget in edit mode, then:
 ### Quick Notes
 
 A composer and the cards of the Quick Notes folder, the same as the <a class="reference-link" href="Right%20Sidebar/Quick%20Notes%20tab.md">Quick Notes tab</a>. The draft is shared between the widget and the tab, so text typed in one appears in the other.
+
+So that the cards get the room, the composer is a single _Quick note…_ line until it is selected or holds a draft; it then grows and shows _Save note_. Press <kbd>Esc</kbd> to leave it; an empty composer shrinks back to one line. The search is behind the <span class="tn-icon bx bx-search"></span> button next to _Active_ and _Archived_; press <kbd>Esc</kbd> in the search box to clear and close it.
 
 ### Calendar
 
