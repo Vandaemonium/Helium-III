@@ -33,9 +33,23 @@ body.density-compact {
         min-height: 0;
         padding-block: 2px;
 
+        .note-title-widget,
+        .note-actions-bar {
+            margin-block: 0;
+        }
+
         .note-title-widget input {
             font-size: 1.35em;
         }
+    }
+
+    .title-actions:not(:empty),
+    .note-split.type-text.view-mode-default .title-actions {
+        padding-block: 6px;
+    }
+
+    .note-type-switcher:empty {
+        min-height: 0;
     }
 
     .inline-title {
