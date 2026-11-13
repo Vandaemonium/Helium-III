@@ -21,6 +21,15 @@ import RightPanelWidget, { NavigatedInNote } from "./RightPanelWidget";
 
 /** The Quick Notes tab: a composer that saves into the Quick Notes folder, and that folder's cards. */
 export default function QuickNotes() {
+    return (
+        <RightPanelWidget id="quick-notes" title={t("right_pane.tab_quick_notes")} grow>
+            <QuickNotesPanel />
+        </RightPanelWidget>
+    );
+}
+
+/** The composer and cards, shared by the right pane tab and the Home board's widget through `quickNotesStore`. */
+export function QuickNotesPanel() {
     const state = useSyncExternalStore(quickNotesStore.subscribe, quickNotesStore.getState);
     const [ refreshToken, setRefreshToken ] = useState(0);
     const refresh = () => setRefreshToken((token) => token + 1);
@@ -38,40 +47,38 @@ export default function QuickNotes() {
     const busy = state.status === "pending";
 
     return (
-        <RightPanelWidget id="quick-notes" title={t("right_pane.tab_quick_notes")} grow>
-            <div className="quick-notes">
-                <FormTextArea
-                    className="quick-notes-composer"
-                    currentValue={state.draft}
-                    onChange={quickNotesStore.setDraft}
-                    disabled={busy}
-                    rows={4}
-                    aria-label={t("helium_quick_notes.composer_label")}
-                    placeholder={t("helium_quick_notes.composer_placeholder")}
+        <div className="quick-notes">
+            <FormTextArea
+                className="quick-notes-composer"
+                currentValue={state.draft}
+                onChange={quickNotesStore.setDraft}
+                disabled={busy}
+                rows={4}
+                aria-label={t("helium_quick_notes.composer_label")}
+                placeholder={t("helium_quick_notes.composer_placeholder")}
+            />
+            <div className="quick-notes-actions">
+                <Button
+                    text={t("helium_quick_notes.save")}
+                    kind="primary"
+                    disabled={busy || state.status === "uncertain" || data?.status !== "ok"}
+                    onClick={() => void quickNotesStore.save()}
                 />
-                <div className="quick-notes-actions">
-                    <Button
-                        text={t("helium_quick_notes.save")}
-                        kind="primary"
-                        disabled={busy || state.status === "uncertain" || data?.status !== "ok"}
-                        onClick={() => void quickNotesStore.save()}
-                    />
-                    {state.status === "uncertain" && (
-                        <Button text={t("helium_quick_notes.acknowledge")} onClick={quickNotesStore.acknowledgeUncertain} />
-                    )}
-                </div>
-                <p className="quick-notes-status" role="status" aria-live="polite">{statusMessage(state.status)}</p>
-
-                {data ? (
-                    <QuickNotesCards data={data} query={state.query} archived={state.archived} onRetrySetup={async () => {
-                        await server.post("helium/quick-notes/setup");
-                        refresh();
-                    }} />
-                ) : failed ? (
-                    <NoItems icon="bx bx-error" text={t("helium_quick_notes.load_failed")} size="small" />
-                ) : <LoadingSpinner />}
+                {state.status === "uncertain" && (
+                    <Button text={t("helium_quick_notes.acknowledge")} onClick={quickNotesStore.acknowledgeUncertain} />
+                )}
             </div>
-        </RightPanelWidget>
+            <p className="quick-notes-status" role="status" aria-live="polite">{statusMessage(state.status)}</p>
+
+            {data ? (
+                <QuickNotesCards data={data} query={state.query} archived={state.archived} onRetrySetup={async () => {
+                    await server.post("helium/quick-notes/setup");
+                    refresh();
+                }} />
+            ) : failed ? (
+                <NoItems icon="bx bx-error" text={t("helium_quick_notes.load_failed")} size="small" />
+            ) : <LoadingSpinner />}
+        </div>
     );
 }
 

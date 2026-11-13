@@ -168,7 +168,7 @@ export const TYPE_MAPPINGS: Record<ExtendedNoteType, NoteTypeMapping> = {
         isFullHeight: true
     },
     heliumHome: {
-        view: () => import("./type_widgets/Home"),
+        view: () => import("./type_widgets/home/HomeBoard"),
         className: "note-detail-helium-home",
         isFullHeight: true
     },

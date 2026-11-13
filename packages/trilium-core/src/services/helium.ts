@@ -109,7 +109,7 @@ export function createChecklistNote() {
 function findTodoInputs(html: string) {
     return parse(html).querySelectorAll("ul.todo-list li input[type=checkbox]").map((input) => {
         const label = input.closest("label") ?? input.parentNode;
-        return { text: label.text.trim(), checked: input.hasAttribute("checked"), range: input.range };
+        return { text: label?.text.trim() ?? "", checked: input.hasAttribute("checked"), range: input.range };
     });
 }
 
