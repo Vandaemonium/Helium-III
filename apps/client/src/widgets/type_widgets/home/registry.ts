@@ -60,7 +60,7 @@ export const HOME_WIDGET_TYPES: HomeWidgetType[] = [
     },
     {
         id: "clock", title: () => t("helium_home.widget_clock"), icon: "bx bx-time",
-        defaultSize: { w: 4, h: 2 }, minSize: { w: 2, h: 2 }, hasSettings: true,
+        defaultSize: { w: 4, h: 3 }, minSize: { w: 2, h: 2 }, hasSettings: true,
         load: () => import("./ClockWidget")
     },
     {

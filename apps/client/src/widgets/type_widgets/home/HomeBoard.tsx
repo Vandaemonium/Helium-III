@@ -27,7 +27,7 @@ import { getLazyWidget, getWidgetType, HOME_WIDGET_TYPES, HomeDataContext, type 
 
 /** The pane width below which the board shows its widgets in one column, without editing. */
 const NARROW_WIDTH = 700;
-const MIN_ROW_HEIGHT = 44;
+const MIN_ROW_HEIGHT = 40;
 /** Must match `--board-gap` and `--board-padding` in `HomeBoard.css`. */
 const GAP = 8;
 const PADDING = 8;

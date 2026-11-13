@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: flex-end;
         gap: 6px;
-        padding: var(--board-padding) var(--board-padding) 0;
+        padding: 4px var(--board-padding) 0;
     }
 
     .helium-board-hint {
@@ -204,7 +204,7 @@
         height: 100%;
 
         .helium-clock-time {
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 300;
             line-height: 1.1;
             font-variant-numeric: tabular-nums;
@@ -218,6 +218,36 @@
 
     .helium-calendar {
         width: auto;
+
+        .calendar-header {
+            flex-wrap: wrap;
+            padding: 0 0 4px;
+
+            input, .dropdown-toggle {
+                font-size: 1em;
+                font-weight: 400;
+            }
+
+            input[type="number"] {
+                width: 4ch;
+            }
+        }
+
+        .calendar-week span {
+            overflow: hidden;
+            padding: 2px 0;
+            font-size: 0.65em;
+            white-space: nowrap;
+        }
+
+        .calendar-body {
+            min-height: 0;
+        }
+
+        .calendar-date, .calendar-week-number-disabled {
+            padding: 2px 0;
+            font-size: 0.95em;
+        }
     }
 }
 

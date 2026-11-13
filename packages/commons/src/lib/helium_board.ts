@@ -48,8 +48,8 @@ export function defaultBoard(): HomeBoard {
             widget("checklist", 0, 7, 4, 5),
             widget("calendar", 4, 0, 4, 6),
             widget("recent", 4, 6, 4, 6),
-            widget("clock", 8, 0, 4, 2),
-            widget("pinned", 8, 2, 4, 4),
+            widget("clock", 8, 0, 4, 3),
+            widget("pinned", 8, 3, 4, 3),
             widget("inbox", 8, 6, 4, 3),
             widget("bookmarks", 8, 9, 4, 3)
         ],
