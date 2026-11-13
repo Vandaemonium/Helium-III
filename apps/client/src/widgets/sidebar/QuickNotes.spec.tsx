@@ -103,7 +103,7 @@ describe("QuickNotes panel", () => {
     }
 
     function cardTitles() {
-        return [ ...container.querySelectorAll(".quick-notes-card-open") ].map((button) => button.textContent?.trim());
+        return [ ...container.querySelectorAll(".quick-notes-card-title") ].map((button) => button.textContent?.trim());
     }
 
     it("shows active cards pinned first, filters by search and keeps the draft across a remount", async () => {
@@ -121,6 +121,30 @@ describe("QuickNotes panel", () => {
         await renderPanel(data);
         expect(container.querySelector<HTMLTextAreaElement>(".quick-notes-composer")?.value).toBe("unsaved");
         expect(cardTitles()).toEqual([ "Gamma" ]);
+    });
+
+    it("shows a one-line card with icon actions for pin and archive", async () => {
+        const put = vi.spyOn(server, "put").mockResolvedValue({});
+        await renderPanel({ ...data, cards: [
+            { noteId: "b", title: "Beta", text: "Beta\nfirst line\nsecond", utcDateModified: "2026-01-01", pinned: true, archived: false }
+        ] });
+
+        const card = container.querySelector(".quick-notes-card");
+        expect(card?.classList.contains("pinned")).toBe(true);
+        expect(card?.querySelector(".quick-notes-card-preview")?.textContent).toBe("first line second");
+
+        const pin = card?.querySelector<HTMLButtonElement>(".quick-notes-pin");
+        const archive = card?.querySelector<HTMLButtonElement>(".quick-notes-archive");
+        expect(pin?.getAttribute("aria-pressed")).toBe("true");
+        expect(pin?.classList.contains("bxs-pin")).toBe(true);
+        expect(pin?.hasAttribute("aria-label")).toBe(true);
+        expect(archive?.getAttribute("aria-pressed")).toBe("false");
+        expect(archive?.hasAttribute("aria-label")).toBe(true);
+
+        await act(async () => pin?.click());
+        expect(put).toHaveBeenCalledWith("helium/quick-notes/b/state", { key: "pinned", value: false });
+        await act(async () => archive?.click());
+        expect(put).toHaveBeenCalledWith("helium/quick-notes/b/state", { key: "archived", value: true });
     });
 
     it("disables saving and lists nothing when the folder is protected", async () => {

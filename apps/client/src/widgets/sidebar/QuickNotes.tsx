@@ -2,12 +2,14 @@ import "./QuickNotes.css";
 
 import { type QuickNoteCard, type QuickNotesData, type QuickNoteStateKey, selectCards } from "@triliumnext/commons";
 import { useSyncExternalStore } from "preact/compat";
+import clsx from "clsx";
 import { useContext, useState } from "preact/hooks";
 
 import appContext from "../../components/app_context";
 import froca from "../../services/froca";
 import { t } from "../../services/i18n";
 import server from "../../services/server";
+import ActionButton from "../react/ActionButton";
 import Button from "../react/Button";
 import FormTextArea from "../react/FormTextArea";
 import FormTextBox from "../react/FormTextBox";
@@ -139,33 +141,52 @@ function QuickNoteCardItem({ card }: { card: QuickNoteCard }) {
         }
     }
 
+    const preview = cardPreview(card);
+    const pinLabel = card.pinned ? t("helium_quick_notes.unpin") : t("helium_quick_notes.pin");
+    const archiveLabel = card.archived ? t("helium_quick_notes.restore") : t("helium_quick_notes.archive");
+
     return (
-        <li className="quick-notes-card">
+        <li className={clsx("quick-notes-card", { pinned: card.pinned })}>
             <Button
                 kind="lowProfile"
                 className="quick-notes-card-open"
-                text={card.title}
+                text={<>
+                    <span className="quick-notes-card-title">{card.title}</span>
+                    {preview && <span className="quick-notes-card-preview">{preview}</span>}
+                </>}
                 onClick={async () => {
                     await appContext.tabManager.getActiveContext()?.setNote(card.noteId);
                     onNavigated?.();
                 }}
             />
-            <p className="quick-notes-card-preview">{card.text}</p>
-            <div className="quick-notes-actions">
-                <Button
-                    size="small" disabled={pending} aria-pressed={card.pinned}
-                    text={card.pinned ? t("helium_quick_notes.unpin") : t("helium_quick_notes.pin")}
+            <div className="quick-notes-card-actions">
+                <ActionButton
+                    icon={card.pinned ? "bx bxs-pin" : "bx bx-pin"}
+                    className="quick-notes-pin"
+                    text={pinLabel} aria-label={pinLabel}
+                    disabled={pending} aria-pressed={card.pinned}
                     onClick={() => void setState("pinned", !card.pinned)}
                 />
-                <Button
-                    size="small" disabled={pending} aria-pressed={card.archived}
-                    text={card.archived ? t("helium_quick_notes.restore") : t("helium_quick_notes.archive")}
+                <ActionButton
+                    icon={card.archived ? "bx bx-archive-out" : "bx bx-archive-in"}
+                    className="quick-notes-archive"
+                    text={archiveLabel} aria-label={archiveLabel}
+                    disabled={pending} aria-pressed={card.archived}
                     onClick={() => void setState("archived", !card.archived)}
                 />
             </div>
             {error && <p className="quick-notes-status" role="status">{t("helium_quick_notes.state_failed")}</p>}
         </li>
     );
+}
+
+/** The card's body as one line, without the first line when it only repeats the title. */
+export function cardPreview({ title, text }: Pick<QuickNoteCard, "title" | "text">) {
+    const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
+    if (lines[0] === title.trim()) {
+        lines.shift();
+    }
+    return lines.join(" ");
 }
 
 function statusMessage(status: QuickNotesSaveStatus) {
