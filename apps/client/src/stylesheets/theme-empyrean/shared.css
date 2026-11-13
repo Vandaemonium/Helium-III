@@ -1,0 +1,27 @@
+/* Rules both Empyrean color schemes share, on top of the Next theme's. */
+
+/* `:root:root` outranks the `:root` defaults in Bootstrap and `packages/ckeditor5`, whichever loads last. */
+:root:root {
+    --center-pane-border-radius: 6px;
+    --dropdown-border-radius: 6px;
+    --tooltip-border-radius: 4px;
+    --overlay-button-border-radius: 4px;
+    --bs-border-radius: 4px;
+    --bs-border-radius-sm: 3px;
+    --bs-border-radius-lg: 6px;
+}
+
+:root div.tab-row-widget div.note-tab div.note-tab-wrapper {
+    border-radius: 5px;
+}
+
+:root div.tab-row-widget div.note-tab[active] div.note-tab-wrapper {
+    background-image: var(--empyrean-gradient);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: calc(100% - 16px) 1px;
+}
+
+.admonition {
+    border-radius: 4px;
+}

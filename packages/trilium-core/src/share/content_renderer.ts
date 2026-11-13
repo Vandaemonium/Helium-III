@@ -27,7 +27,7 @@ import becca from "../becca/becca.js";
 import type BAttachment from "../becca/entities/battachment.js";
 import type BBranch from "../becca/entities/bbranch.js";
 import BNote from "../becca/entities/bnote.js";
-import appInfo from "../services/app_info.js";
+import { assetVersion } from "../services/app_info.js";
 import * as iconPackService from "../services/icon_packs.js";
 import { getLog } from "../services/log.js";
 import options from "../services/options.js";
@@ -46,7 +46,7 @@ import shareRoot from "./share_root.js";
 /**
  * The URL prefix the share theme resolves built-in assets against, such as `assets/v1.2.3`.
  */
-export const assetUrlFragment = `assets/v${appInfo.appVersion}`;
+export const assetUrlFragment = `assets/v${assetVersion}`;
 
 const PLAIN_TEXT_LANGUAGE = normalizeMimeTypeForCKEditor("text/plain");
 

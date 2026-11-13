@@ -34,6 +34,12 @@ interface ThemeFamily {
 
 const THEME_FAMILIES: ThemeFamily[] = [
     {
+        key: "empyrean",
+        title: t("theme.empyrean_themes"),
+        icon: "bx bx-planet",
+        schemes: THEME_FAMILY_SCHEMES.empyrean
+    },
+    {
         key: "modern",
         title: t("theme.modern_themes"),
         icon: "bx bx-star",
@@ -138,7 +144,7 @@ function UserInterface() {
                             icon={family.icon}
                             selected={resolved.family?.key === family.key}
                             onClick={() => setFamily(family)}
-                            badges={family.key === "modern" ? [{ text: t("theme.recommended") }] : undefined}
+                            badges={family.key === "empyrean" ? [{ text: t("theme.recommended") }] : undefined}
                         >
                             {family.title}
                         </FormListItem>

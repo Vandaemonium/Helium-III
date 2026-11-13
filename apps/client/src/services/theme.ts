@@ -4,7 +4,7 @@ import { readCssVar } from "../utils/css-var.js";
 
 export function getThemeStyle(): "auto" | "light" | "dark" {
     const configuredTheme = window.glob?.theme;
-    if (configuredTheme === "auto" || configuredTheme === "next") {
+    if (configuredTheme === "auto" || configuredTheme === "next" || configuredTheme === "empyrean") {
         return "auto";
     }
 
@@ -12,11 +12,11 @@ export function getThemeStyle(): "auto" | "light" | "dark" {
         return configuredTheme;
     }
 
-    if (configuredTheme === "next-light") {
+    if (configuredTheme === "next-light" || configuredTheme === "empyrean-light") {
         return "light";
     }
 
-    if (configuredTheme === "next-dark") {
+    if (configuredTheme === "next-dark" || configuredTheme === "empyrean-dark") {
         return "dark";
     }
 
@@ -46,7 +46,7 @@ export interface StylesheetRef {
 type ThemeBase = "next" | "next-light" | "next-dark";
 
 /** Built-in themes whose stylesheets can be resolved purely on the client, without a server lookup. */
-const BUILTIN_THEMES = new Set([ "auto", "light", "dark", "next", "next-light", "next-dark" ]);
+const BUILTIN_THEMES = new Set([ "auto", "light", "dark", "next", "next-light", "next-dark", "empyrean", "empyrean-light", "empyrean-dark" ]);
 
 /** Marks the always-present baseline `theme-light.css` link, used as the insertion anchor when swapping themes. */
 const THEME_BASE_ATTR = "data-theme-base";
@@ -63,19 +63,15 @@ export function getConfiguredThemeStylesheets(stylesheetsPath: string, theme: st
         return [{ href: `${stylesheetsPath}/theme-dark.css` }];
     }
 
-    if (theme === "next") {
+    if (theme === "next" || theme === "empyrean") {
         return [
-            { href: `${stylesheetsPath}/theme-next-light.css` },
-            { href: `${stylesheetsPath}/theme-next-dark.css`, media: "(prefers-color-scheme: dark)" }
+            { href: `${stylesheetsPath}/theme-${theme}-light.css` },
+            { href: `${stylesheetsPath}/theme-${theme}-dark.css`, media: "(prefers-color-scheme: dark)" }
         ];
     }
 
-    if (theme === "next-light") {
-        return [{ href: `${stylesheetsPath}/theme-next-light.css` }];
-    }
-
-    if (theme === "next-dark") {
-        return [{ href: `${stylesheetsPath}/theme-next-dark.css` }];
+    if ([ "next-light", "next-dark", "empyrean-light", "empyrean-dark" ].includes(theme)) {
+        return [{ href: `${stylesheetsPath}/theme-${theme}.css` }];
     }
 
     if (theme !== "light" && customThemeCssUrl) {

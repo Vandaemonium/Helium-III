@@ -4,6 +4,9 @@ import { getNextColorSchemeTheme, resolveColorScheme } from "./color_scheme.js";
 
 describe("resolveColorScheme", () => {
     it("resolves each built-in theme to its family and scheme", () => {
+        expect(resolveColorScheme("empyrean")).toEqual({ family: "empyrean", scheme: "system", isCustom: false });
+        expect(resolveColorScheme("empyrean-light")).toEqual({ family: "empyrean", scheme: "light", isCustom: false });
+        expect(resolveColorScheme("empyrean-dark")).toEqual({ family: "empyrean", scheme: "dark", isCustom: false });
         expect(resolveColorScheme("next")).toEqual({ family: "modern", scheme: "system", isCustom: false });
         expect(resolveColorScheme("next-light")).toEqual({ family: "modern", scheme: "light", isCustom: false });
         expect(resolveColorScheme("next-dark")).toEqual({ family: "modern", scheme: "dark", isCustom: false });
@@ -24,6 +27,7 @@ describe("getNextColorSchemeTheme", () => {
         expect(getNextColorSchemeTheme("next")).toBe("next-light");
         expect(getNextColorSchemeTheme("next-light")).toBe("next-dark");
         expect(getNextColorSchemeTheme("next-dark")).toBe("next");
+        expect(getNextColorSchemeTheme("empyrean-dark")).toBe("empyrean");
 
         expect(getNextColorSchemeTheme("auto")).toBe("light");
         expect(getNextColorSchemeTheme("light")).toBe("dark");

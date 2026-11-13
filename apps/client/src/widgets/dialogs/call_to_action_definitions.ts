@@ -77,12 +77,12 @@ const CALL_TO_ACTIONS: CallToAction[] = [
         id: "next_theme",
         title: t("call_to_action.next_theme_title"),
         message: t("call_to_action.next_theme_message"),
-        enabled: () => ![ "next", "next-light", "next-dark" ].includes(options.get("theme")),
+        enabled: () => ![ "next", "next-light", "next-dark", "empyrean", "empyrean-light", "empyrean-dark" ].includes(options.get("theme")),
         buttons: [
             {
                 text: t("call_to_action.next_theme_button"),
                 async onClick() {
-                    await options.save("theme", "next");
+                    await options.save("theme", "empyrean");
                     await options.save("backgroundEffects", "true");
                     utils.reloadFrontendApp("call-to-action");
                 }

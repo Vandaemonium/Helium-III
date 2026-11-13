@@ -1,5 +1,6 @@
 {
   "about": {
+    "fork_of": "A fork of <upstream>TriliumNext</upstream>, by its contributors below",
     "version_label": "Version:",
     "version": "{{appVersion}} (database: {{dbVersion}}, sync protocol: {{syncVersion}})",
     "build_info": "Build: {{buildDate}}, revision: <buildRevision />",
@@ -1207,7 +1208,7 @@
     "reload_frontend": "Reload frontend",
     "show_hidden_subtree": "Hidden notes",
     "show_help": "Help",
-    "about": "About Trilium Notes",
+    "about": "About Helium-III",
     "logout": "Log out",
     "show-cheatsheet": "Keyboard shortcuts",
     "toggle-zen-mode": "Zen mode",
@@ -1983,6 +1984,7 @@
     "triliumnext": "Follow system color scheme",
     "triliumnext-light": "Light",
     "triliumnext-dark": "Dark",
+    "empyrean_themes": "Empyrean",
     "modern_themes": "Modern",
     "legacy_themes": "Legacy",
     "custom_themes": "Custom",
@@ -2103,7 +2105,7 @@
   "network_connections": {
     "network_connections_title": "Network",
     "check_for_updates": "Check for updates automatically",
-    "check_for_updates_description": "Checks for new versions on GitHub and shows a notification in the global menu when available."
+    "check_for_updates_description": "Checks GitHub for new versions of TriliumNext, the project Helium-III is forked from, and shows a notification in the global menu when one is available. These are not updates of Helium-III."
   },
   "note_erasure_timeout": {
     "note_erasure_timeout_title": "Deleted Notes",
@@ -4025,7 +4027,7 @@
     "step_progress": "Step {{current}} of {{total}}"
   },
   "call_to_action": {
-    "next_theme_title": "Try the new Trilium theme",
+    "next_theme_title": "Try the new Helium-III theme",
     "next_theme_message": "You are currently using the legacy theme, would you like to try the new theme?",
     "next_theme_button": "Try the new theme",
     "background_effects_title": "Background effects are now stable",
@@ -4247,6 +4249,7 @@
   "helium_quick_notes": {
     "composer_label": "New quick note",
     "composer_placeholder": "The first line is the title. Capture the rest below.",
+    "composer_compact_placeholder": "Quick note…",
     "save": "Save note",
     "saving": "Saving…",
     "saved": "Saved.",

@@ -3,6 +3,9 @@ import { build as esbuild } from "esbuild";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { basename, delimiter, extname, join } from "path";
 
+/** One ID per build run, in every bundle of that run. */
+const ASSET_BUILD_ID = Date.now().toString(36);
+
 export default class BuildHelper {
 
     rootDir: string;
@@ -107,6 +110,8 @@ export default class BuildHelper {
             },
             define: {
                 "process.env.NODE_ENV": JSON.stringify("production"),
+                // Read by `assetVersion` in core's app_info.ts, so a rebuild changes the cached asset URLs.
+                "__TRILIUM_ASSET_BUILD__": JSON.stringify(ASSET_BUILD_ID),
                 // CJS output has no `import.meta`, so esbuild rewrites
                 // `import.meta.url` to `{}` (→ undefined). Bundled ESM deps
                 // (e.g. @anthropic-ai/claude-agent-sdk) call

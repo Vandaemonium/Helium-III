@@ -82,10 +82,15 @@ export default function AboutDialog() {
             <div className="about-dialog-content">
 
                 <div className={"icon"} data-icon={altIcon ?? icon} />
-                <h2>Trilium Notes {channel !== "stable" && <span className="channel-name">{t(`about.channel.${channel}`)}</span>}</h2>
-                <a className="tn-link" href="https://triliumnotes.org/" target="_blank" rel="noopener noreferrer">
-                    triliumnotes.org
-                </a>
+                <h2>Helium-III {channel !== "stable" && <span className="channel-name">{t(`about.channel.${channel}`)}</span>}</h2>
+                <span className="about-dialog-fork">
+                    <Trans
+                        i18nKey="about.fork_of"
+                        components={{
+                            upstream: <a className="tn-link" href="https://triliumnotes.org/" target="_blank" rel="noopener noreferrer" /> as React.ReactElement
+                        }}
+                    />
+                </span>
 
                 <PropertySheet className="about-dialog-property-sheet">
                     <PropertySheetItem label={t("about.version_label")}>

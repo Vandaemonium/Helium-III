@@ -11,6 +11,7 @@ export const COLOR_SCHEME_ICONS: Record<ColorScheme, string> = {
 
 /** Maps each theme family and color scheme to the concrete `theme` option value. */
 export const THEME_FAMILY_SCHEMES: Record<string, Record<ColorScheme, string>> = {
+    empyrean: { system: "empyrean", light: "empyrean-light", dark: "empyrean-dark" },
     modern: { system: "next", light: "next-light", dark: "next-dark" },
     legacy: { system: "auto", light: "light", dark: "dark" }
 };

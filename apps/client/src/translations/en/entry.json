@@ -1,6 +1,6 @@
 {
   "login": {
-    "heading": "Log in to Trilium Notes",
+    "heading": "Log in to Helium-III",
     "password": "Password",
     "totp-token": "One-time password or recovery code",
     "button": "Log in",
@@ -26,7 +26,7 @@
     "desktop-description": "This Trilium desktop app has no password yet, so it can't be opened from a browser. In the desktop app, go to Options → Password & Auth and set a password, then reload this page to log in."
   },
   "setup": {
-    "heading": "Get started with Trilium",
+    "heading": "Get started with Helium-III",
     "new-document": "New knowledge base",
     "new-document-description": "Start with a clean knowledge base and begin right away.",
     "sync-from-desktop": "Connect a desktop app",

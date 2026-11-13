@@ -96,7 +96,7 @@ body.density-compact {
         }
     }
 
-    .quick-notes .quick-notes-composer {
+    .quick-notes:not(.collapsed) .quick-notes-composer {
         min-height: 64px;
     }
 }

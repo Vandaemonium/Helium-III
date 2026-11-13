@@ -193,7 +193,7 @@
   },
   "login": {
     "title": "Login",
-    "heading": "Trilium Login",
+    "heading": "Helium-III Login",
     "incorrect-totp": "TOTP is incorrect. Please try again.",
     "incorrect-password": "Password is incorrect. Please try again.",
     "password": "Password",
@@ -438,8 +438,8 @@
     "unable-to-print": "Unable to print the note"
   },
   "tray": {
-    "tooltip": "Trilium Notes",
-    "close": "Quit Trilium",
+    "tooltip": "Helium-III",
+    "close": "Quit Helium-III",
     "recents": "Recent notes",
     "bookmarks": "Bookmarks",
     "today": "Open today's journal note",

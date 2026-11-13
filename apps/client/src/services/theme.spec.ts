@@ -72,6 +72,12 @@ describe("getThemeStyle", () => {
         expect(getThemeStyle()).toBe("light");
         setTheme("next-dark");
         expect(getThemeStyle()).toBe("dark");
+        setTheme("empyrean");
+        expect(getThemeStyle()).toBe("auto");
+        setTheme("empyrean-light");
+        expect(getThemeStyle()).toBe("light");
+        setTheme("empyrean-dark");
+        expect(getThemeStyle()).toBe("dark");
 
         // None of the explicit branches should fall through to computed styles.
         expect(computed).not.toHaveBeenCalled();
@@ -155,6 +161,16 @@ describe("getConfiguredThemeStylesheets", () => {
         ]);
         expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "next-dark")).toEqual([
             { href: `${STYLESHEETS_PATH}/theme-next-dark.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "empyrean")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-empyrean-light.css` },
+            { href: `${STYLESHEETS_PATH}/theme-empyrean-dark.css`, media: "(prefers-color-scheme: dark)" }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "empyrean-light")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-empyrean-light.css` }
+        ]);
+        expect(getConfiguredThemeStylesheets(STYLESHEETS_PATH, "empyrean-dark")).toEqual([
+            { href: `${STYLESHEETS_PATH}/theme-empyrean-dark.css` }
         ]);
     });
 

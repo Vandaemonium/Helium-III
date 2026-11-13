@@ -41,7 +41,7 @@ export const HOME_WIDGET_TYPES: HomeWidgetType[] = [
     {
         id: "quickNotes", title: () => t("helium_home.widget_quick_notes"), icon: "bx bx-notepad",
         defaultSize: { w: 4, h: 7 }, minSize: { w: 3, h: 4 },
-        load: async () => ({ default: (await import("../../sidebar/QuickNotes")).QuickNotesPanel })
+        load: async () => ({ default: (await import("../../sidebar/QuickNotes")).HomeQuickNotes })
     },
     {
         id: "calendar", title: () => t("helium_home.widget_calendar"), icon: "bx bx-calendar",

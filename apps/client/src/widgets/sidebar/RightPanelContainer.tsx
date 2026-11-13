@@ -61,17 +61,28 @@ export default function RightPanelContainer({ widgetsByParent }: { widgetsByPare
         void options.save("rightPaneSelectedTab", tabId);
     }, []);
     const [ expandRequest, setExpandRequest ] = useState<ExpandWidgetRequest | null>(null);
-    useSplit(mode);
 
     // The chosen tab may have nothing to show for this note (or may have gone away entirely, e.g. the
     // chat once AI is switched off), in which case the first one that does stands in — without
     // overwriting the choice, so it is back as soon as the note has that tab again.
     const activeTab = tabs.find((tab) => tab.id === selectedTabId) ?? tabs[0];
 
+    // Home fills the content pane, so a docked pane with nothing on its tab for Home steps aside
+    // without being closed: `rightPaneVisible` is untouched and the pane is back on the next note.
+    const { noteContext } = useActiveNoteContext();
+    const showsHome = !!noteContext?.showsHome();
+    const [ revealedOnHome, setRevealedOnHome ] = useState(false);
+    useEffect(() => {
+        if (!showsHome) setRevealedOnHome(false);
+    }, [ showsHome ]);
+    const hiddenForHome = mode === "docked" && showsHome && !revealedOnHome && !activeTab?.items.length;
+    const revealOnHome = useCallback(() => setRevealedOnHome(true), []);
+    useSplit(hiddenForHome ? "closed" : mode);
+
     // Legacy entry points (tab-row toggle, empty-state button) open/close the *docked* pane;
     // the keyboard shortcut peeks it (same as clicking the peek button).
-    useTriliumEvent("toggleRightPane", toggleDocked);
-    useTriliumEvent("peekRightPane", togglePeek);
+    useTriliumEvent("toggleRightPane", hiddenForHome ? revealOnHome : toggleDocked);
+    useTriliumEvent("peekRightPane", hiddenForHome ? revealOnHome : togglePeek);
 
     // An entry point aimed at one tab (the chat launcher, the note map's keyboard action): it opens
     // the pane on that tab, brings it to the front if the pane is already open on another one, and puts
@@ -123,8 +134,8 @@ export default function RightPanelContainer({ widgetsByParent }: { widgetsByPare
             <PeekPaneButton
                 side="end"
                 className="right-pane-peek-button"
-                isOpen={visible}
-                onToggle={togglePeek}
+                isOpen={visible && !hiddenForHome}
+                onToggle={hiddenForHome ? revealOnHome : togglePeek}
                 hideText={t("right_pane.hide")}
                 peekText={t("right_pane.peek")}
                 keyboardAction="peekRightPane"
@@ -135,7 +146,7 @@ export default function RightPanelContainer({ widgetsByParent }: { widgetsByPare
                 `hidden` (display:none) keeps soft-dismissed peek content mounted but out of layout. */}
             <div
                 id="right-pane-host"
-                class={clsx("peek-pane-host side-end", mode === "peek" && "peek", !visible && "hidden")}
+                class={clsx("peek-pane-host side-end", mode === "peek" && "peek", (!visible || hiddenForHome) && "hidden")}
             >
                 {/* The spacer is both the left Split target and the dismiss backdrop in peek mode:
                     it covers the content (a click dismisses) and shields the PDF iframe so Split's

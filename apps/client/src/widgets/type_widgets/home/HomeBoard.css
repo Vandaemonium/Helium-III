@@ -248,6 +248,11 @@
             padding: 2px 0;
             font-size: 0.95em;
         }
+
+        .calendar-week-number {
+            transform: none;
+            font-size: 0.75em;
+        }
     }
 }
 
