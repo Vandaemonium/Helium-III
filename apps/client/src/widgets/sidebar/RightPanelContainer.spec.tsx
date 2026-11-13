@@ -5,12 +5,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import FNote from "../../entities/fnote";
 
 // The container follows whichever note is being read; the tests hand it one directly.
-const shownNote = vi.hoisted(() => ({ current: null as FNote | null }));
+const shownNote = vi.hoisted(() => ({ current: null as FNote | null, showsHome: false }));
 // The tabs' names live in tooltips only; Bootstrap's own machinery is not what is under test here.
 const useStaticTooltip = vi.hoisted(() => vi.fn());
 vi.mock("../react/hooks", async (importOriginal) => ({
     ...(await importOriginal<typeof import("../react/hooks")>()),
-    useActiveNoteContext: () => ({ note: shownNote.current }),
+    useActiveNoteContext: () => ({ note: shownNote.current, noteContext: { showsHome: () => shownNote.showsHome } }),
     useStaticTooltip
 }));
 
@@ -169,6 +169,23 @@ describe("RightPanelContainer", () => {
         options.set("heliumQuickNotesEnabled", "false");
         renderContainer();
         expect(shownTabIcons()).not.toContain(icon("quickNotes"));
+    });
+
+    it("leaves the text outline out while Home stands in for root", () => {
+        options.set("rightPaneSelectedTab", "outline");
+        shownNote.current = buildNote({ title: "Root", id: "root" });
+        shownNote.showsHome = true;
+        try {
+            renderContainer();
+            expect(container.querySelector(".toc-stub")).toBeNull();
+            render(null, container);
+
+            shownNote.showsHome = false;
+            renderContainer();
+            expect(container.querySelector(".toc-stub")).not.toBeNull();
+        } finally {
+            shownNote.showsHome = false;
+        }
     });
 
     function renderContainer() {
