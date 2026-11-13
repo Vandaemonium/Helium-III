@@ -4,6 +4,7 @@ import type { ViewScope } from "../services/link.js";
 import options from "../services/options.js";
 import utils from "../services/utils.js";
 import { buildNote } from "../test/easy-froca.js";
+import { getFormattingToolbarState } from "../widgets/layout/FormattingToolbar.js";
 import { getExtendedWidgetType } from "../widgets/NoteDetail.js";
 import appContext from "./app_context.js";
 import NoteContext from "./note_context.js";
@@ -56,6 +57,21 @@ describe("NoteContext built-in Home", () => {
         noteContext.noteId = "root";
         expect(noteContext.showsHome()).toBe(false);
         expect(await getExtendedWidgetType(noteContext.note, noteContext)).not.toBe("heliumHome");
+    });
+
+    it("hides the fixed formatting toolbar while Home stands in for root", async () => {
+        options.load({ heliumHomeEnabled: "true" });
+        const root = buildNote({ id: "root", title: "root", type: "text" });
+        const noteContext = new NoteContext();
+        noteContext.noteId = "root";
+        noteContext.viewScope = { viewMode: "default", isReadOnly: false };
+        vi.spyOn(noteContext, "getMainContext").mockReturnValue(noteContext);
+        vi.spyOn(noteContext, "getSubContexts").mockReturnValue([ noteContext ]);
+
+        expect(await getFormattingToolbarState(noteContext, root, "ckeditor-classic")).toBe("hidden");
+
+        options.load({ heliumHomeEnabled: "false" });
+        expect(await getFormattingToolbarState(noteContext, root, "ckeditor-classic")).toBe("visible");
     });
 });
 
