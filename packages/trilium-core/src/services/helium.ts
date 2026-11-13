@@ -27,11 +27,7 @@ export function seedHeliumConfig() {
 
     const quickConfig = becca.notes[HELIUM_QUICK_CONFIG_NOTE_ID];
     if (quickConfig && isEmptyContent(quickConfig)) {
-        const folder = ensureQuickNotesFolder();
-        if (folder) {
-            const config: HeliumQuickConfig = { schemaVersion: 1, dataNoteId: folder.noteId };
-            quickConfig.setContent(JSON.stringify(config, null, 4));
-        }
+        writeQuickConfig(quickConfig);
     }
 }
 
@@ -113,7 +109,25 @@ export function setQuickNoteState(noteId: string, key: unknown, value: unknown) 
 /** Runs setup again, e.g. after the user renamed a conflicting folder. */
 export function retryQuickNotesSetup() {
     seedHeliumConfig();
+    // Unreadable or unsupported config is derived data, so retrying replaces it instead of failing silently.
+    const quickConfig = becca.notes[HELIUM_QUICK_CONFIG_NOTE_ID];
+    if (quickConfig?.isContentAvailable() && !configuredDataNoteId()) {
+        writeQuickConfig(quickConfig);
+    }
     return getQuickNotes();
+}
+
+function writeQuickConfig(quickConfig: BNote) {
+    const folder = ensureQuickNotesFolder();
+    if (folder) {
+        const config: HeliumQuickConfig = { schemaVersion: 1, dataNoteId: folder.noteId };
+        quickConfig.setContent(JSON.stringify(config, null, 4));
+    }
+}
+
+function configuredDataNoteId() {
+    const config = readJson(HELIUM_QUICK_CONFIG_NOTE_ID) as Partial<HeliumQuickConfig> | null;
+    return config?.schemaVersion === 1 && typeof config.dataNoteId === "string" ? config.dataNoteId : null;
 }
 
 function ensureQuickNotesFolder(): BNote | null {
@@ -129,7 +143,6 @@ function ensureQuickNotesFolder(): BNote | null {
     }
     return noteService.createNewNote({
         noteId: HELIUM_QUICK_NOTES_FOLDER_ID,
-        branchId: `root_${HELIUM_QUICK_NOTES_FOLDER_ID}`,
         parentNoteId: "root",
         title,
         content: "",
@@ -139,8 +152,7 @@ function ensureQuickNotesFolder(): BNote | null {
 }
 
 function resolveQuickNotesFolder(): { status: QuickNotesData["status"]; folder: BNote | null } {
-    const config = readJson(HELIUM_QUICK_CONFIG_NOTE_ID) as Partial<HeliumQuickConfig> | null;
-    const dataNoteId = config?.schemaVersion === 1 && typeof config.dataNoteId === "string" ? config.dataNoteId : null;
+    const dataNoteId = configuredDataNoteId();
     if (!dataNoteId) {
         return { status: hasFolderConflict() ? "conflict" : "unconfigured", folder: null };
     }

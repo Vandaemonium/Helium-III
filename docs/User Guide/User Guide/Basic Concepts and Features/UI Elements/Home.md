@@ -4,8 +4,8 @@ Home is the overview shown when the root note is opened: the notes modified most
 ## Sections
 
 *   _Recent_ lists the most recently modified notes.
-*   _Pinned_ lists the notes with the `#pinned` label.
-*   _Inbox_ lists the notes with the `#inbox` label, and the direct children of any note with that label, so a whole folder can serve as an inbox.
+*   _Pinned_ lists the notes that carry the `#pinned` label themselves; a label a note only inherits does not count.
+*   _Inbox_ lists the notes that carry the `#inbox` label themselves, and the direct children of any such note, so a whole folder can serve as an inbox.
 
 Each entry is a link that opens the note. The sections update as notes change.
 

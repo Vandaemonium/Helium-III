@@ -42,6 +42,22 @@ describe("Helium Home and Quick Notes API (core)", () => {
             checkHiddenSubtree();
         });
 
+        it("replaces unreadable Quick Notes config on setup instead of staying unconfigured", async () => {
+            const config = becca.getNoteOrThrow(HELIUM_QUICK_CONFIG_NOTE_ID);
+            const savedConfig = String(config.getContent());
+            for (const broken of [ "{ not json", JSON.stringify({ schemaVersion: 2, dataNoteId: "x" }) ]) {
+                getContext().init(() => config.setContent(broken));
+                expect((await api.get<QuickNotesData>("/api/helium/quick-notes")).body.status).toBe("unconfigured");
+
+                const res = await api.post<QuickNotesData>("/api/helium/quick-notes/setup");
+                expect(res.body.status).toBe("ok");
+                expect(JSON.parse(String(config.getContent())))
+                    .toEqual({ schemaVersion: 1, dataNoteId: HELIUM_QUICK_NOTES_FOLDER_ID });
+            }
+            expect(becca.getNoteOrThrow("root").getChildNotes().filter((n) => n.title === "Quick Notes")).toHaveLength(1);
+            getContext().init(() => config.setContent(savedConfig));
+        });
+
         it("reports a conflict with an unrelated Quick Notes folder instead of claiming it", async () => {
             const config = becca.getNoteOrThrow(HELIUM_QUICK_CONFIG_NOTE_ID);
             const folder = becca.getNoteOrThrow(HELIUM_QUICK_NOTES_FOLDER_ID);
