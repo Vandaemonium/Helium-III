@@ -1,0 +1,66 @@
+.quick-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+
+    .quick-notes-composer {
+        min-height: 96px;
+        resize: vertical;
+    }
+
+    .quick-notes-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .quick-notes-status {
+        margin: 0;
+        min-height: 1lh;
+        font-size: 0.9em;
+        color: var(--muted-text-color);
+    }
+
+    .quick-notes-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .quick-notes-card {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        padding: 8px;
+        border: 1px solid var(--main-border-color);
+        border-radius: 8px;
+        overflow-wrap: anywhere;
+    }
+
+    .quick-notes-card-open {
+        justify-content: flex-start;
+        text-align: start;
+        font-weight: 600;
+        white-space: normal;
+    }
+
+    .quick-notes-card-preview {
+        display: -webkit-box;
+        margin: 0;
+        overflow: hidden;
+        white-space: pre-wrap;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+    }
+
+    @media (pointer: coarse) {
+        .btn {
+            min-height: 44px;
+        }
+    }
+}

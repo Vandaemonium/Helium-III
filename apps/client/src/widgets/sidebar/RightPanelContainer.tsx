@@ -251,6 +251,7 @@ export function useRightPaneTabs(rightPaneVisible: boolean, widgetsByParent: Wid
     const boardColumns = useGetContextData("boardColumns");
     // Subscribe to the AI toggle so the LLM chat is added/removed reactively without a page reload.
     const [ aiEnabled ] = useTriliumOptionBool("aiEnabled");
+    const [ quickNotesEnabled ] = useTriliumOptionBool("heliumQuickNotesEnabled");
     const isPdf = noteType === "file" && noteMime === "application/pdf";
 
     if (!rightPaneVisible) return [];
@@ -325,6 +326,11 @@ export function useRightPaneTabs(rightPaneVisible: boolean, widgetsByParent: Wid
             el: <ChatHighlightsList />,
             enabled: noteType === "llmChat" && (chatHighlights?.highlights.length ?? 0) > 0,
             tab: "outline"
+        },
+        {
+            el: <LazyComponent loader={() => import("./QuickNotes.jsx")} />,
+            enabled: !!note && quickNotesEnabled,
+            tab: "quickNotes"
         },
         {
             // Loaded lazily because the chat pulls in the whole LLM + CKEditor graph,

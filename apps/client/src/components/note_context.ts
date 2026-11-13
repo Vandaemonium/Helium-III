@@ -499,6 +499,13 @@ class NoteContext extends Component implements EventListener<"entitiesReloaded">
         });
     }
 
+    /** Whether the built-in Home stands in for this context's note: the root note in its normal view. */
+    showsHome() {
+        return this.note?.noteId === "root"
+            && (this.viewScope?.viewMode ?? "default") === "default"
+            && options.is("heliumHomeEnabled");
+    }
+
     hasNoteList() {
         const note = this.note;
 
@@ -506,7 +513,7 @@ class NoteContext extends Component implements EventListener<"entitiesReloaded">
             return false;
         }
 
-        if (note.type === "search") {
+        if (note.type === "search" || this.showsHome()) {
             return false;
         }
 

@@ -4191,7 +4191,51 @@
     "tab_attributes": "Attributes",
     "tab_connections": "Connections",
     "tab_chat": "AI chat",
-    "tab_widgets": "Widgets"
+    "tab_widgets": "Widgets",
+    "tab_quick_notes": "Quick Notes"
+  },
+  "helium_home": {
+    "recent": "Recent",
+    "pinned": "Pinned",
+    "inbox": "Inbox",
+    "recent_empty": "No recent notes yet.",
+    "pinned_empty": "No pinned notes. Add the #pinned label to a note to list it here.",
+    "inbox_empty": "The inbox is empty. Add the #inbox label to a note or a folder to list it here.",
+    "load_failed": "Could not load Home."
+  },
+  "helium_quick_notes": {
+    "composer_label": "New quick note",
+    "composer_placeholder": "The first line is the title. Capture the rest below.",
+    "save": "Save note",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "blank": "Enter some text before saving.",
+    "failed": "Not saved. Your draft is kept.",
+    "uncertain": "The save is uncertain. Check Active, Archived and the Quick Notes folder before allowing a retry. Your draft is kept.",
+    "acknowledge": "I checked; allow retry",
+    "retry_enabled": "Retry enabled. Saving again might duplicate the note if the earlier save succeeded.",
+    "search": "Search quick notes",
+    "active": "Active",
+    "archived": "Archived",
+    "empty": "No notes in this view.",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "archive": "Archive",
+    "restore": "Restore",
+    "state_failed": "The change was not confirmed. Refresh before retrying.",
+    "load_failed": "Could not load Quick Notes. No notes were changed.",
+    "status_unconfigured": "Quick Notes is not set up yet.",
+    "status_conflict": "A top-level note named “Quick Notes” already exists, so no capture folder was created. Rename that note, then set up again.",
+    "status_missing": "The Quick Notes folder was deleted or moved into the hidden notes. Restore it from Recent changes to keep capturing.",
+    "status_protected": "The Quick Notes folder is protected. Quick Notes saves only into an unprotected folder.",
+    "retry_setup": "Set up again"
+  },
+  "helium_options": {
+    "title": "Home and Quick Notes",
+    "home_enabled": "Home on the root note",
+    "home_enabled_description": "Opening the root note shows recent, pinned and inbox notes instead of the root note's own content.",
+    "quick_notes_enabled": "Quick Notes tab",
+    "quick_notes_enabled_description": "Offers a Quick Notes tab in the right pane, and in the note panel on phones. Captured notes stay in the Quick Notes folder either way."
   },
   "print_preview": {
     "title": "Print preview",
