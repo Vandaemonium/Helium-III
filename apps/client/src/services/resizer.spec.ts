@@ -46,10 +46,14 @@ function setLauncherPaneWidth(px: number) {
  * singleton that never resets) with options.get/getInt stubbed to the supplied
  * values.
  */
-async function loadResizer(opts: { layoutOrientation?: string; leftPaneWidth?: number | null } = {}) {
+async function loadResizer(opts: { layoutOrientation?: string; leftPaneWidth?: number | null; uiDensity?: string } = {}) {
     vi.resetModules();
     const optionsModule = (await import("./options.js")).default;
-    optionsModule.get = vi.fn((key) => (key === "layoutOrientation" ? (opts.layoutOrientation ?? "horizontal") : "")) as typeof optionsModule.get;
+    optionsModule.get = vi.fn((key) => {
+        if (key === "layoutOrientation") return opts.layoutOrientation ?? "horizontal";
+        if (key === "uiDensity") return opts.uiDensity ?? "comfortable";
+        return "";
+    }) as typeof optionsModule.get;
     optionsModule.getInt = vi.fn((key) => {
         if (key === "leftPaneWidth") return opts.leftPaneWidth ?? null;
         return null;
@@ -164,6 +168,20 @@ describe("setupLeftPaneResizer", () => {
         flushRaf();
         expect(SplitMock).toHaveBeenCalledTimes(2);
         expect(SplitMock.mock.calls[1][1].sizes).toEqual([43, 57]);
+    });
+
+    it("narrows the comfortable default width under the compact density, and keeps any other width", async () => {
+        const widthFor = async (leftPaneWidth: number, uiDensity: string) => {
+            SplitMock.mockClear();
+            const { resizer } = await loadResizer({ layoutOrientation: "horizontal", leftPaneWidth, uiDensity });
+            resizer.setupLeftPaneResizer("docked");
+            flushRaf();
+            return SplitMock.mock.calls[0][1].sizes[0];
+        };
+
+        expect(await widthFor(25, "compact")).toBe(20);
+        expect(await widthFor(25, "comfortable")).toBe(25);
+        expect(await widthFor(30, "compact")).toBe(30);
     });
 
     it("clamps a missing stored width (getInt -> null) up to the minimum of 5", async () => {

@@ -1,5 +1,5 @@
 # Home
-Home is the overview shown when the root note is opened: the notes modified most recently, the pinned notes and the inbox. It takes the place of the root note's own content and its list of child notes; the root note itself is not changed.
+Home is the overview shown when the root note is opened: the notes modified most recently, the pinned notes and the inbox. It takes the place of the root note's own content and its list of child notes, so the text formatting toolbar is not shown above it; the root note itself is not changed.
 
 ## Sections
 

@@ -106,6 +106,21 @@ describe("the note title style", () => {
     });
 });
 
+describe("the density", () => {
+    it("marks the stored density, and falls back to compact", () => {
+        const activeChoice = () => [ ...host.querySelectorAll(".tn-segmented-choice .active") ]
+            .map(button => button.textContent?.trim())
+            .find(text => text?.startsWith("theme.density_"));
+
+        open();
+        expect(activeChoice()).toBe("theme.density_compact");
+
+        mocks.stored.uiDensity = "comfortable";
+        open();
+        expect(activeChoice()).toBe("theme.density_comfortable");
+    });
+});
+
 describe("the desktop-only settings", () => {
     it("are offered with the way to apply them, and neither is on a server build", () => {
         open();

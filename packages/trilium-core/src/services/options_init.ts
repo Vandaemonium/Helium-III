@@ -345,6 +345,7 @@ const defaultOptions: DefaultOption[] = [
     // HTML import configuration
     { name: "layoutOrientation", value: "vertical", isSynced: false },
     { name: "noteTitleStyle", value: "large", isSynced: false },
+    { name: "uiDensity", value: "compact", isSynced: false },
     { name: "backgroundEffects", value: "true", isSynced: false },
     {
         name: "allowedHtmlTags",
