@@ -1,5 +1,5 @@
 # Home
-Home is the board of widgets shown when the root note is opened: quick capture, a calendar of the journal, a checklist, the clock, recent, pinned and inbox notes, bookmarks and saved searches, each in its own panel. It takes the place of the root note's own content and its list of child notes; the root note itself is not changed.
+Home is the board of widgets shown when the root note is opened: quick capture, a calendar of the journal, a checklist, the clock, recent, pinned and inbox notes, bookmarks and saved searches, each in its own panel. It takes the place of the root note's own content and its list of child notes, so the text formatting toolbar is not shown above it; the root note itself is not changed.
 
 ## The board
 

@@ -58,6 +58,11 @@ const NOTE_TITLE_STYLES: SegmentedChoiceOption<OptionDefinitions["noteTitleStyle
     { value: "compact", label: t("theme.note_title_style_compact"), icon: "bx-collapse-vertical" }
 ];
 
+const DENSITIES: SegmentedChoiceOption<OptionDefinitions["uiDensity"]>[] = [
+    { value: "comfortable", label: t("theme.density_comfortable"), icon: "bx-expand-vertical" },
+    { value: "compact", label: t("theme.density_compact"), icon: "bx-collapse-vertical" }
+];
+
 function resolveTheme(themeVal: string | null): { family: ThemeFamily | null; scheme: ColorScheme; isCustom: boolean } {
     const { family: familyKey, scheme, isCustom } = resolveColorScheme(themeVal);
     const family = THEME_FAMILIES.find(f => f.key === familyKey) ?? null;
@@ -93,6 +98,7 @@ function UserInterface() {
     const customThemes = useUserThemes();
     const [ editedNotesOpenInRibbon, setEditedNotesOpenInRibbon ] = useTriliumOptionBool("editedNotesOpenInRibbon");
     const [ noteTitleStyle, setNoteTitleStyle ] = useTriliumOption("noteTitleStyle");
+    const [ uiDensity, setUiDensity ] = useTriliumOption("uiDensity");
 
     const resolved = useMemo(() => resolveTheme(theme ?? null), [theme]);
     const isCustom = resolved.isCustom;
@@ -167,6 +173,19 @@ function UserInterface() {
                     currentValue={isCustom ? "" : resolved.scheme}
                     onChange={setColorScheme}
                     disabled={isCustom}
+                    collapseOnMobile
+                />
+            </OptionCardSection>
+
+            <OptionCardSection
+                name="density"
+                label={t("theme.density")}
+                description={t("theme.density_description")}
+            >
+                <SegmentedChoice
+                    options={DENSITIES}
+                    currentValue={uiDensity === "comfortable" ? "comfortable" : "compact"}
+                    onChange={setUiDensity}
                     collapseOnMobile
                 />
             </OptionCardSection>

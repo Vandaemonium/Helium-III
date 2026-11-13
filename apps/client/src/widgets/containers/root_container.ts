@@ -55,6 +55,7 @@ export default class RootContainer extends FlexContainer<BasicWidget> {
         this.#setMaxContentWidth();
         this.#setMotion();
         this.#setShadows();
+        this.#setDensity();
         this.#setBackdropEffects();
         this.#setMonospaceLigatures();
         this.#setStickyTableHeaders();
@@ -93,6 +94,10 @@ export default class RootContainer extends FlexContainer<BasicWidget> {
 
         if (loadResults.isOptionReloaded("shadowsEnabled")) {
             this.#setShadows();
+        }
+
+        if (loadResults.isOptionReloaded("uiDensity") || loadResults.isOptionReloaded("overrideThemeFonts")) {
+            this.#setDensity();
         }
 
         if (loadResults.isOptionReloaded("backdropEffectsEnabled")) {
@@ -192,6 +197,13 @@ export default class RootContainer extends FlexContainer<BasicWidget> {
     #setShadows() {
         const enabled = options.is("shadowsEnabled");
         document.body.classList.toggle("shadows-disabled", !enabled);
+    }
+
+    /** `density-compact-text` leaves font sizes the user set (`overrideThemeFonts`) alone. */
+    #setDensity() {
+        const compact = options.get("uiDensity") !== "comfortable";
+        document.body.classList.toggle("density-compact", compact);
+        document.body.classList.toggle("density-compact-text", compact && !options.is("overrideThemeFonts"));
     }
 
     #setBackdropEffects() {

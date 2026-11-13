@@ -19,6 +19,8 @@ In addition:
 
 Whenever the title is scrolled past, the fixed title is shown instead.
 
+With the _Compact_ <a class="reference-link" href="../UI%20Elements/Density.md">Density</a>, the default, the inline title uses a smaller icon and font and sits closer to the top of the note.
+
 Note types that take the entirety of the screen, such as <a class="reference-link" href="../../Note%20Types/Code.md">Code</a> and <a class="reference-link" href="../../Note%20Types/Canvas.md">Canvas</a>, will always have only the fixed title bar.
 
 Under the note title, the <a class="reference-link" href="New%20note%20type%20switcher.md">New note type switcher</a> appears if the note is empty.

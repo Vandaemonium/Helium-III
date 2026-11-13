@@ -2006,7 +2006,11 @@
     "note_title_style": "Note title",
     "note_title_style_description": "The compact title shows only in the bar above the note, leaving more room for the content. The creation and modification dates are not shown.",
     "note_title_style_large": "Large",
-    "note_title_style_compact": "Compact"
+    "note_title_style_compact": "Compact",
+    "density": "Density",
+    "density_description": "Compact uses smaller bars, tighter tree rows and a shorter note header, so more of your notes fit on screen.",
+    "density_comfortable": "Comfortable",
+    "density_compact": "Compact"
   },
   "ui-performance": {
     "title": "Performance",

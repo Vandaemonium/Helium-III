@@ -25,7 +25,7 @@
     .quick-notes-cards {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 4px;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -33,33 +33,82 @@
 
     .quick-notes-card {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
+        flex-wrap: wrap;
+        align-items: center;
         min-width: 0;
-        padding: 8px;
         border: 1px solid var(--main-border-color);
-        border-radius: 8px;
-        overflow-wrap: anywhere;
+        border-radius: 6px;
+
+        &.pinned {
+            border-color: var(--link-color);
+        }
+
+        & > .quick-notes-status {
+            flex-basis: 100%;
+            padding: 0 8px 4px;
+        }
     }
 
-    .quick-notes-card-open {
-        justify-content: flex-start;
+    .quick-notes-card-open.btn {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1px;
+        min-width: 0;
+        padding: 4px 8px;
         text-align: start;
+        white-space: nowrap;
+    }
+
+    .quick-notes-card-title,
+    .quick-notes-card-preview {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .quick-notes-card-title {
         font-weight: 600;
-        white-space: normal;
     }
 
     .quick-notes-card-preview {
-        display: -webkit-box;
-        margin: 0;
-        overflow: hidden;
-        white-space: pre-wrap;
-        -webkit-line-clamp: 6;
-        -webkit-box-orient: vertical;
+        font-size: 0.9em;
+        color: var(--muted-text-color);
+    }
+
+    .quick-notes-card-actions {
+        display: flex;
+        flex-shrink: 0;
+        padding-inline-end: 4px;
+    }
+
+    .quick-notes-card .icon-action {
+        display: none;
+    }
+
+    .quick-notes-card:hover .icon-action,
+    .quick-notes-card:focus-within .icon-action,
+    .quick-notes-card.pinned .quick-notes-pin {
+        display: inline-flex;
+    }
+
+    .quick-notes-card.pinned .quick-notes-pin {
+        color: var(--link-color);
+    }
+
+    @media (hover: none) {
+        .quick-notes-card .icon-action {
+            display: inline-flex;
+        }
     }
 
     @media (pointer: coarse) {
         .btn {
+            min-height: 44px;
+        }
+
+        .quick-notes-card .icon-action {
+            min-width: 44px;
             min-height: 44px;
         }
     }
