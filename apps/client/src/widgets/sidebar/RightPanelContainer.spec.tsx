@@ -188,6 +188,40 @@ describe("RightPanelContainer", () => {
         }
     });
 
+    it("steps aside beside Home when its tab is empty there, without closing, and is back on another note", () => {
+        options.set("rightPaneSelectedTab", "outline");
+        shownNote.current = buildNote({ title: "Root", id: "root" });
+        shownNote.showsHome = true;
+        const host = () => container.querySelector("#right-pane-host");
+        try {
+            renderContainer();
+            expect(host()?.classList.contains("hidden")).toBe(true);
+            expect(options.get("rightPaneVisible")).toBe("true");
+
+            // The toggle shows it for this visit to Home instead of closing the docked pane.
+            act(() => {
+                for (const handler of eventHandlers.get("toggleRightPane") ?? []) handler({});
+            });
+            expect(host()?.classList.contains("hidden")).toBe(false);
+            expect(container.querySelector("#right-pane .no-items")).not.toBeNull();
+            render(null, container);
+
+            // A tab that has something for Home keeps the pane.
+            options.set("rightPaneSelectedTab", "attributes");
+            renderContainer();
+            expect(host()?.classList.contains("hidden")).toBe(false);
+            render(null, container);
+
+            options.set("rightPaneSelectedTab", "outline");
+            shownNote.showsHome = false;
+            renderContainer();
+            expect(host()?.classList.contains("hidden")).toBe(false);
+            expect(container.querySelector(".toc-stub")).not.toBeNull();
+        } finally {
+            shownNote.showsHome = false;
+        }
+    });
+
     function renderContainer() {
         eventHandlers = new Map();
         const parent = {
