@@ -207,7 +207,7 @@ describe("GlobalMenu", () => {
     async function openThemes() {
         const opened = await openSubmenu("global_menu.theme");
         const items = () => [ ...opened.submenu?.querySelectorAll<HTMLElement>(":scope > li") ?? [] ];
-        await vi.waitFor(() => expect(items().length).toBe(6 + userThemes.length));
+        await vi.waitFor(() => expect(items().length).toBe(7 + userThemes.length));
         const row = (text: string) => items().find((item) => item.textContent?.trim() === text);
         return {
             ...opened,
@@ -247,7 +247,7 @@ describe("GlobalMenu", () => {
         expect(next?.textContent?.trim()).toBe("global_menu.advanced");
     });
 
-    it("lists the color schemes, then Modern and the custom themes, with the active ones checked", async () => {
+    it("lists the color schemes, then Empyrean, Modern and the custom themes, with the active ones checked", async () => {
         ctrl.theme = "next-dark";
         const { entries, checked, row, click } = await openThemes();
 
@@ -255,7 +255,7 @@ describe("GlobalMenu", () => {
             "theme.color_scheme",
             "theme.color_scheme_system", "theme.color_scheme_light", "theme.color_scheme_dark",
             "global_menu.theme",
-            "theme.modern_themes", "Solarized"
+            "theme.empyrean_themes", "theme.modern_themes", "Solarized"
         ]);
         expect(checked).toEqual([ "theme.color_scheme_dark", "theme.modern_themes" ]);
         expect(row("theme.color_scheme_dark")?.querySelector(".menu-trailing-icon.bx-check")).not.toBeNull();
@@ -276,6 +276,8 @@ describe("GlobalMenu", () => {
 
         await click("theme.modern_themes");
         expect(ctrl.setTheme).toHaveBeenCalledWith("next-dark");
+        await click("theme.empyrean_themes");
+        expect(ctrl.setTheme).toHaveBeenCalledWith("empyrean-dark");
     });
 
     it("disables the color schemes while a custom theme is active", async () => {

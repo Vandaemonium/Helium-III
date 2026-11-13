@@ -1003,7 +1003,7 @@ export default class TabManager extends Component {
         const titleFragments = [
             // it helps to navigate in history if note title is included in the title
             await activeNoteContext.getNavigationTitle(),
-            "Trilium Notes"
+            "Helium-III"
         ].filter(Boolean);
 
         document.title = titleFragments.join(" - ");

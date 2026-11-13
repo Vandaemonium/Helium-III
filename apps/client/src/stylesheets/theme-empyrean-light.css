@@ -1,0 +1,215 @@
+/*
+ * Empyrean (light): the Next theme in muted Empyrean colors. Only the color scheme changes; the
+ * layout and every rule come from `theme-next-light.css`.
+ */
+@import url(./theme-next-light.css);
+@import url(./theme-empyrean/shared.css);
+
+:root {
+    --empyrean-gradient: linear-gradient(90deg, #2ec4b6, #b026ff);
+    --empyrean-accent: #6a56a6;
+
+    --main-background-color: #f4f3f8;
+    --main-text-color: #3a3747;
+    --main-border-color: #d9d6e3;
+    --subtle-border-color: #4a3f7a14;
+    --dropdown-border-color: #d2cfdd;
+    --dropdown-shadow-opacity: 0.12;
+    --dropdown-item-icon-destructive-color: #b2584a;
+    --form-error-text-color: #a8443a;
+    --contextual-help-icon-color: #5c4899;
+
+    --accented-background-color: #eae8f1;
+    --muted-text-color: #5e5a6e;
+
+    --tool-dialog-background-color: #f8f7fb;
+    --tool-dialog-shadow-color: #2a24404d;
+
+    --cmd-button-background-color: #4a3f7a12;
+    --cmd-button-text-color: #3a3747;
+    --cmd-button-hover-background-color: #4a3f7a1f;
+    --cmd-button-hover-text-color: #241f33;
+    --cmd-button-icon-color: #3a3747;
+    --cmd-button-keyboard-shortcut-background: #4a3f7a17;
+    --cmd-button-keyboard-shortcut-color: #3a3747;
+
+    --low-profile-button-active-background-color: #6a56a6;
+    --low-profile-button-active-color: #f8f7fb;
+
+    --button-group-active-button-background-color: #f8f7fb;
+    --button-group-active-button-color: #241f33;
+    --button-group-active-button-shadow-color: #2a244040;
+
+    --opaque-icon-button-background: #e4e2ecd7;
+    --opaque-icon-button-hover-background-color: #d6d3e0d7;
+
+    --input-background-color: #4a3f7a12;
+    --input-text-color: #3a3747;
+    --input-placeholder-color: #67637a;
+    --input-selection-background: #6a56a659;
+    --input-selection-text-color: #241f33;
+    --input-hover-background: #4a3f7a1c;
+    --input-hover-color: #3a3747;
+    --input-focus-outline-color: #6a56a68c;
+    --input-focus-background: #ffffff80;
+    --input-focus-color: #241f33;
+    --input-action-button-color: #5e5a6e;
+    --input-action-button-hover: #241f33;
+
+    --select-focus-background: #f8f7fb;
+    --select-arrow-svg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='transparent' stroke='%233a3747' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+    --select-group-heading-text-color: #67637a;
+
+    --link-color: #5c4899;
+    --link-hover-background: #6a56a614;
+    --link-selection-outline-color: #6a56a680;
+
+    --hover-item-text-color: #241f33;
+    --hover-item-background-color: #4a3f7a14;
+
+    --active-item-background-color: #6a56a626;
+
+    --menu-text-color: #3a3747;
+    --menu-background-color: #f8f7fbe6;
+    --menu-background-color-no-backdrop: #f8f7fb;
+    --menu-item-icon-color: #67637a;
+    --menu-item-keyboard-shortcut-color: #67637a;
+    --menu-item-arrow-color: #67637a;
+    --menu-item-delimiter-color: #4a3f7a26;
+    --menu-item-group-header-color: #67637a;
+    --menu-section-background-color: #4a3f7a06;
+
+    --glass-background: #f8f7fba6;
+    --glass-edge-color: #4a3f7a1f;
+
+    --grouped-background-color: #ebe9f1;
+    --grouped-card-background-color: #f8f7fb;
+
+    --modal-backdrop-color: #5e5a6e;
+    --modal-shadow-color: #2a244033;
+    --modal-border-color: #c9c5d6;
+    --modal-background-color: #f8f7fb;
+    --modal-title-color: #5e5a6e;
+    --modal-footer-background: #4a3f7a08;
+    --modal-footer-color: #5e5a6e;
+
+    --toast-background: #3a3747e6;
+    --toast-text-color: #f4f3f8;
+
+    --quick-search-background: #4a3f7a12;
+    --quick-search-color: #67637a;
+    --quick-search-hover-background: #4a3f7a1c;
+    --quick-search-focus-border: #6a56a666;
+    --quick-search-focus-background: #ffffff80;
+    --quick-search-focus-color: #241f33;
+    --quick-search-result-highlight-color: #8a4f6a;
+    --quick-search-result-fuzzy-highlight-color: #8a6a3a;
+
+    --left-pane-collapsed-border-color: #4a3f7a0d;
+    --left-pane-background-color: #ebe9f1;
+    --left-pane-text-color: #3a3747;
+    --left-pane-item-hover-background: #4a3f7a0a;
+    --left-pane-item-selected-background: #6a56a626;
+    --left-pane-item-selected-color: #241f33;
+    --left-pane-item-selected-shadow: none;
+    --left-pane-item-action-button-background: #4a3f7a1c;
+    --left-pane-item-action-button-hover-background: #f8f7fb;
+
+    --launcher-pane-vert-background-color: #e4e2ec;
+    --launcher-pane-vert-text-color: #4a4659;
+    --launcher-pane-vert-button-hover-color: #241f33;
+    --launcher-pane-vert-button-hover-background: #f8f7fb;
+    --launcher-pane-vert-button-hover-shadow: none;
+
+    --launcher-pane-horiz-border-color: #4a3f7a1a;
+    --launcher-pane-horiz-background-color: #efedf4;
+    --launcher-pane-horiz-button-hover-color: #241f33;
+
+    --global-menu-update-available-badge-background-color: #4f8a66;
+    --global-menu-update-available-badge-color: #f8f7fb;
+
+    --protected-session-active-icon-color: #3f8a5a;
+    --sync-status-error-pulse-color: #c4604e;
+
+    --classic-toolbar-vert-layout-background-color: #f8f7fba1;
+
+    --right-pane-heading-color: #67637a;
+    --right-pane-peek-background: #f8f7fbea;
+    --left-pane-peek-background: #ebe9f1ea;
+
+    --gutter-hover-color: #c4c0d1;
+
+    --tab-close-button-hover-background: #b86a6a;
+    --tab-close-button-hover-color: #f8f7fb;
+
+    --active-tab-background-color: #fbfafd;
+    --active-tab-icon-color: #5e5a6e;
+    --active-tab-text-color: #3a3747;
+    --active-tab-shadow: 0 1px 2px #2a24401a;
+    --inactive-tab-hover-background-color: #4a3f7a12;
+    --inactive-tab-text-color: #5e5a6e;
+
+    --alert-bar-background: #6a56a61f;
+
+    --badge-background-color: #4a3f7a12;
+
+    --note-icon-background-color: #5a566b;
+    --note-icon-color: #f4f3f8;
+    --note-icon-hover-background-color: #6f6b80;
+
+    --promoted-attribute-card-background-color: #4a3f7a12;
+
+    --floating-button-background-color: #e9e7f0cc;
+
+    --new-tab-button-background: #dedbe7;
+    --new-tab-button-color: #3a3747;
+    --new-tab-button-hover-background: #f8f7fb;
+    --new-tab-button-hover-color: #241f33;
+
+    --right-pane-item-hover-background: #4a3f7a12;
+
+    --bottom-panel-background-color: #f8f7fb8c;
+
+    --status-bar-border-color: #4a3f7a1f;
+
+    --scrollbar-thumb-color: #4a3f7a40;
+    --scrollbar-thumb-hover-color: #4a3f7a59;
+
+    --selection-background-color: #6a56a640;
+
+    --code-block-box-shadow: 0 0 0 1px #4a3f7a14;
+
+    --card-background-color: #4a3f7a0a;
+    --card-background-hover-color: #4a3f7a12;
+
+    --inline-code-background-color: #4a3f7a0f;
+    --inline-code-border-color: #4a3f7a1f;
+    --inline-code-hover-background-color: #4a3f7a1a;
+
+    --calendar-day-highlight-background: #6a56a626;
+
+    --timeline-bullet-color: #8a8699;
+    --timeline-connector-color: #d9d6e3;
+    --timeline-connector-active-color: #c9c5d6;
+
+    --tooltip-background-color: #3a3747eb;
+    --tooltip-foreground-color: #f4f3f8;
+
+    --ck-editor-toolbar-button-on-background: #6a56a626;
+    --ck-editor-toolbar-button-on-color: #241f33;
+    --ck-editor-toolbar-button-on-shadow: none;
+
+    --text-note-table-header-background: #4a3f7a0d;
+
+    --task-checkbox-done-color: #4f8a66;
+    --task-checkbox-done-hover-color: #5f9a76;
+    --task-checkbox-unknown-state-color: #b85c5c;
+}
+
+:root:root {
+    --admonition-note-accent-color: #4f7aa3;
+    --admonition-tip-accent-color: #4f8a5e;
+    --admonition-important-accent-color: #6a56a6;
+    --admonition-caution-accent-color: #a85454;
+    --admonition-warning-accent-color: #a07c34;
+}

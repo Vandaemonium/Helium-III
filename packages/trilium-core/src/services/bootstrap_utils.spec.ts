@@ -41,7 +41,7 @@ describe("bootstrap_utils (real DB)", () => {
         const items = getSharedBootstrapItems(ASSET_PATH, false);
 
         expect(items.dbInitialized).toBe(false);
-        expect(items.theme).toBe("next");
+        expect(items.theme).toBe("empyrean");
         expect(items.themeCssUrl).toBe(false);
         expect(items.appCssNoteIds).toEqual([]);
         // Common items + icon config are always present.
@@ -116,7 +116,10 @@ describe("bootstrap_utils (real DB)", () => {
             dark: `${ASSET_PATH}/stylesheets/theme-dark.css`,
             next: `${ASSET_PATH}/stylesheets/theme-next.css`,
             "next-light": `${ASSET_PATH}/stylesheets/theme-next-light.css`,
-            "next-dark": `${ASSET_PATH}/stylesheets/theme-next-dark.css`
+            "next-dark": `${ASSET_PATH}/stylesheets/theme-next-dark.css`,
+            empyrean: `${ASSET_PATH}/stylesheets/theme-empyrean.css`,
+            "empyrean-light": `${ASSET_PATH}/stylesheets/theme-empyrean-light.css`,
+            "empyrean-dark": `${ASSET_PATH}/stylesheets/theme-empyrean-dark.css`
         };
 
         for (const [theme, expected] of Object.entries(expectations)) {

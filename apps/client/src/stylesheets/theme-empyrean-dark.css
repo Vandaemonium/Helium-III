@@ -1,0 +1,243 @@
+/*
+ * Empyrean (dark): the Next theme in muted Empyrean colors. Only the color scheme changes; the
+ * layout and every rule come from `theme-next-dark.css`.
+ */
+@import url(./theme-next-dark.css);
+@import url(./theme-empyrean/shared.css);
+
+:root {
+    --empyrean-gradient: linear-gradient(90deg, #2ec4b6, #b026ff);
+    --empyrean-accent: #8f7bc4;
+
+    --main-background-color: #1a1922;
+    --main-text-color: #cfcbe0;
+    --main-border-color: #33313f;
+    --subtle-border-color: #26252f;
+    --dropdown-border-color: #33313f;
+    --dropdown-shadow-opacity: 0.45;
+    --dropdown-item-icon-destructive-color: #c98a80;
+    --form-error-text-color: #e39a90;
+    --contextual-help-icon-color: #9d8fcc;
+
+    --accented-background-color: #2c2a38;
+    --muted-text-color: #9a96ad;
+
+    --tool-dialog-background-color: #1f1e28;
+    --tool-dialog-shadow-color: #07060c;
+
+    --cmd-button-background-color: #c8bfff14;
+    --cmd-button-text-color: #cfcbe0;
+    --cmd-button-hover-background-color: #c8bfff22;
+    --cmd-button-hover-text-color: #e2def0;
+    --cmd-button-icon-color: #cfcbe0;
+    --cmd-button-keyboard-shortcut-background: #0000003d;
+    --cmd-button-keyboard-shortcut-color: #cfcbe0;
+
+    --low-profile-button-active-background-color: #8f7bc440;
+    --low-profile-button-active-color: #e2def0;
+
+    --button-group-background-color: #0000003d;
+    --button-group-active-button-background-color: #3a3748;
+    --button-group-active-button-color: #e2def0;
+    --button-group-active-button-shadow-color: #07060c;
+
+    --opaque-icon-button-background: #2f2d3bd7;
+    --opaque-icon-button-hover-background-color: #3d3a4bd7;
+
+    --input-background-color: #ffffff0d;
+    --input-text-color: #d3cfe3;
+    --input-placeholder-color: #918da3;
+    --input-selection-background: #8f7bc466;
+    --input-selection-text-color: #e2def0;
+    --input-hover-background: #ffffff14;
+    --input-focus-outline-color: #8f7bc4a6;
+    --input-focus-background: #ffffff12;
+    --input-focus-color: #e2def0;
+    --input-action-button-color: #a9a5bb;
+    --input-action-button-hover: #e2def0;
+
+    --radio-checkbox-background: #c8bfff26;
+    --radio-checkbox-hover-background: #c8bfff40;
+    --radio-checkbox-indicator-color: #e2def0;
+
+    --select-focus-background: #262532;
+    --select-arrow-svg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='transparent' stroke='%23cfcbe0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+    --select-group-heading-text-color: #8a8699;
+
+    --link-color: #a593d8;
+    --link-hover-background: #8f7bc41f;
+    --link-selection-outline-color: #8f7bc480;
+
+    --hover-item-text-color: #e2def0;
+    --hover-item-background-color: #c8bfff12;
+
+    --active-item-background-color: #8f7bc440;
+
+    --new-tab-button-color: #a9a5bb;
+    --new-tab-button-hover-background: #c8bfff1f;
+    --new-tab-button-hover-color: #e2def0;
+
+    --menu-text-color: #d3cfe3;
+    --menu-background-color: #1f1e28e6;
+    --menu-background-color-no-backdrop: #1f1e28;
+    --menu-item-icon-color: #8f8aa3;
+    --menu-item-keyboard-shortcut-color: #8f8aa3;
+    --menu-item-arrow-color: #8f8aa3;
+    --menu-item-delimiter-color: #c8bfff1a;
+    --menu-item-group-header-color: #8f8aa3;
+    --menu-section-background-color: #c8bfff08;
+
+    --glass-background: #1f1e2899;
+    --glass-edge-color: #c8bfff1a;
+    --glass-highlight-color: #c8bfff24;
+
+    --grouped-background-color: #131219;
+    --grouped-card-background-color: #22212c;
+
+    --modal-backdrop-color: #07060c;
+    --modal-shadow-color: #07060c80;
+    --modal-border-color: #33313f;
+    --modal-background-color: #1f1e28;
+    --modal-title-color: #9a96ad;
+    --modal-control-button-background: #c8bfff1f;
+    --modal-control-button-color: #cfcbe0;
+    --modal-control-button-hover-color: #e2def0;
+    --modal-control-button-hover-background: #c8bfff33;
+    --modal-footer-background: #c8bfff06;
+    --modal-footer-color: #9a96ad;
+
+    --toast-background: #2c2a38e6;
+    --toast-text-color: #d3cfe3;
+
+    --quick-search-background: #ffffff0d;
+    --quick-search-color: #918da3;
+    --quick-search-hover-background: #ffffff14;
+    --quick-search-focus-border: #8f7bc480;
+    --quick-search-focus-background: #ffffff12;
+    --quick-search-focus-color: #e2def0;
+    --quick-search-result-highlight-color: #b3a5e0;
+    --quick-search-result-fuzzy-highlight-color: #cfae86;
+
+    --left-pane-collapsed-border-color: #07060c99;
+    --left-pane-background-color: #16151d;
+    --left-pane-text-color: #bcb8cd;
+    --left-pane-icon-color: #a9a5bb;
+    --left-pane-item-hover-background: #c8bfff0d;
+    --left-pane-item-selected-background: #8f7bc433;
+    --left-pane-item-selected-color: #e2def0;
+    --left-pane-item-selected-shadow: none;
+    --left-pane-item-action-button-background: #c8bfff40;
+    --left-pane-item-action-button-color: #16151d;
+    --left-pane-item-action-button-hover-background: #c8bfff73;
+
+    --launcher-pane-vert-background-color: #131219;
+    --launcher-pane-vert-text-color: #9a96ad;
+    --launcher-pane-vert-button-hover-color: #e2def0;
+    --launcher-pane-vert-button-hover-background: #c8bfff17;
+    --launcher-pane-vert-button-hover-shadow: none;
+
+    --launcher-pane-horiz-border-color: #0d0c12;
+    --launcher-pane-horiz-background-color: #1d1c26;
+    --launcher-pane-horiz-text-color: #a9a5bb;
+    --launcher-pane-horiz-button-hover-color: #e2def0;
+    --launcher-pane-horiz-button-hover-background: #c8bfff17;
+
+    --global-menu-update-available-badge-background-color: #7fb89a;
+    --global-menu-update-available-badge-color: #16151d;
+
+    --protected-session-active-icon-color: #8fc4a2;
+    --sync-status-error-pulse-color: #d98880;
+
+    --classic-toolbar-vert-layout-background-color: #c8bfff08;
+
+    --right-pane-heading-color: #8a8699;
+    --right-pane-peek-background: #1f1e28dc;
+    --left-pane-peek-background: #16151ddc;
+
+    --gutter-hover-color: #4a4759;
+
+    --tab-close-button-hover-background: #8c5560;
+    --tab-close-button-hover-color: #e2def0;
+
+    --active-tab-background-color: #ffffff12;
+    --active-tab-icon-color: #a9a5bb;
+    --active-tab-text-color: #d6d2e6;
+    --active-tab-shadow: none;
+    --inactive-tab-hover-background-color: #c8bfff0d;
+    --inactive-tab-text-color: #8a8699;
+
+    --alert-bar-background: #8f7bc426;
+
+    --badge-background-color: #c8bfff17;
+
+    --note-icon-background-color: #33313f;
+    --note-icon-color: #cfcbe0;
+    --note-icon-hover-background-color: #403d4f;
+
+    --promoted-attribute-card-background-color: #c8bfff14;
+
+    --floating-button-background-color: #2c2a38d2;
+
+    --right-pane-item-hover-background: #c8bfff1a;
+    --right-pane-item-hover-color: #e2def0;
+
+    --bottom-panel-background-color: #13121980;
+    --bottom-panel-title-bar-background-color: #2c2a3880;
+
+    --status-bar-border-color: #c8bfff14;
+
+    --scrollbar-thumb-color: #c8bfff2e;
+    --scrollbar-thumb-hover-color: #c8bfff4d;
+
+    --selection-background-color: #8f7bc459;
+
+    --code-block-box-shadow: none;
+
+    --card-background-color: #ffffff0a;
+    --card-background-hover-color: #ffffff12;
+
+    --inline-code-background-color: #c8bfff12;
+    --inline-code-border-color: #c8bfff1f;
+    --inline-code-hover-background-color: #c8bfff1f;
+
+    --calendar-day-highlight-background: #8f7bc440;
+
+    --timeline-bullet-color: #8a8699;
+    --timeline-bullet-hover-color: #e2def0;
+    --timeline-connector-color: #33313f;
+    --timeline-connector-active-color: #403d4f;
+
+    --tooltip-background-color: #2c2a38e6;
+    --tooltip-foreground-color: #d6d2e6;
+    --tooltip-kbd-color: #d6d2e6;
+    --tooltip-kbd-background: #c8bfff24;
+    --note-tooltip-background-color: #262532d9;
+
+    --help-card-heading-color: #9a96ad;
+    --help-kbd-shortcut-color: #d6d2e6;
+    --help-kbd-shortcut-background: #33313f;
+    --help-kbd-shortcut-border: #26252f;
+    --help-code-background: #33313f;
+
+    --ck-editor-toolbar-button-on-background: #8f7bc440;
+    --ck-editor-toolbar-button-on-color: #e2def0;
+    --ck-editor-toolbar-button-on-shadow: none;
+    --ck-editor-toolbar-dropdown-button-open-background: #c8bfff14;
+
+    --text-note-table-header-background: #c8bfff0d;
+
+    --calendar-coll-event-text-color: #e2def0;
+
+    --task-checkbox-done-color: #5f9a76;
+    --task-checkbox-done-hover-color: #72b08a;
+    --task-checkbox-unknown-state-color: #c47a7a;
+    --task-checkbox-glyph-color: #e2def0;
+}
+
+:root:root {
+    --admonition-note-accent-color: #7fa3c4;
+    --admonition-tip-accent-color: #7fae8c;
+    --admonition-important-accent-color: #9d8fcc;
+    --admonition-caution-accent-color: #c48585;
+    --admonition-warning-accent-color: #c4a46c;
+}

@@ -48,7 +48,7 @@ Restoring a backup may take some time, depending on its size. Once it completes,
 
 Let's assume you want to restore the weekly backup (only in .db format, .tnbackup files are not supported by this method), here's how to do it:
 
-*   find [data directory](Data%20directory.md) Trilium uses - easy way is to open "About Trilium Notes" (<span class="tn-icon bx bx-info-circle"></span>) from "Menu" in upper left corner and looking at "data directory"
+*   find [data directory](Data%20directory.md) Trilium uses - easy way is to open "About Helium-III" (<span class="tn-icon bx bx-info-circle"></span>) from "Menu" in upper left corner and looking at "data directory"
     *   I'll refer to `~/trilium-data` as data directory from now on
 *   find `~/trilium-data/backup/backup-weekly.db` - this is the <a class="reference-link" href="../Advanced%20Usage/Database.md">Database</a> backup.
 *   at this point stop/kill Trilium

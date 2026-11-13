@@ -68,7 +68,7 @@ export async function initNotSyncedOptions(initialized: boolean, opts: NotSynced
     createNotSyncedOption("lastSyncedPull", "0");
     createNotSyncedOption("lastSyncedPush", "0");
 
-    createNotSyncedOption("theme", "next");
+    createNotSyncedOption("theme", "empyrean");
 
     createNotSyncedOption("syncServerHost", opts.syncServerHost || "");
     createNotSyncedOption("syncServerTimeout", "120"); // 120 seconds (2 minutes)
@@ -126,6 +126,10 @@ export function migrateSyncTimeoutFromMilliseconds(milliseconds: number): { valu
     }
     return { value: seconds, scale: 1 }; // display as seconds
 }
+
+/** The dark code block theme that suits the muted Empyrean theme; `stackoverflow-dark` was the default before it. */
+const EMPYREAN_CODE_BLOCK_THEME = "default:github-dark-dimmed";
+const PREVIOUS_CODE_BLOCK_THEME = "default:stackoverflow-dark";
 
 /**
  * Contains all the default options that must be initialized on new and existing databases (at startup). The value can also be determined based on other options, provided they have already been initialized.
@@ -233,7 +237,7 @@ const defaultOptions: DefaultOption[] = [
     { name: "compressImages", value: "true", isSynced: true },
     { name: "downloadImagesAutomatically", value: "true", isSynced: true },
     { name: "highlightsList", value: '["underline","color","bgColor"]', isSynced: true },
-    { name: "checkForUpdates", value: "true", isSynced: true },
+    { name: "checkForUpdates", value: "false", isSynced: true },
     { name: "disableTray", value: "false", isSynced: false },
     { name: "closeToTray", value: "false", isSynced: false },
     { name: "launchOnStartup", value: "false", isSynced: false },
@@ -261,9 +265,11 @@ const defaultOptions: DefaultOption[] = [
             switch (optionsMap.theme) {
                 case "light":
                 case "next-light":
+                case "empyrean-light":
                     return "default:vs-code-light";
                 case "dark":
                 case "next-dark":
+                case "empyrean-dark":
                 default:
                     return "default:vs-code-dark";
             }
@@ -301,14 +307,13 @@ const defaultOptions: DefaultOption[] = [
             if (optionsMap.theme === "light") {
                 return "default:stackoverflow-light";
             }
-            return "default:stackoverflow-dark";
-
+            return EMPYREAN_CODE_BLOCK_THEME;
         },
         isSynced: false
     },
     { name: "codeBlockThemeMatchesApp", value: "true", isSynced: false },
     { name: "codeBlockThemeLight", value: "default:stackoverflow-light", isSynced: false },
-    { name: "codeBlockThemeDark", value: "default:stackoverflow-dark", isSynced: false },
+    { name: "codeBlockThemeDark", value: EMPYREAN_CODE_BLOCK_THEME, isSynced: false },
     { name: "codeBlockWordWrap", value: "false", isSynced: true },
     { name: "codeBlockTabWidth", value: "4", isSynced: true },
 
@@ -399,6 +404,7 @@ const defaultOptions: DefaultOption[] = [
  */
 export function initStartupOptions() {
     const optionsMap = optionService.getOptionMap();
+    adoptHeliumDefaults(optionsMap);
 
     const allDefaultOptions = defaultOptions.concat(getKeyboardDefaultOptions());
 
@@ -428,6 +434,31 @@ export function initStartupOptions() {
             ])
         );
     }
+}
+
+/**
+ * Moves an install still on the previous upstream defaults to Helium-III's, once: the `next` theme
+ * and the `stackoverflow-dark` code block theme to Empyrean, and the check for TriliumNext releases
+ * off, since those releases are not updates of this fork. `heliumDefaultsAdopted` records that it
+ * ran, so a setting chosen again later sticks; any other value is left alone.
+ */
+function adoptHeliumDefaults(optionsMap: Partial<OptionMap>) {
+    if ("heliumDefaultsAdopted" in optionsMap) {
+        return;
+    }
+
+    if (optionsMap.theme === "next") {
+        optionService.setOption("theme", "empyrean");
+    }
+    for (const name of [ "codeBlockTheme", "codeBlockThemeDark" ] as const) {
+        if (optionsMap[name] === PREVIOUS_CODE_BLOCK_THEME) {
+            optionService.setOption(name, EMPYREAN_CODE_BLOCK_THEME);
+        }
+    }
+    if (optionsMap.checkForUpdates === "true") {
+        optionService.setOption("checkForUpdates", "false");
+    }
+    optionService.createOption("heliumDefaultsAdopted", "true", false);
 }
 
 function getKeyboardDefaultOptions() {

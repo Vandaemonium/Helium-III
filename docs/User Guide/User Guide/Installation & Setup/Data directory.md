@@ -8,7 +8,7 @@ Data directory contains:
 
 ## Location of the data directory
 
-Easy way how to find out which data directory Trilium uses is to look at the "About Trilium Notes" dialog (from "Menu" in upper left corner):
+Easy way how to find out which data directory Trilium uses is to look at the "About Helium-III" dialog (from "Menu" in upper left corner):
 
 ![](Data%20directory_image.jpg)
 

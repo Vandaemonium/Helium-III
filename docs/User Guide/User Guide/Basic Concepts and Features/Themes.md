@@ -1,7 +1,15 @@
 # Themes
 ## Default Themes
 
-Trilium comes with a couple pre-installed color themes, with the default being a light theme. To switch to a dark theme or any other available theme, navigate to the <span class="tn-icon bx bx-cog"></span> Options menu (accessible via the app icon in the top-left corner), select the Appearance tab, and choose your preferred theme. The _Theme_ submenu of the <a class="reference-link" href="UI%20Elements/Global%20menu.md">Global menu</a> switches the theme and the color scheme as well.
+Trilium comes with three families of built-in themes, each with a light and a dark color scheme:
+
+*   _Empyrean_, the default. A muted, low-contrast theme meant to be easy on the eyes over long sessions: a soft blue-violet charcoal background instead of black, off-white text with a slight violet tint, a dusty violet accent for selections, links and focus, and small corner radii. Its body text reads at about 11:1 against the background in the dark scheme and 10.5:1 in the light one, instead of the near-maximum contrast of the other themes; every text still meets WCAG AA.
+*   _Modern_, the TriliumNext theme Empyrean is built on.
+*   _Legacy_, the original Trilium theme.
+
+An installation that was still on the previous default, _Modern_ following the system color scheme, moves to _Empyrean_ once when it is upgraded, and the previous default dark code block theme becomes _GitHub Dark Dimmed_. Choosing _Modern_ again afterwards sticks, and any other theme chosen before the upgrade is kept.
+
+To switch theme, navigate to the <span class="tn-icon bx bx-cog"></span> Options menu (accessible via the app icon in the top-left corner), select the Appearance tab, and choose the theme under _Application theme_ and the scheme under _Color scheme_ (_System_ follows the operating system). The _Theme_ submenu of the <a class="reference-link" href="UI%20Elements/Global%20menu.md">Global menu</a> switches the theme and the color scheme as well.
 
 ![Dark Theme](Themes_dark-theme.png)
 
