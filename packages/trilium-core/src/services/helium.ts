@@ -72,7 +72,7 @@ export function getQuickNotes(): QuickNotesData {
             noteId: note.noteId,
             title: note.title,
             text: htmlToText(String(note.getContent())),
-            utcDateModified: note.utcDateModified,
+            utcDateModified: note.utcDateModified ?? "",
             pinned: note.getOwnedLabelValue(QUICK_PINNED_LABEL) === "true",
             archived: note.getOwnedLabelValue(QUICK_ARCHIVED_LABEL) === "true"
         }));
@@ -187,11 +187,11 @@ function notesWithLabel(name: string) {
 }
 
 function newestFirst(notes: BNote[]) {
-    return [ ...new Set(notes) ].sort((a, b) => b.utcDateModified.localeCompare(a.utcDateModified) || a.noteId.localeCompare(b.noteId));
+    return [ ...new Set(notes) ].sort((a, b) => (b.utcDateModified ?? "").localeCompare(a.utcDateModified ?? "") || a.noteId.localeCompare(b.noteId));
 }
 
 function toHomeItem(note: BNote): HomeItem {
-    return { noteId: note.noteId, title: note.title, icon: note.getIcon(), utcDateModified: note.utcDateModified };
+    return { noteId: note.noteId, title: note.title, icon: note.getIcon(), utcDateModified: note.utcDateModified ?? "" };
 }
 
 function readJson(noteId: string): unknown {

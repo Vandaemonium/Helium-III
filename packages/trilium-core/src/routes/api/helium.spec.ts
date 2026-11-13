@@ -119,7 +119,7 @@ describe("Helium Home and Quick Notes API (core)", () => {
             const note = becca.getNoteOrThrow(card.noteId);
             expect(note.getOwnedLabelValue("heliumQuickPinned")).toBe("true");
             expect(note.getOwnedLabelValue("heliumQuickArchived")).toBe("false");
-            expect(note.getOwnedLabels().every((l) => !l.isInheritable)).toBe(true);
+            expect(note.getOwnedAttributes().every((attr) => !attr.isInheritable)).toBe(true);
             expect(note.hasOwnedLabel("pinned")).toBe(false);
         });
 
