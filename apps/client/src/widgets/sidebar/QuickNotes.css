@@ -83,13 +83,13 @@
     }
 
     .quick-notes-card .icon-action {
-        opacity: 0;
+        display: none;
     }
 
     .quick-notes-card:hover .icon-action,
     .quick-notes-card:focus-within .icon-action,
     .quick-notes-card.pinned .quick-notes-pin {
-        opacity: 1;
+        display: inline-flex;
     }
 
     .quick-notes-card.pinned .quick-notes-pin {
@@ -98,7 +98,7 @@
 
     @media (hover: none) {
         .quick-notes-card .icon-action {
-            opacity: 1;
+            display: inline-flex;
         }
     }
 
