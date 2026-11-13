@@ -946,22 +946,6 @@
                                     "attachments": []
                                 },
                                 {
-                                    "isClone": true,
-                                    "noteId": "Un4wj2Mak2Ky",
-                                    "notePath": [
-                                        "pOsGYCXsbNQG",
-                                        "Otzi9La2YAUX",
-                                        "WOcw2SLH6tbX",
-                                        "Un4wj2Mak2Ky"
-                                    ],
-                                    "title": "Nix flake",
-                                    "prefix": null,
-                                    "dataFileName": "Nix flake.clone.md",
-                                    "type": "text",
-                                    "format": "markdown",
-                                    "isExpanded": false
-                                },
-                                {
                                     "isClone": false,
                                     "noteId": "x1lQNKQBqLcA",
                                     "notePath": [
@@ -1065,6 +1049,57 @@
                                 },
                                 {
                                     "isClone": false,
+                                    "noteId": "krg1KysruMuH",
+                                    "notePath": [
+                                        "pOsGYCXsbNQG",
+                                        "Otzi9La2YAUX",
+                                        "WOcw2SLH6tbX",
+                                        "krg1KysruMuH"
+                                    ],
+                                    "title": "AI-Context mirror",
+                                    "notePosition": 150,
+                                    "prefix": null,
+                                    "isExpanded": false,
+                                    "type": "text",
+                                    "mime": "text/html",
+                                    "attributes": [
+                                        {
+                                            "type": "label",
+                                            "name": "shareAlias",
+                                            "value": "ai-context-mirror",
+                                            "isInheritable": false,
+                                            "position": 10
+                                        },
+                                        {
+                                            "type": "label",
+                                            "name": "iconClass",
+                                            "value": "bx bx-brain",
+                                            "isInheritable": false,
+                                            "position": 20
+                                        }
+                                    ],
+                                    "format": "markdown",
+                                    "dataFileName": "AI-Context mirror.md",
+                                    "attachments": []
+                                },
+                                {
+                                    "isClone": true,
+                                    "noteId": "Un4wj2Mak2Ky",
+                                    "notePath": [
+                                        "pOsGYCXsbNQG",
+                                        "Otzi9La2YAUX",
+                                        "WOcw2SLH6tbX",
+                                        "Un4wj2Mak2Ky"
+                                    ],
+                                    "title": "Nix flake",
+                                    "prefix": null,
+                                    "dataFileName": "Nix flake.clone.md",
+                                    "type": "text",
+                                    "format": "markdown",
+                                    "isExpanded": false
+                                },
+                                {
+                                    "isClone": false,
                                     "noteId": "iGTnKjubbXkA",
                                     "notePath": [
                                         "pOsGYCXsbNQG",
@@ -1073,7 +1108,7 @@
                                         "iGTnKjubbXkA"
                                     ],
                                     "title": "System Requirements",
-                                    "notePosition": 150,
+                                    "notePosition": 160,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",

@@ -156,5 +156,11 @@ export default async function buildApp() {
 
     erase.startScheduledCleanup();
 
+    if (process.env.HELIUM_AI_CONTEXT_DIR) void sql_init.dbReady.then(async () => {
+        await becca_loader.beccaLoaded;
+        const { startAiContextMirror } = await import("./services/ai_context_mirror.js");
+        startAiContextMirror();
+    });
+
     return app;
 }
