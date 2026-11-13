@@ -237,7 +237,7 @@ const defaultOptions: DefaultOption[] = [
     { name: "compressImages", value: "true", isSynced: true },
     { name: "downloadImagesAutomatically", value: "true", isSynced: true },
     { name: "highlightsList", value: '["underline","color","bgColor"]', isSynced: true },
-    { name: "checkForUpdates", value: "true", isSynced: true },
+    { name: "checkForUpdates", value: "false", isSynced: true },
     { name: "disableTray", value: "false", isSynced: false },
     { name: "closeToTray", value: "false", isSynced: false },
     { name: "launchOnStartup", value: "false", isSynced: false },
@@ -404,7 +404,7 @@ const defaultOptions: DefaultOption[] = [
  */
 export function initStartupOptions() {
     const optionsMap = optionService.getOptionMap();
-    adoptEmpyreanTheme(optionsMap);
+    adoptHeliumDefaults(optionsMap);
 
     const allDefaultOptions = defaultOptions.concat(getKeyboardDefaultOptions());
 
@@ -437,12 +437,13 @@ export function initStartupOptions() {
 }
 
 /**
- * Moves an install still on the previous defaults (the `next` theme, the `stackoverflow-dark` code
- * block theme) to Empyrean, once. `empyreanThemeAdopted` records that it ran, so choosing `next`
- * again later sticks; any other theme is left alone.
+ * Moves an install still on the previous upstream defaults to Helium-III's, once: the `next` theme
+ * and the `stackoverflow-dark` code block theme to Empyrean, and the check for TriliumNext releases
+ * off, since those releases are not updates of this fork. `heliumDefaultsAdopted` records that it
+ * ran, so a setting chosen again later sticks; any other value is left alone.
  */
-function adoptEmpyreanTheme(optionsMap: Partial<OptionMap>) {
-    if ("empyreanThemeAdopted" in optionsMap) {
+function adoptHeliumDefaults(optionsMap: Partial<OptionMap>) {
+    if ("heliumDefaultsAdopted" in optionsMap) {
         return;
     }
 
@@ -454,7 +455,10 @@ function adoptEmpyreanTheme(optionsMap: Partial<OptionMap>) {
             optionService.setOption(name, EMPYREAN_CODE_BLOCK_THEME);
         }
     }
-    optionService.createOption("empyreanThemeAdopted", "true", false);
+    if (optionsMap.checkForUpdates === "true") {
+        optionService.setOption("checkForUpdates", "false");
+    }
+    optionService.createOption("heliumDefaultsAdopted", "true", false);
 }
 
 function getKeyboardDefaultOptions() {

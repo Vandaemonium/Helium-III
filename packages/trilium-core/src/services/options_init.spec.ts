@@ -171,26 +171,29 @@ describe("initStartupOptions", () => {
         }
     });
 
-    it("moves an install on the previous default theme to Empyrean once, and leaves other choices alone", () => {
+    it("moves an install on the previous upstream defaults to Helium-III's once, and leaves other choices alone", () => {
         const oldDefaults = {
             theme: "next",
             codeBlockTheme: "default:stackoverflow-dark",
             codeBlockThemeDark: "default:stackoverflow-dark",
-            codeBlockThemeLight: "default:stackoverflow-light"
+            codeBlockThemeLight: "default:stackoverflow-light",
+            checkForUpdates: "true"
         };
         const adopted = runWith(oldDefaults);
         expect(Object.fromEntries(adopted.set)).toEqual({
             theme: "empyrean",
             codeBlockTheme: "default:github-dark-dimmed",
-            codeBlockThemeDark: "default:github-dark-dimmed"
+            codeBlockThemeDark: "default:github-dark-dimmed",
+            checkForUpdates: "false"
         });
-        expect(adopted.created.get("empyreanThemeAdopted")).toBe("true");
+        expect(adopted.created.get("heliumDefaultsAdopted")).toBe("true");
 
-        expect(runWith({ ...oldDefaults, empyreanThemeAdopted: "true" }).set.size).toBe(0);
+        expect(runWith({ ...oldDefaults, heliumDefaultsAdopted: "true" }).set.size).toBe(0);
 
-        const chosen = runWith({ theme: "next-dark", codeBlockThemeDark: "default:monokai" });
+        const chosen = runWith({ theme: "next-dark", codeBlockThemeDark: "default:monokai", checkForUpdates: "false" });
         expect(chosen.set.size).toBe(0);
-        expect(chosen.created.get("empyreanThemeAdopted")).toBe("true");
+        expect(chosen.created.get("heliumDefaultsAdopted")).toBe("true");
+        expect(runWith({}).created.get("checkForUpdates")).toBe("false");
     });
 
     it("opens the start note, or the root in safe mode, when the environment asks for it", () => {

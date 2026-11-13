@@ -1,5 +1,6 @@
 {
   "about": {
+    "fork_of": "A fork of <upstream>TriliumNext</upstream>, by its contributors below",
     "version_label": "Version:",
     "version": "{{appVersion}} (database: {{dbVersion}}, sync protocol: {{syncVersion}})",
     "build_info": "Build: {{buildDate}}, revision: <buildRevision />",
@@ -1207,7 +1208,7 @@
     "reload_frontend": "Reload frontend",
     "show_hidden_subtree": "Hidden notes",
     "show_help": "Help",
-    "about": "About Trilium Notes",
+    "about": "About Helium-III",
     "logout": "Log out",
     "show-cheatsheet": "Keyboard shortcuts",
     "toggle-zen-mode": "Zen mode",
@@ -2104,7 +2105,7 @@
   "network_connections": {
     "network_connections_title": "Network",
     "check_for_updates": "Check for updates automatically",
-    "check_for_updates_description": "Checks for new versions on GitHub and shows a notification in the global menu when available."
+    "check_for_updates_description": "Checks GitHub for new versions of TriliumNext, the project Helium-III is forked from, and shows a notification in the global menu when one is available. These are not updates of Helium-III."
   },
   "note_erasure_timeout": {
     "note_erasure_timeout_title": "Deleted Notes",

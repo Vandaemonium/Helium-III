@@ -110,8 +110,8 @@ export interface OptionDefinitions extends KeyboardShortcutsOptions<KeyboardActi
     noteTitleStyle: "large" | "compact";
     /** How much room the interface takes: `compact` tightens bars, rows and headers; `comfortable` keeps the theme's sizes. */
     uiDensity: "comfortable" | "compact";
-    /** Set once `initStartupOptions()` has moved an install still on the old default theme (`next`) to Empyrean. */
-    empyreanThemeAdopted: boolean;
+    /** Set once `initStartupOptions()` has moved an install from the upstream defaults (`next` theme, update check) to Helium-III's. */
+    heliumDefaultsAdopted: boolean;
     allowedHtmlTags: string;
     /** JSON: what the Content Manager's cleanup tool was last set to erase — see `CleanupToolOptions`. */
     cleanupToolOptions: string;
