@@ -1983,6 +1983,7 @@
     "triliumnext": "Follow system color scheme",
     "triliumnext-light": "Light",
     "triliumnext-dark": "Dark",
+    "empyrean_themes": "Empyrean",
     "modern_themes": "Modern",
     "legacy_themes": "Legacy",
     "custom_themes": "Custom",
@@ -4025,7 +4026,7 @@
     "step_progress": "Step {{current}} of {{total}}"
   },
   "call_to_action": {
-    "next_theme_title": "Try the new Trilium theme",
+    "next_theme_title": "Try the new Helium-III theme",
     "next_theme_message": "You are currently using the legacy theme, would you like to try the new theme?",
     "next_theme_button": "Try the new theme",
     "background_effects_title": "Background effects are now stable",

@@ -147,7 +147,8 @@ describe("initStartupOptions", () => {
         expect(fresh.created.get("zoomFactor")).toBe("0.9");
         expect(fresh.created.get("aiEnabled")).toBe("false");
         expect(fresh.created.get("codeNoteTheme")).toBe("default:vs-code-dark");
-        expect(fresh.created.get("codeBlockTheme")).toBe("default:stackoverflow-dark");
+        expect(fresh.created.get("codeBlockTheme")).toBe("default:github-dark-dimmed");
+        expect(fresh.created.get("codeBlockThemeDark")).toBe("default:github-dark-dimmed");
         expect(fresh.set.size).toBe(0);
 
         const legacy = runWith({ syncServerTimeout: "120000", experimentalFeatures: "[\"llm\"]", theme: "light" });
@@ -162,10 +163,34 @@ describe("initStartupOptions", () => {
         for (const [ theme, expected ] of [
             [ "next-light", "default:vs-code-light" ],
             [ "dark", "default:vs-code-dark" ],
-            [ "next-dark", "default:vs-code-dark" ]
+            [ "next-dark", "default:vs-code-dark" ],
+            [ "empyrean-light", "default:vs-code-light" ],
+            [ "empyrean", "default:vs-code-dark" ]
         ]) {
             expect(runWith({ theme }).created.get("codeNoteTheme"), theme).toBe(expected);
         }
+    });
+
+    it("moves an install on the previous default theme to Empyrean once, and leaves other choices alone", () => {
+        const oldDefaults = {
+            theme: "next",
+            codeBlockTheme: "default:stackoverflow-dark",
+            codeBlockThemeDark: "default:stackoverflow-dark",
+            codeBlockThemeLight: "default:stackoverflow-light"
+        };
+        const adopted = runWith(oldDefaults);
+        expect(Object.fromEntries(adopted.set)).toEqual({
+            theme: "empyrean",
+            codeBlockTheme: "default:github-dark-dimmed",
+            codeBlockThemeDark: "default:github-dark-dimmed"
+        });
+        expect(adopted.created.get("empyreanThemeAdopted")).toBe("true");
+
+        expect(runWith({ ...oldDefaults, empyreanThemeAdopted: "true" }).set.size).toBe(0);
+
+        const chosen = runWith({ theme: "next-dark", codeBlockThemeDark: "default:monokai" });
+        expect(chosen.set.size).toBe(0);
+        expect(chosen.created.get("empyreanThemeAdopted")).toBe("true");
     });
 
     it("opens the start note, or the root in safe mode, when the environment asks for it", () => {

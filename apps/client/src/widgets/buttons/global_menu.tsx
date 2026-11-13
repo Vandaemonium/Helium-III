@@ -135,6 +135,14 @@ function ThemeMenu() {
 
             <FormListHeader text={t("global_menu.theme")} />
             <FormListItem
+                icon="bx bx-planet"
+                checkable
+                checked={family === "empyrean"}
+                onClick={() => void setTheme(THEME_FAMILY_SCHEMES.empyrean[scheme])}
+            >
+                {t("theme.empyrean_themes")}
+            </FormListItem>
+            <FormListItem
                 icon="bx bx-star"
                 checkable
                 checked={family === "modern"}

@@ -44,7 +44,7 @@ export default function getSharedBootstrapItems(assetPath: string, dbInitialized
     if (!dbInitialized) {
         return {
             ...commonItems,
-            theme: "next",
+            theme: "empyrean",
             themeCssUrl: false as const,
             themeUseNextAsBase: "next" as const,
             appCssNoteIds: [],
@@ -89,6 +89,9 @@ export function getIconConfig(assetPath: string): Pick<BootstrapDefinition, "ico
     };
 }
 
+/** The built-in themes served as `theme-<name>.css`. */
+const FAMILY_THEMES = [ "next", "next-light", "next-dark", "empyrean", "empyrean-light", "empyrean-dark" ];
+
 function getAppCssNoteIds() {
     return attributes.getNotesWithLabel("appCss").map((note) => note.noteId);
 }
@@ -101,12 +104,8 @@ function getThemeCssUrl(theme: string, assetPath: string, themeNote: BNote | nul
         return false;
     } else if (theme === "dark") {
         return `${assetPath}/stylesheets/theme-dark.css`;
-    } else if (theme === "next") {
-        return `${assetPath}/stylesheets/theme-next.css`;
-    } else if (theme === "next-light") {
-        return `${assetPath}/stylesheets/theme-next-light.css`;
-    } else if (theme === "next-dark") {
-        return `${assetPath}/stylesheets/theme-next-dark.css`;
+    } else if (FAMILY_THEMES.includes(theme)) {
+        return `${assetPath}/stylesheets/theme-${theme}.css`;
     } else if (!getPlatform().getEnv("TRILIUM_SAFE_MODE") && themeNote) {
         return `api/notes/download/${themeNote.noteId}`;
     }
@@ -115,7 +114,7 @@ function getThemeCssUrl(theme: string, assetPath: string, themeNote: BNote | nul
 }
 
 function getCustomThemeCssUrl(theme: string, themeNote: BNote | null) {
-    if (["auto", "light", "dark", "next", "next-light", "next-dark"].includes(theme)) {
+    if (["auto", "light", "dark", ...FAMILY_THEMES].includes(theme)) {
         return undefined;
     }
 
