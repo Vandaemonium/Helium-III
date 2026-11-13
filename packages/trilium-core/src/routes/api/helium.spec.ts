@@ -271,6 +271,8 @@ describe("Helium Home and Quick Notes API (core)", () => {
             const quickPinned = await createTextNote(api, { parentNoteId: HELIUM_QUICK_NOTES_FOLDER_ID, title: "Quick pinned" });
             await api.put(`/api/notes/${pinned.noteId}/set-attribute`, { body: { type: "label", name: "pinned", value: "" } });
             await setState(quickPinned.noteId, "pinned", true);
+            // A bookmark clones the note into the hidden tree; its visible path keeps it on Home.
+            expect((await api.put(`/api/notes/${pinned.noteId}/clone-to-note/_lbBookmarks`, { body: {} })).status).toBe(200);
 
             const inbox = await createTextNote(api, { title: "Inbox folder" });
             const child = await createTextNote(api, { parentNoteId: inbox.noteId, title: "Inbox child" });

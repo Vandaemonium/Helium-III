@@ -53,7 +53,7 @@ export function saveHomeBoard(raw: unknown): HomeBoard {
 /** The to-do items of a text note, in document order. Protected notes are refused even while unlocked. */
 export function getChecklist(noteId: string): ChecklistData {
     const note = becca.notes[noteId];
-    if (!note || note.isDeleted || note.isInHiddenSubtree()) {
+    if (!note || note.isDeleted || note.isHiddenCompletely()) {
         return { status: "missing", title: "", items: [] };
     }
     if (note.isProtected) {
@@ -76,7 +76,7 @@ export function setChecklistItem(noteId: string, index: unknown, checked: unknow
         throw new ValidationError("Invalid checklist change.");
     }
     const note = becca.notes[noteId];
-    if (!note || note.isDeleted || note.isProtected || note.type !== "text" || note.isInHiddenSubtree()) {
+    if (!note || note.isDeleted || note.isProtected || note.type !== "text" || note.isHiddenCompletely()) {
         throw new ValidationError("Not an unprotected text note.");
     }
     const content = String(note.getContent());
@@ -235,7 +235,7 @@ function resolveQuickNotesFolder(): { status: QuickNotesData["status"]; folder: 
         return { status: hasFolderConflict() ? "conflict" : "unconfigured", folder: null };
     }
     const folder = becca.notes[dataNoteId];
-    if (!folder || folder.isInHiddenSubtree()) {
+    if (!folder || folder.isHiddenCompletely()) {
         return { status: "missing", folder: null };
     }
     if (folder.isProtected) {
@@ -267,7 +267,8 @@ function isHomeEligible(note: BNote, config: HeliumHomeConfig) {
     return !note.noteId.startsWith("_")
         && note.noteId !== "root"
         && !note.isProtected
-        && !(config.excludeHidden && note.isInHiddenSubtree())
+        // A note cloned into the hidden tree, such as a bookmark, stays listed through its visible paths.
+        && !(config.excludeHidden && note.isHiddenCompletely())
         && !(config.excludeArchived && note.isArchived)
         && !LEGACY_MODULE_LABELS.some((label) => note.hasOwnedLabel(label));
 }
