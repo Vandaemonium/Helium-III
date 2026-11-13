@@ -270,6 +270,8 @@
     "helium-home-config-title": "Home Configuration",
     "helium-quick-config-title": "Quick Notes Configuration",
     "helium-quick-notes-folder": "Quick Notes",
+    "helium-checklist-title": "Checklist",
+    "helium-checklist-first-item": "First item",
     "task-state-none": "None",
     "task-state-doing": "Doing",
     "task-state-done": "Done",

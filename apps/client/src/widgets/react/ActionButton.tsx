@@ -11,7 +11,7 @@ import { useCommandTrigger } from "./react_utils";
 
 export interface ActionButtonProps extends Pick<
     HTMLAttributes<HTMLButtonElement>,
-    "onClick" | "onAuxClick" | "onContextMenu" | "onBlur" | "style" | "aria-expanded"
+    "onClick" | "onAuxClick" | "onContextMenu" | "onBlur" | "style" | "aria-expanded" | "aria-label"
     | "aria-pressed" | "onClickCapture" | "onPointerDown" | "onPointerMove" | "onPointerUp"
     | "onPointerLeave" | "onPointerCancel"
 > {

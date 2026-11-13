@@ -1,0 +1,102 @@
+/* `#trilium-app` outranks `body.layout-horizontal`, which the themes load after this file. */
+body#trilium-app.density-compact {
+    --launcher-pane-vert-size: 44px;
+    --launcher-pane-vert-icon-size: 18px;
+    --launcher-pane-vert-button-margin: 4px;
+    --launcher-pane-vert-button-gap: 2px;
+    --launcher-pane-horiz-size: 44px;
+    --launcher-pane-horiz-icon-size: 18px;
+    --tab-bar-height: 36px;
+    --tab-height: 28px;
+    --new-tab-button-size: 20px;
+    --center-pane-border-radius: 6px;
+    --overlay-button-height: 24px;
+}
+
+/* The font sizes must reach `<html>`, as in the `api/fonts` stylesheet. */
+:root:has(> body.density-compact-text) {
+    --main-font-size: 92%;
+    --tree-font-size: 92%;
+    --detail-font-size: 95%;
+}
+
+body.density-compact {
+    :is(#left-pane, .tree-popup-sidebar) span.fancytree-node {
+        padding-block: 1px;
+    }
+
+    #left-pane .tree.scroll-edge-fade {
+        padding-top: 4px;
+    }
+
+    .title-row {
+        min-height: 0;
+        padding-block: 2px;
+
+        .note-title-widget,
+        .note-actions-bar {
+            margin-block: 0;
+        }
+
+        .note-title-widget input {
+            font-size: 1.35em;
+        }
+    }
+
+    .title-actions:not(:empty),
+    .note-split.type-text.view-mode-default .title-actions {
+        padding-block: 6px;
+    }
+
+    .note-type-switcher:empty {
+        min-height: 0;
+    }
+
+    .inline-title {
+        padding-top: 6px;
+
+        & > .inline-title-row {
+            gap: 10px;
+
+            .note-icon-widget {
+                --note-icon-size: 24px;
+                --note-icon-container-padding-size: 6px;
+            }
+
+            .note-title-widget {
+                --note-title-size: 1.4em;
+            }
+        }
+
+        .title-details {
+            margin-top: 0;
+        }
+    }
+
+    .ribbon-tab-title,
+    .ribbon-button-container {
+        font-size: 0.92em;
+    }
+
+    .helium-home {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .helium-home-section {
+        padding: 10px 12px;
+
+        .tn-card-section {
+            padding-block: 5px;
+            min-height: 0;
+        }
+
+        .tn-card-heading {
+            margin-bottom: 4px;
+        }
+    }
+
+    .quick-notes .quick-notes-composer {
+        min-height: 64px;
+    }
+}

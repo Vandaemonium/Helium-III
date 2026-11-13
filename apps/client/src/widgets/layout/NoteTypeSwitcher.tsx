@@ -41,7 +41,7 @@ export default function NoteTypeSwitcher({ note }: { note?: FNote | null }) {
     const currentNoteTypeData = NOTE_TYPES.find(t => t.type === currentNoteType);
 
     // Code notes fill the pane with their editor, so the switcher has nowhere to sit above them.
-    return (currentNoteType === "text" &&
+    return (currentNoteType === "text" && !noteContext?.showsHome() &&
         <div
             className="note-type-switcher"
             onWheel={onWheelHorizontalScroll}

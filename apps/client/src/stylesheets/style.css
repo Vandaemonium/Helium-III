@@ -3,6 +3,7 @@
 @import "./menus.css";
 @import "./buttons.css";
 @import "./zen.css";
+@import "./density.css";
 
 @font-face {
     font-family: Montserrat;

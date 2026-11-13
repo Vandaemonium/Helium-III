@@ -240,9 +240,12 @@ export function RightPaneTabBodies({ tabs, activeTabId, expandRequest, flat, hea
  * false. Shared by the desktop pane and the mobile note panel.
  */
 export function useRightPaneTabs(rightPaneVisible: boolean, widgetsByParent: WidgetsByParent): RightPaneTabContents[] {
-    const { note } = useActiveNoteContext();
+    const { note, noteContext } = useActiveNoteContext();
     const noteType = useNoteProperty(note, "type");
     const noteMime = useNoteProperty(note, "mime");
+    // Subscribed so that the text outline returns as soon as Home is turned off.
+    useTriliumOptionBool("heliumHomeEnabled");
+    const isText = noteType === "text" && !noteContext?.showsHome();
     const [ highlightsList ] = useTriliumOptionJson<string[]>("highlightsList");
     // Published by the LLM chat; drives the chat highlights widget's visibility (only shown once
     // the chat has at least one highlight).
@@ -287,7 +290,7 @@ export function useRightPaneTabs(rightPaneVisible: boolean, widgetsByParent: Wid
         },
         {
             el: <TableOfContents />,
-            enabled: (noteType === "text" || isPdf || noteType === "llmChat" || !!note?.isMarkdown()),
+            enabled: (isText || isPdf || noteType === "llmChat" || !!note?.isMarkdown()),
             tab: "outline"
         },
         {
@@ -312,7 +315,7 @@ export function useRightPaneTabs(rightPaneVisible: boolean, widgetsByParent: Wid
         },
         {
             el: <HighlightsList />,
-            enabled: (noteType === "text" || !!note?.isMarkdown()) && highlightsList.length > 0,
+            enabled: (isText || !!note?.isMarkdown()) && highlightsList.length > 0,
             tab: "outline"
         },
         {

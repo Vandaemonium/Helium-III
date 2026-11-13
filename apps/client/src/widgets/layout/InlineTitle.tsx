@@ -13,23 +13,26 @@ import { ViewScope } from "../../services/link";
 import { formatDateTime } from "../../utils/formatters";
 import NoteIcon from "../note_icon";
 import NoteTitleWidget from "../note_title";
-import { useNoteContext, useNoteProperty, useStaticTooltip, useTriliumOption } from "../react/hooks";
+import { useNoteContext, useNoteProperty, useStaticTooltip, useTriliumOption, useTriliumOptionBool } from "../react/hooks";
 import { joinElements } from "../react/react_utils";
 import { useNoteMetadata } from "./note_metadata";
 
 export default function InlineTitle() {
-    const { note, parentComponent, viewScope } = useNoteContext();
+    const { note, noteContext, parentComponent, viewScope } = useNoteContext();
     const type = useNoteProperty(note, "type");
     const mime = useNoteProperty(note, "mime");
     const [ titleStyle ] = useTriliumOption("noteTitleStyle");
+    const [ homeEnabled ] = useTriliumOptionBool("heliumHomeEnabled");
     const isOptions = note?.noteId?.startsWith("_options") ?? false;
-    const [ shown, setShown ] = useState(shouldShowInlineTitle(note, type, viewScope, titleStyle));
+    // Home fills the pane like a code note, so the sticky title row carries its title.
+    const showsHome = !!noteContext?.showsHome();
+    const [ shown, setShown ] = useState(!showsHome && shouldShowInlineTitle(note, type, viewScope, titleStyle));
     const containerRef = useRef<HTMLDivElement>(null);
     const [ titleHidden, setTitleHidden ] = useState(false);
 
     useLayoutEffect(() => {
-        setShown(shouldShowInlineTitle(note, type, viewScope, titleStyle));
-    }, [ note, type, mime, viewScope, titleStyle ]);
+        setShown(!showsHome && shouldShowInlineTitle(note, type, viewScope, titleStyle));
+    }, [ note, type, mime, viewScope, titleStyle, showsHome, homeEnabled ]);
 
     // Options pages render their own title (OptionsPageHeader) inside the content, so collapse the
     // note's own sticky title-row for them — `hide-title` only fades it (keeping its height), which

@@ -1736,6 +1736,40 @@
                         },
                         {
                             "isClone": false,
+                            "noteId": "k3a4pdes8F1d",
+                            "notePath": [
+                                "jdjRLhLV3TtI",
+                                "yeqU0zo0ZQ83",
+                                "k3a4pdes8F1d"
+                            ],
+                            "title": "Home board widgets",
+                            "notePosition": 90,
+                            "prefix": null,
+                            "isExpanded": false,
+                            "type": "text",
+                            "mime": "text/html",
+                            "attributes": [
+                                {
+                                    "type": "label",
+                                    "name": "shareAlias",
+                                    "value": "home-board-widgets",
+                                    "isInheritable": false,
+                                    "position": 10
+                                },
+                                {
+                                    "type": "label",
+                                    "name": "iconClass",
+                                    "value": "bx bx-grid-alt",
+                                    "isInheritable": false,
+                                    "position": 20
+                                }
+                            ],
+                            "format": "markdown",
+                            "dataFileName": "Home board widgets.md",
+                            "attachments": []
+                        },
+                        {
+                            "isClone": false,
                             "noteId": "m2W35hwSDUeh",
                             "notePath": [
                                 "jdjRLhLV3TtI",
@@ -1743,7 +1777,7 @@
                                 "m2W35hwSDUeh"
                             ],
                             "title": "Icons",
-                            "notePosition": 90,
+                            "notePosition": 100,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -1770,7 +1804,7 @@
                                 "TLXJwBDo8Rdv"
                             ],
                             "title": "Internationalisation / Translations",
-                            "notePosition": 100,
+                            "notePosition": 110,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -1919,7 +1953,7 @@
                                 "Usiyzn9C4WFv"
                             ],
                             "title": "Launchers",
-                            "notePosition": 110,
+                            "notePosition": 120,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -1946,7 +1980,7 @@
                                 "qjQNyaYXSNWu"
                             ],
                             "title": "Note Revisions",
-                            "notePosition": 120,
+                            "notePosition": 130,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -1980,7 +2014,7 @@
                                 "7RBJMqVz2EsJ"
                             ],
                             "title": "Note Types",
-                            "notePosition": 130,
+                            "notePosition": 140,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2273,7 +2307,7 @@
                                 "6dC7ha5vjqqS"
                             ],
                             "title": "Options",
-                            "notePosition": 140,
+                            "notePosition": 150,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2338,7 +2372,7 @@
                                 "W0msUwLxm40d"
                             ],
                             "title": "Printing and exporting to PDF",
-                            "notePosition": 150,
+                            "notePosition": 160,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2372,7 +2406,7 @@
                                 "UvXpeSqfYc6d"
                             ],
                             "title": "Protected entities",
-                            "notePosition": 160,
+                            "notePosition": 170,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2406,7 +2440,7 @@
                                 "vphziLmQeQHY"
                             ],
                             "title": "Share",
-                            "notePosition": 170,
+                            "notePosition": 180,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2440,7 +2474,7 @@
                                 "n9wYW9nUTynV"
                             ],
                             "title": "Synchronisation",
-                            "notePosition": 180,
+                            "notePosition": 190,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2533,7 +2567,7 @@
                                 "k7RavjuXQt8z"
                             ],
                             "title": "Syntax highlighting",
-                            "notePosition": 190,
+                            "notePosition": 200,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2567,7 +2601,7 @@
                                 "7BCukQTCm7fv"
                             ],
                             "title": "Themes",
-                            "notePosition": 200,
+                            "notePosition": 210,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",
@@ -2601,7 +2635,7 @@
                                 "YTAxJMA3uWwn"
                             ],
                             "title": "Web Clipper",
-                            "notePosition": 210,
+                            "notePosition": 220,
                             "prefix": null,
                             "isExpanded": false,
                             "type": "text",

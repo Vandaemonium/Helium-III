@@ -1,0 +1,257 @@
+.note-detail-helium-home {
+    height: 100%;
+}
+
+.helium-board {
+    --board-gap: 8px;
+    --board-padding: 8px;
+    --board-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+
+    .helium-board-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        padding: 4px var(--board-padding) 0;
+    }
+
+    .helium-board-hint {
+        margin-inline-end: auto;
+        color: var(--muted-text-color);
+        font-size: 0.85em;
+    }
+
+    .helium-board-drawer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 6px;
+        border: 1px dashed var(--main-border-color);
+        border-radius: var(--board-radius);
+        font-size: 0.85em;
+        color: var(--muted-text-color);
+    }
+
+    .helium-board-scroll {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+    }
+
+    .helium-board-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        grid-template-rows: repeat(var(--board-rows), var(--board-row-height));
+        gap: var(--board-gap);
+        padding: var(--board-padding);
+    }
+
+    .helium-board-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--board-gap);
+        padding: var(--board-padding);
+
+        .helium-board-panel {
+            max-height: 70vh;
+        }
+
+        .helium-board-panel-body {
+            flex: none;
+        }
+    }
+
+    .helium-board-panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        background: var(--card-background-color);
+        border: 1px solid var(--card-border-color, var(--main-border-color));
+        border-radius: var(--board-radius);
+        overflow-wrap: anywhere;
+    }
+
+    .helium-board-panel-header {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 28px;
+        padding: 2px var(--card-padding-inline, 8px);
+        border-bottom: 1px solid var(--main-border-color);
+        color: var(--muted-text-color);
+
+        h3 {
+            flex: 1;
+            margin: 0;
+            overflow: hidden;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .helium-board-panel-body {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        padding: 6px var(--card-padding-inline, 8px);
+    }
+
+    &.editing {
+        .helium-board-panel {
+            outline: 1px dashed var(--main-border-color);
+            outline-offset: 1px;
+
+            &:focus-visible {
+                outline: 2px solid var(--active-item-border-color, var(--main-text-color));
+            }
+        }
+
+        .helium-board-panel-header {
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .helium-board-panel-body {
+            opacity: 0.75;
+        }
+    }
+
+    .helium-board-resize {
+        position: absolute;
+        inset-inline-end: 0;
+        bottom: 0;
+        width: 14px;
+        height: 14px;
+        cursor: nwse-resize;
+        touch-action: none;
+        background: linear-gradient(135deg, transparent 50%, var(--muted-text-color) 50%);
+        opacity: 0.6;
+    }
+
+    .helium-board-cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        padding: 0;
+        border: 1px dashed transparent;
+        border-radius: var(--board-radius);
+        background: transparent;
+        color: transparent;
+
+        &:hover, &:focus-visible {
+            border-color: var(--main-border-color);
+            background: var(--hover-item-background-color);
+            color: var(--muted-text-color);
+        }
+    }
+
+    .helium-board-preview {
+        z-index: 2;
+        pointer-events: none;
+        border: 2px solid var(--active-item-border-color, var(--main-text-color));
+        border-radius: var(--board-radius);
+        background: var(--active-item-background-color);
+        opacity: 0.5;
+
+        &.blocked {
+            border-color: var(--bs-danger);
+        }
+    }
+
+    .helium-widget-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: 2px 0;
+        }
+    }
+
+    .helium-widget-setup {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .helium-checklist {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .helium-clock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+
+        .helium-clock-time {
+            font-size: 1.6em;
+            font-weight: 300;
+            line-height: 1.1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .helium-clock-date, .helium-clock-zone {
+            color: var(--muted-text-color);
+            font-size: 0.9em;
+        }
+    }
+
+    .helium-calendar {
+        width: auto;
+
+        .calendar-header {
+            flex-wrap: wrap;
+            padding: 0 0 4px;
+
+            input, .dropdown-toggle {
+                font-size: 1em;
+                font-weight: 400;
+            }
+
+            input[type="number"] {
+                width: 4ch;
+            }
+        }
+
+        .calendar-week span {
+            overflow: hidden;
+            padding: 2px 0;
+            font-size: 0.65em;
+            white-space: nowrap;
+        }
+
+        .calendar-body {
+            min-height: 0;
+        }
+
+        .calendar-date, .calendar-week-number-disabled {
+            padding: 2px 0;
+            font-size: 0.95em;
+        }
+    }
+}
+
+.helium-board-settings-panel .dropdown-menu {
+    min-width: 260px;
+    padding: 8px;
+}

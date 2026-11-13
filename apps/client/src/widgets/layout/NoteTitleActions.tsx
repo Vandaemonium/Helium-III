@@ -22,6 +22,8 @@ export default function NoteTitleActions() {
     const noteType = useNoteProperty(note, "type");
     const isDefaultView = !viewScope?.viewMode || viewScope.viewMode === "default";
     const [ noteTitleStyle ] = useTriliumOption("noteTitleStyle");
+    const [ homeEnabled ] = useTriliumOptionBool("heliumHomeEnabled");
+    const showsHome = homeEnabled && !!noteContext?.showsHome();
 
     return (
         <div className="title-actions">
@@ -29,7 +31,7 @@ export default function NoteTitleActions() {
             {noteType === "search" && <SearchProperties note={note} ntxId={ntxId} />}
             {isDefaultView && note && <PinnedAttachments note={note} />}
             <EditedNotes />
-            {isDefaultView && noteTitleStyle !== "compact" && <NoteTypeSwitcher note={note} />}
+            {isDefaultView && noteTitleStyle !== "compact" && !showsHome && <NoteTypeSwitcher note={note} />}
         </div>
     );
 }

@@ -65,7 +65,7 @@ export default function FormattingToolbar() {
 };
 
 async function showFormattingToolbar(note: FNote | null | undefined, noteContext: NoteContext | undefined) {
-    return note?.type === "text" && noteContext?.viewScope?.viewMode === "default"
+    return note?.type === "text" && noteContext?.viewScope?.viewMode === "default" && !noteContext.showsHome()
         && options.get("textNoteEditorType") === "ckeditor-classic"
         && !(await noteContext?.isReadOnly());
 }
@@ -168,7 +168,7 @@ export async function getFormattingToolbarState(activeNoteContext: NoteContext |
 
     const subContexts = activeNoteContext?.getMainContext().getSubContexts() ?? [];
     if (subContexts.length === 1) {
-        if (activeNote?.type !== "text" || activeNoteContext.viewScope?.viewMode !== "default") {
+        if (activeNote?.type !== "text" || activeNoteContext.viewScope?.viewMode !== "default" || activeNoteContext.showsHome()) {
             return "hidden";
         }
 
@@ -181,7 +181,7 @@ export async function getFormattingToolbarState(activeNoteContext: NoteContext |
     }
 
     // If there are multiple note contexts (e.g. splits), the logic is slightly different.
-    const textNoteContexts = subContexts.filter(s => s.note?.type === "text" && s.viewScope?.viewMode === "default");
+    const textNoteContexts = subContexts.filter(s => s.note?.type === "text" && s.viewScope?.viewMode === "default" && !s.showsHome());
     const textNoteContextsReadOnly = await Promise.all(textNoteContexts.map(sc => sc.isReadOnly()));
 
     // If all text notes are hidden, no need to display the toolbar at all.
@@ -190,7 +190,7 @@ export async function getFormattingToolbarState(activeNoteContext: NoteContext |
     }
 
     // If the current subcontext is not a text note, but there is at least an editable text then it must be disabled.
-    if (activeNote?.type !== "text") return "disabled";
+    if (activeNote?.type !== "text" || activeNoteContext.showsHome()) return "disabled";
 
     // If the current subcontext is a text note, it must not be read-only.
     const subContextIndex = textNoteContexts.indexOf(activeNoteContext);

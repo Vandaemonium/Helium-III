@@ -4,6 +4,9 @@ import type { PaneMode } from "../widgets/react/peek_pane.js";
 import options from "./options.js";
 
 export const DEFAULT_GUTTER_SIZE = 5;
+/** Must match the `leftPaneWidth` default in `options_init.ts`. */
+const COMFORTABLE_LEFT_PANE_WIDTH = 25;
+const COMPACT_LEFT_PANE_WIDTH = 20;
 
 let leftPaneWidth: number;
 let layoutOrientation: string;
@@ -45,7 +48,7 @@ function setupLeftPaneResizer(mode: PaneMode) {
         return;
     }
 
-    leftPaneWidth = leftPaneWidth ?? (options.getInt("leftPaneWidth") ?? 0);
+    leftPaneWidth = leftPaneWidth ?? defaultForDensity(options.getInt("leftPaneWidth") ?? 0);
     if (!leftPaneWidth || leftPaneWidth < 5) {
         leftPaneWidth = 5;
     }
@@ -74,6 +77,16 @@ function setupLeftPaneResizer(mode: PaneMode) {
             }
         });
     });
+}
+
+/**
+ * The compact density narrows a pane still at the comfortable default of the `leftPaneWidth` option.
+ * shortcut: a pane dragged to exactly that default also narrows; a "resized" flag would tell them apart.
+ */
+function defaultForDensity(width: number) {
+    return width === COMFORTABLE_LEFT_PANE_WIDTH && options.get("uiDensity") !== "comfortable"
+        ? COMPACT_LEFT_PANE_WIDTH
+        : width;
 }
 
 function findKeyByNtxId(ntxId: string): string[] | undefined {

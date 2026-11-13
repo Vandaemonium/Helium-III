@@ -5,6 +5,7 @@ The Quick Notes tab captures short text notes beside whatever note is open, and 
 
 *   To capture a note, type into the composer at the top of the tab and press _Save note_. The first line that is not blank becomes the note's title, and the whole text becomes its content. Text that looks like HTML is saved as plain text.
 *   Nothing is saved until _Save note_ is pressed. A blank composer is refused.
+*   The draft is shared with the _Quick Notes_ widget on <a class="reference-link" href="../Home.md">Home</a>, so text typed in one appears in the other.
 *   The draft stays while switching tabs, closing the right sidebar or moving to another note, but only for as long as the window stays open. Closing or reloading the window with an unsaved draft asks for confirmation first.
 *   If saving fails, the draft is kept and can be saved again. If the connection drops before the answer arrives, the note might have been created anyway: the tab says the save is uncertain and only allows saving again after pressing _I checked; allow retry_, so that a note is not created twice.
 
@@ -12,11 +13,11 @@ Captured notes are ordinary text notes, created in the _Quick Notes_ folder at t
 
 ## Cards
 
-Each direct text child of the _Quick Notes_ folder is shown as a card, with its title and the beginning of its text.
+Each direct text child of the _Quick Notes_ folder is shown as a card: its title, and below it one line of its text, which leaves out a first line that only repeats the title. The <span class="tn-icon bx bx-pin"></span> pin and <span class="tn-icon bx bx-archive-in"></span> archive buttons appear at the end of the card while the pointer is over it or it has the focus, and always on a touch screen.
 
-*   To open a note in the current tab, press its title.
-*   To keep a card at the top, press _Pin_; _Unpin_ releases it. Pinned cards come first, then the most recently modified.
-*   To put a card away without deleting it, press _Archive_. Archived cards are listed under _Archived_ instead of _Active_, and _Restore_ brings them back.
+*   To open a note in the current tab, press its card.
+*   To keep a card at the top, press <span class="tn-icon bx bx-pin"></span> _Pin_; on a pinned card the filled <span class="tn-icon bx bxs-pin"></span> _Unpin_ button stays visible and releases it. Pinned cards have a colored border and come first, then the most recently modified.
+*   To put a card away without deleting it, press <span class="tn-icon bx bx-archive-in"></span> _Archive_. Archived cards are listed under _Archived_ instead of _Active_, and <span class="tn-icon bx bx-archive-out"></span> _Restore_ brings them back.
 *   To find a card, type into the search field. The search matches the title and the text of the cards in the selected view only.
 
 Pinning and archiving set the `#heliumQuickPinned` and `#heliumQuickArchived` labels on the note. They do not change the `#pinned` or `#archived` labels used elsewhere, such as on <a class="reference-link" href="../Home.md">Home</a>.

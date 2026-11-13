@@ -2,6 +2,8 @@
  * Shared types and pure helpers of Helium-III's built-in Home and Quick Notes.
  */
 
+import { defaultBoard, type HomeBoard, normalizeBoard } from "./helium_board.js";
+
 /** The hidden note holding the Home configuration as JSON. */
 export const HELIUM_HOME_CONFIG_NOTE_ID = "_heliumHomeConfig";
 /** The hidden note holding the Quick Notes configuration as JSON. */
@@ -12,7 +14,8 @@ export const QUICK_PINNED_LABEL = "heliumQuickPinned";
 export const QUICK_ARCHIVED_LABEL = "heliumQuickArchived";
 
 export interface HeliumHomeConfig {
-    schemaVersion: 1;
+    /** 1 had no board; reading it yields the default board. */
+    schemaVersion: 2;
     recentLimit: number;
     pinnedLabel: string;
     pinnedLimit: number;
@@ -20,17 +23,19 @@ export interface HeliumHomeConfig {
     inboxLimit: number;
     excludeHidden: boolean;
     excludeArchived: boolean;
+    board: HomeBoard;
 }
 
 export const DEFAULT_HOME_CONFIG: Readonly<HeliumHomeConfig> = Object.freeze({
-    schemaVersion: 1,
+    schemaVersion: 2,
     recentLimit: 8,
     pinnedLabel: "pinned",
     pinnedLimit: 12,
     inboxLabel: "inbox",
     inboxLimit: 10,
     excludeHidden: true,
-    excludeArchived: true
+    excludeArchived: true,
+    board: defaultBoard()
 });
 
 export interface HeliumQuickConfig {
@@ -77,14 +82,36 @@ export interface QuickNotesData {
 
 export type QuickNoteStateKey = "pinned" | "archived";
 
-/** Normalizes a stored Home configuration, falling back to defaults for anything invalid. */
+export interface ChecklistItem {
+    /** The item's position among the note's to-do items, which a tick names together with its text. */
+    index: number;
+    text: string;
+    checked: boolean;
+}
+
+/**
+ * - `missing`: the note is deleted or hidden.
+ * - `protected`: the note is protected; Home never shows it, even while unlocked.
+ * - `unsupported`: the note is not a text note.
+ */
+export interface ChecklistData {
+    status: "ok" | "missing" | "protected" | "unsupported";
+    title: string;
+    items: ChecklistItem[];
+}
+
+/**
+ * Normalizes a stored Home configuration, falling back to defaults for anything invalid. A version 1
+ * configuration, or a board that does not validate, gets the default board.
+ */
 export function normalizeHomeConfig(raw: unknown): HeliumHomeConfig {
     if (!raw || typeof raw !== "object") {
-        return { ...DEFAULT_HOME_CONFIG };
+        return { ...DEFAULT_HOME_CONFIG, board: defaultBoard() };
     }
     const value = raw as Record<string, unknown>;
     return {
-        schemaVersion: 1,
+        schemaVersion: 2,
+        board: normalizeBoard(value.board) ?? defaultBoard(),
         recentLimit: clampLimit(value.recentLimit, DEFAULT_HOME_CONFIG.recentLimit),
         pinnedLabel: sanitizeLabelName(value.pinnedLabel, DEFAULT_HOME_CONFIG.pinnedLabel),
         pinnedLimit: clampLimit(value.pinnedLimit, DEFAULT_HOME_CONFIG.pinnedLimit),

@@ -1,15 +1,16 @@
 import {
-    DEFAULT_HOME_CONFIG, HELIUM_HOME_CONFIG_NOTE_ID, HELIUM_QUICK_CONFIG_NOTE_ID, HELIUM_QUICK_NOTES_FOLDER_ID,
-    type HeliumHomeConfig, type HeliumQuickConfig, type HomeData, type HomeItem, normalizeHomeConfig,
+    type ChecklistData, DEFAULT_HOME_CONFIG, HELIUM_HOME_CONFIG_NOTE_ID, HELIUM_QUICK_CONFIG_NOTE_ID, HELIUM_QUICK_NOTES_FOLDER_ID,
+    type HeliumHomeConfig, type HeliumQuickConfig, type HomeBoard, type HomeData, type HomeItem, normalizeBoard, normalizeHomeConfig,
     QUICK_ARCHIVED_LABEL, QUICK_PINNED_LABEL, type QuickNoteCard, type QuickNotesData, textCapture
 } from "@triliumnext/commons";
 import { t } from "i18next";
+import { parse } from "node-html-parser";
 
 import becca from "../becca/becca.js";
 import type BNote from "../becca/entities/bnote.js";
 import { ValidationError } from "../errors.js";
 import noteService from "./notes.js";
-import { stripTags, unescapeHtml } from "./utils/index.js";
+import { escapeHtml, stripTags, unescapeHtml } from "./utils/index.js";
 
 /** Labels that mark notes of the retired Home and Quick Notes modules, which Home leaves out. */
 const LEGACY_MODULE_LABELS = [ "heliumModuleId", "heliumModuleConfig", "heliumHomeHost", "heliumQuickRetained" ];
@@ -33,6 +34,83 @@ export function seedHeliumConfig() {
 
 export function getHomeConfig(): HeliumHomeConfig {
     return normalizeHomeConfig(readJson(HELIUM_HOME_CONFIG_NOTE_ID));
+}
+
+/** Replaces the board in the Home configuration, keeping the other settings. */
+export function saveHomeBoard(raw: unknown): HomeBoard {
+    const board = normalizeBoard(raw);
+    if (!board) {
+        throw new ValidationError("Invalid Home layout.");
+    }
+    const note = becca.notes[HELIUM_HOME_CONFIG_NOTE_ID];
+    if (!note || note.isProtected || !note.isContentAvailable()) {
+        throw new ValidationError("The Home configuration note is unavailable.");
+    }
+    note.setContent(JSON.stringify({ ...getHomeConfig(), board }, null, 4));
+    return board;
+}
+
+/** The to-do items of a text note, in document order. Protected notes are refused even while unlocked. */
+export function getChecklist(noteId: string): ChecklistData {
+    const note = becca.notes[noteId];
+    if (!note || note.isDeleted || note.isHiddenCompletely()) {
+        return { status: "missing", title: "", items: [] };
+    }
+    if (note.isProtected) {
+        return { status: "protected", title: "", items: [] };
+    }
+    if (note.type !== "text") {
+        return { status: "unsupported", title: note.title, items: [] };
+    }
+    const items = findTodoInputs(String(note.getContent())).map(({ text, checked }, index) => ({ index, text, checked }));
+    return { status: "ok", title: note.title, items };
+}
+
+/**
+ * Ticks or unticks one to-do item. The content is read again inside this transaction, and the item
+ * must still carry `expectedText`, so an edit made elsewhere since the client loaded the list is
+ * never overwritten or applied to the wrong item. Only the checkbox tag is changed.
+ */
+export function setChecklistItem(noteId: string, index: unknown, checked: unknown, expectedText: unknown) {
+    if (typeof checked !== "boolean" || typeof expectedText !== "string" || !Number.isInteger(index)) {
+        throw new ValidationError("Invalid checklist change.");
+    }
+    const note = becca.notes[noteId];
+    if (!note || note.isDeleted || note.isProtected || note.type !== "text" || note.isHiddenCompletely()) {
+        throw new ValidationError("Not an unprotected text note.");
+    }
+    const content = String(note.getContent());
+    const item = findTodoInputs(content)[index as number];
+    if (!item || item.text !== expectedText) {
+        throw new ValidationError("The checklist changed since it was loaded. Reload it and try again.");
+    }
+    if (item.checked === checked) return;
+    const [ start, end ] = item.range;
+    const tag = content.slice(start, end);
+    const newTag = checked
+        ? tag.replace(/^<input/i, "<input checked=\"checked\"")
+        : tag.replace(/\s+checked(\s*=\s*("[^"]*"|'[^']*'|[^\s>]+))?(?=[\s/>])/i, "");
+    note.setContent(content.slice(0, start) + newTag + content.slice(end));
+}
+
+/** Creates the visible "Checklist" note under root with one empty to-do item. */
+export function createChecklistNote() {
+    const { note } = noteService.createNewNote({
+        parentNoteId: "root",
+        title: t("hidden-subtree.helium-checklist-title"),
+        content: `<ul class="todo-list"><li><label class="todo-list__label"><input type="checkbox" disabled="disabled"><span class="todo-list__label__description">${escapeHtml(t("hidden-subtree.helium-checklist-first-item"))}</span></label></li></ul>`,
+        type: "text",
+        mime: "text/html",
+        isProtected: false
+    });
+    return { noteId: note.noteId };
+}
+
+function findTodoInputs(html: string) {
+    return parse(html).querySelectorAll("ul.todo-list li input[type=checkbox]").map((input) => {
+        const label = input.closest("label") ?? input.parentNode;
+        return { text: label?.text.trim() ?? "", checked: input.hasAttribute("checked"), range: input.range };
+    });
 }
 
 export function getHomeData(): HomeData {
@@ -157,7 +235,7 @@ function resolveQuickNotesFolder(): { status: QuickNotesData["status"]; folder: 
         return { status: hasFolderConflict() ? "conflict" : "unconfigured", folder: null };
     }
     const folder = becca.notes[dataNoteId];
-    if (!folder || folder.isInHiddenSubtree()) {
+    if (!folder || folder.isHiddenCompletely()) {
         return { status: "missing", folder: null };
     }
     if (folder.isProtected) {
@@ -189,7 +267,8 @@ function isHomeEligible(note: BNote, config: HeliumHomeConfig) {
     return !note.noteId.startsWith("_")
         && note.noteId !== "root"
         && !note.isProtected
-        && !(config.excludeHidden && note.isInHiddenSubtree())
+        // A note cloned into the hidden tree, such as a bookmark, stays listed through its visible paths.
+        && !(config.excludeHidden && note.isHiddenCompletely())
         && !(config.excludeArchived && note.isArchived)
         && !LEGACY_MODULE_LABELS.some((label) => note.hasOwnedLabel(label));
 }

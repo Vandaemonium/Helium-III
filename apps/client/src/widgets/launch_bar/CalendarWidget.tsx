@@ -116,7 +116,7 @@ interface CalendarHeaderProps {
     setDate(date: Dayjs): void;
 }
 
-function CalendarHeader(props: CalendarHeaderProps) {
+export function CalendarHeader(props: CalendarHeaderProps) {
     return (
         <div className="calendar-header">
             <CalendarMonthSelector {...props} />
