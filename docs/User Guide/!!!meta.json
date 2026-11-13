@@ -1557,6 +1557,41 @@
                                 },
                                 {
                                     "isClone": false,
+                                    "noteId": "tlP0mJdFV3M2",
+                                    "notePath": [
+                                        "pOsGYCXsbNQG",
+                                        "gh7bpGYxajRS",
+                                        "Vc8PjrjAGuOp",
+                                        "tlP0mJdFV3M2"
+                                    ],
+                                    "title": "Home",
+                                    "notePosition": 30,
+                                    "prefix": null,
+                                    "isExpanded": false,
+                                    "type": "text",
+                                    "mime": "text/html",
+                                    "attributes": [
+                                        {
+                                            "type": "label",
+                                            "name": "shareAlias",
+                                            "value": "home",
+                                            "isInheritable": false,
+                                            "position": 10
+                                        },
+                                        {
+                                            "type": "label",
+                                            "name": "iconClass",
+                                            "value": "bx bx-home",
+                                            "isInheritable": false,
+                                            "position": 20
+                                        }
+                                    ],
+                                    "format": "markdown",
+                                    "dataFileName": "Home.md",
+                                    "attachments": []
+                                },
+                                {
+                                    "isClone": false,
                                     "noteId": "oPVyFC7WL2Lp",
                                     "notePath": [
                                         "pOsGYCXsbNQG",
@@ -1565,7 +1600,7 @@
                                         "oPVyFC7WL2Lp"
                                     ],
                                     "title": "Note Tree",
-                                    "notePosition": 30,
+                                    "notePosition": 40,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -1831,7 +1866,7 @@
                                         "3seOhtN8uLIY"
                                     ],
                                     "title": "Tabs",
-                                    "notePosition": 70,
+                                    "notePosition": 80,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -1883,7 +1918,7 @@
                                         "xYmIYSP6wE3F"
                                     ],
                                     "title": "Launch Bar",
-                                    "notePosition": 110,
+                                    "notePosition": 120,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -1927,7 +1962,7 @@
                                         "8YBEPzcpUgxw"
                                     ],
                                     "title": "Note menu",
-                                    "notePosition": 130,
+                                    "notePosition": 140,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -1971,7 +2006,7 @@
                                         "1P8QXI5edXNd"
                                     ],
                                     "title": "Note buttons",
-                                    "notePosition": 140,
+                                    "notePosition": 150,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2006,7 +2041,7 @@
                                         "4TIF1oA4VQRO"
                                     ],
                                     "title": "Options",
-                                    "notePosition": 150,
+                                    "notePosition": 160,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2050,7 +2085,7 @@
                                         "luNhaphA37EO"
                                     ],
                                     "title": "Split View",
-                                    "notePosition": 160,
+                                    "notePosition": 170,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2094,7 +2129,7 @@
                                         "RnaPdbciOfeq"
                                     ],
                                     "title": "Right Sidebar",
-                                    "notePosition": 180,
+                                    "notePosition": 190,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2300,6 +2335,42 @@
                                                     "dataFileName": "Connections tab_image.png"
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "isClone": false,
+                                            "noteId": "gMHK0sfZhHtq",
+                                            "notePath": [
+                                                "pOsGYCXsbNQG",
+                                                "gh7bpGYxajRS",
+                                                "Vc8PjrjAGuOp",
+                                                "RnaPdbciOfeq",
+                                                "gMHK0sfZhHtq"
+                                            ],
+                                            "title": "Quick Notes tab",
+                                            "notePosition": 50,
+                                            "prefix": null,
+                                            "isExpanded": false,
+                                            "type": "text",
+                                            "mime": "text/html",
+                                            "attributes": [
+                                                {
+                                                    "type": "label",
+                                                    "name": "shareAlias",
+                                                    "value": "quick-notes",
+                                                    "isInheritable": false,
+                                                    "position": 10
+                                                },
+                                                {
+                                                    "type": "label",
+                                                    "name": "iconClass",
+                                                    "value": "bx bx-notepad",
+                                                    "isInheritable": false,
+                                                    "position": 20
+                                                }
+                                            ],
+                                            "format": "markdown",
+                                            "dataFileName": "Quick Notes tab.md",
+                                            "attachments": []
                                         }
                                     ]
                                 },
@@ -2313,7 +2384,7 @@
                                         "r5JGHN99bVKn"
                                     ],
                                     "title": "Recent Changes",
-                                    "notePosition": 200,
+                                    "notePosition": 210,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2357,7 +2428,7 @@
                                         "ny318J39E5Z0"
                                     ],
                                     "title": "Zoom",
-                                    "notePosition": 210,
+                                    "notePosition": 220,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2392,7 +2463,7 @@
                                         "lgKX7r3aL30x"
                                     ],
                                     "title": "Note Tooltip",
-                                    "notePosition": 230,
+                                    "notePosition": 240,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2436,7 +2507,7 @@
                                         "SL5f1Auq7sVN"
                                     ],
                                     "title": "Note types with split view",
-                                    "notePosition": 250,
+                                    "notePosition": 260,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2471,7 +2542,7 @@
                                         "t596jLvPrqkS"
                                     ],
                                     "title": "Content width",
-                                    "notePosition": 260,
+                                    "notePosition": 270,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2506,7 +2577,7 @@
                                         "jcQVxzYybYgz"
                                     ],
                                     "title": "Note contextual menu",
-                                    "notePosition": 270,
+                                    "notePosition": 280,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2550,7 +2621,7 @@
                                         "AlJ73vBCjWDw"
                                     ],
                                     "title": "Status bar",
-                                    "notePosition": 280,
+                                    "notePosition": 290,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
@@ -2585,7 +2656,7 @@
                                         "I6p2a06hdnL6"
                                     ],
                                     "title": "Breadcrumb",
-                                    "notePosition": 290,
+                                    "notePosition": 300,
                                     "prefix": null,
                                     "isExpanded": false,
                                     "type": "text",
