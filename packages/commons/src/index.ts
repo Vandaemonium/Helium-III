@@ -62,3 +62,4 @@ export * from "./lib/task_states.js";
 export * from "./lib/resources.js";
 export * from "./lib/transcript.js";
 export * from "./lib/keyboard_shortcut_display.js";
+export * from "./lib/helium.js";

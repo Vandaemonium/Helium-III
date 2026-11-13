@@ -1,4 +1,4 @@
-import type { HiddenSubtreeItem } from "@triliumnext/commons";
+import { HELIUM_HOME_CONFIG_NOTE_ID, HELIUM_QUICK_CONFIG_NOTE_ID, type HiddenSubtreeItem } from "@triliumnext/commons";
 import { t } from "i18next";
 
 import becca from "../becca/becca.js";
@@ -6,6 +6,7 @@ import BAttribute from "../becca/entities/battribute.js";
 import BBranch from "../becca/entities/bbranch.js";
 import BNote from "../becca/entities/bnote.js";
 import buildLaunchBarConfig from "./hidden_subtree_launcherbar.js";
+import { seedHeliumConfig } from "./helium.js";
 import buildHiddenSubtreeTemplates from "./hidden_subtree_templates.js";
 import migrationService from "./migration.js";
 import noteService from "./notes.js";
@@ -154,6 +155,18 @@ function buildHiddenSubtreeDefinition(): HiddenSubtreeItem {
                 title: t("hidden-subtree.custom-dictionary-title"),
                 type: "code",
                 icon: "bx-book"
+            },
+            {
+                // Configuration of the built-in Home and Quick Notes. No `content` here, so that the
+                // check never overwrites edited JSON; seedHeliumConfig() fills empty notes once.
+                id: "_helium",
+                title: t("hidden-subtree.helium-title"),
+                type: "doc",
+                icon: "bx-home",
+                children: [
+                    { id: HELIUM_HOME_CONFIG_NOTE_ID, title: t("hidden-subtree.helium-home-config-title"), type: "code", mime: "application/json" },
+                    { id: HELIUM_QUICK_CONFIG_NOTE_ID, title: t("hidden-subtree.helium-quick-config-title"), type: "code", mime: "application/json" }
+                ]
             },
             {
                 // place for user scripts hidden stuff (scripts should not create notes directly under hidden root)
@@ -379,6 +392,8 @@ function checkHiddenSubtree(force = false, extraOpts: CheckHiddenExtraOpts = {})
         if (!taskStatesExisted) {
             seedDefaultTaskStates();
         }
+
+        seedHeliumConfig();
     });
 }
 

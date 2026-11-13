@@ -154,6 +154,10 @@ export interface OptionDefinitions extends KeyboardShortcutsOptions<KeyboardActi
     rightPaneWidth: number;
     rightPaneCollapsedItems: string;
     rightPaneSelectedTab: string;
+    /** Shows the built-in Home on the root note instead of its own view. */
+    heliumHomeEnabled: boolean;
+    /** Offers the built-in Quick Notes tab in the right pane and the mobile note panel. */
+    heliumQuickNotesEnabled: boolean;
     /**
      * Which map the connections tab draws, `link` or `tree`. A preference of the reader's rather than
      * a property of any one note: the tab is a lens on whatever note is being read, and a note map
