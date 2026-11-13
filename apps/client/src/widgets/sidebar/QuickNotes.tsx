@@ -150,7 +150,7 @@ function QuickNotesCards({ data, query, archived, compact, onRetrySetup }: {
                     type="search"
                     currentValue={query}
                     onChange={quickNotesStore.setQuery}
-                    autoFocus={compact}
+                    autoFocus={compact && searchOpen}
                     onBlur={compact ? (value) => {
                         if (!value) setSearchOpen(false);
                     } : undefined}
