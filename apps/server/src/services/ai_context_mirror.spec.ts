@@ -29,11 +29,11 @@ describe("AI-Context mirror", () => {
         write("_index.md", "---\ntier: canonical\n---\n\n# Start here\n\n| File | Covers |\n|---|---|\n| `b.md` | B |\n| `a.md` | A |\n");
         write("a.md", "# Alpha\n\n## Section\n\nSee [site](https://example.com).\n");
         write("b.md", "No heading here.\n");
-        write("zz.md", "# Zed\n");
+        write("zz.md", "# **Zed** (`zz.md`)\n");
 
         const result = sync();
         expect(result?.created).toHaveLength(5);
-        expect(children()).toEqual([ "Start here", "b", "Alpha", "Zed" ]);
+        expect(children()).toEqual([ "Start here", "b", "Alpha", "Zed (zz.md)" ]);
 
         const index = becca.getNoteOrThrow(childNoteId("_index.md"));
         const content = String(index.getContent());

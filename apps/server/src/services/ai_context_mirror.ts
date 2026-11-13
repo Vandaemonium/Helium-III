@@ -86,7 +86,8 @@ export function syncAiContext(dir: string): MirrorResult | null {
             if (source === null) continue; // Unreadable or too large: the existing note stays as it is.
 
             const { body } = parseFrontmatter(source);
-            const title = /^#[ \t]+(.+?)[ \t#]*$/m.exec(body)?.[1] ?? name.replace(/\.md$/i, "");
+            const heading = /^#[ \t]+(.+?)[ \t#]*$/m.exec(body)?.[1].replace(/`|\*\*/g, "");
+            const title = heading ?? name.replace(/\.md$/i, "");
             const html = markdownImportService.renderToHtml(body, title);
             const note = becca.notes[noteId];
             if (!note) {
